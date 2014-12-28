@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" 
+    xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="Test" transaction-type="RESOURCE_LOCAL">
+		<class>server.internal.model.users.UserPersisted</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="openjpa.ConnectionURL" value="jdbc:derby:/home/glefur/databases/test-osgi-jee;create=true" />      
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema" />
+			<property name="openjpa.Log" value="SQL=TRACE" />
+			<property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
+			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
+		</properties>
+	</persistence-unit>
+</persistence>
