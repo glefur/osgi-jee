@@ -32,7 +32,7 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class TestsActivator implements BundleActivator {
 
-    private static final String TEST_RESOURCES_PATH = "src/test/resources";
+    private static final String TEST_RESOURCES_PATH = "src/test/resources/";
 	private static TestsActivator instance;
     private ServiceTracker<EntityManagerFactory, EntityManagerFactory> emfTracker;
 	private Bundle bundle;
