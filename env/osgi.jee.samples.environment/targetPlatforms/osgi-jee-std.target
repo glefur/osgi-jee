@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="OSGi/JEE standard Target Platform" sequenceNumber="1419761038">
+<target name="OSGi/JEE standard Target Platform" sequenceNumber="1420019023">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.osgi" version="3.9.1.v20140110-1610"/>
@@ -37,7 +37,7 @@
       <unit id="org.apache.aries.jpa.container" version="1.0.0"/>
       <unit id="org.apache.aries.transaction.manager" version="1.0.0"/>
       <unit id="org.apache.aries.util" version="1.0.0"/>
-      <repository id="persistence" location="https://glefur.github.io/p2/p2CoJaL"/>
+      <repository id="p2CoJaL" location="https://glefur.github.io/p2/p2CoJaL"/>
     </location>
   </locations>
 </target>
