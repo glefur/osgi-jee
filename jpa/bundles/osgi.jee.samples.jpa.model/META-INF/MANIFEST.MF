@@ -13,4 +13,4 @@ Import-Package: javax.persistence;version="1.1.0",
  org.apache.openjpa.persistence;version="2.0.0",
  org.osgi.framework;version="1.7.0",
  osgi.jee.samples.jpa.api.services.persistence
-Bundle-Activator: osgi.jee.samples.jpa.model.ModelActivator
+Service-Component: OSGI-INF/OpenJPADerbyPersistenceService.xml

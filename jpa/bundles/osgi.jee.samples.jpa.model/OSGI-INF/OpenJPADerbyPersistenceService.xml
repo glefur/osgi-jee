@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.openjpa.derby.services.AriesOpenJPADerbyPersistenceService">
+   <implementation class="osgi.jee.samples.jpa.aries.openjpa.derby.services.AriesOpenJPADerbyPersistenceService"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.api.services.persistence.PersistenceService"/>
+   </service>
+</scr:component>
