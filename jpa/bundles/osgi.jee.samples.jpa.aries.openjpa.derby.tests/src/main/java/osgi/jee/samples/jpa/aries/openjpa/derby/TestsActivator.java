@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -38,7 +36,6 @@ public class TestsActivator implements BundleActivator {
 
     private static final String TEST_RESOURCES_PATH = "src/test/resources/";
 	private static TestsActivator instance;
-    private ServiceTracker<EntityManagerFactory, EntityManagerFactory> emfTracker;
     private ServiceTracker<PersistenceService, PersistenceService> persistenceServiceTracker;
 	private Bundle bundle;
         
@@ -57,8 +54,6 @@ public class TestsActivator implements BundleActivator {
     public void start(final BundleContext context) throws Exception {
         instance = this;
         bundle = context.getBundle();
-        emfTracker = new ServiceTracker<EntityManagerFactory, EntityManagerFactory>(context, EntityManagerFactory.class, null);
-        emfTracker.open();
         persistenceServiceTracker = new ServiceTracker<PersistenceService, PersistenceService>(context, PersistenceService.class, new ServiceTrackerCustomizer<PersistenceService, PersistenceService>() {
 
 			/**
@@ -100,11 +95,6 @@ public class TestsActivator implements BundleActivator {
     @Override
     public void stop(BundleContext arg0) throws Exception {
     	persistenceServiceTracker.close();
-        emfTracker.close();
-    }
-    
-    public EntityManagerFactory getEntityManagerFactory() {
-        return emfTracker.getService();
     }
     
     public PersistenceService getPersistenceService() {

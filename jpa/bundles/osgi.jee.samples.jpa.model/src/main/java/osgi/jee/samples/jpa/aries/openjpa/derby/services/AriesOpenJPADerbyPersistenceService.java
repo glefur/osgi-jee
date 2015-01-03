@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.apache.derby.tools.ij;
 import org.apache.openjpa.persistence.OpenJPAEntityManager;
@@ -32,6 +33,23 @@ import osgi.jee.samples.jpa.model.Constants;
  *
  */
 public class AriesOpenJPADerbyPersistenceService implements PersistenceService {
+	
+	private EntityManagerFactory entityManagerFactory;
+	
+	/**
+	 * @param entityManagerFactory the entityManagerFactory to set
+	 */
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+		this.entityManagerFactory = entityManagerFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.api.services.persistence.PersistenceService#createEntityManager()
+	 */
+	public EntityManager createEntityManager() {
+		return entityManagerFactory.createEntityManager();
+	}
 
 	/**
 	 * {@inheritDoc}

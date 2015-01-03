@@ -4,4 +4,5 @@
    <service>
       <provide interface="osgi.jee.samples.jpa.api.services.persistence.PersistenceService"/>
    </service>
+   <reference bind="setEntityManagerFactory" cardinality="1..1" interface="javax.persistence.EntityManagerFactory" name="EntityManagerFactory" policy="static"/>
 </scr:component>

@@ -27,6 +27,12 @@ import javax.persistence.EntityManager;
 public interface PersistenceService {
 	
 	/**
+	 * Creates a new Entity Manager.
+	 * @return the created {@link EntityManager}.
+	 */
+	EntityManager createEntityManager();
+
+	/**
 	 * Extracts the database connection from the given entity manager.
 	 * @param entityManager the {@link EntityManager} to process.
 	 * @return the database {@link Connection}.
