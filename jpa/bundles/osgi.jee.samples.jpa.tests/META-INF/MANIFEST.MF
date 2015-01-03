@@ -17,5 +17,5 @@ Import-Package: javax.persistence;version="1.1.0",
  osgi.jee.samples.jpa.api.services.persistence,
  osgi.jee.samples.jpa.model
 Require-Bundle: org.junit;bundle-version="4.11.0"
-Bundle-Activator: osgi.jee.samples.jpa.aries.openjpa.derby.TestsActivator
+Bundle-Activator: osgi.jee.samples.jpa.tests.TestsActivator
 Bundle-ActivationPolicy: lazy

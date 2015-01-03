@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.aries.openjpa.derby.tests;
+package osgi.jee.samples.jpa.tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,15 +36,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
-import osgi.jee.samples.jpa.aries.openjpa.derby.TestConstants;
-import osgi.jee.samples.jpa.aries.openjpa.derby.TestsActivator;
 import osgi.jee.samples.jpa.model.Student;
+import osgi.jee.samples.jpa.tests.TestConstants;
+import osgi.jee.samples.jpa.tests.TestsActivator;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class TestAriesOpenJPADerby {
+public class SampleTest {
     
 	private static EntityManager entityManager;
 	private static DatabaseConnection dbunitConnection;

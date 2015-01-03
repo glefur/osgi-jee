@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.aries.openjpa.derby.services;
+package osgi.jee.samples.jpa.aries.openjpa.derby.internal.services;
 
 import java.io.InputStream;
 import java.sql.Connection;
