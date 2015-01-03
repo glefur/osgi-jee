@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JPA Tests in Aries/OpenJPA/Derby context
-Bundle-SymbolicName: osgi.jee.samples.jpa.aries.openjpa.derby.tests
+Bundle-SymbolicName: osgi.jee.samples.jpa.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
