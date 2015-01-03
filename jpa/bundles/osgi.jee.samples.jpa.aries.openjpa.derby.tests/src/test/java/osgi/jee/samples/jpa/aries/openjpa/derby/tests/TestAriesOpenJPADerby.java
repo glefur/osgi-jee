@@ -15,7 +15,7 @@
  */
 package osgi.jee.samples.jpa.aries.openjpa.derby.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -25,9 +25,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.derby.tools.ij;
-import org.apache.openjpa.persistence.OpenJPAEntityManager;
-import org.apache.openjpa.persistence.OpenJPAPersistence;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -56,10 +53,9 @@ public class TestAriesOpenJPADerby {
     @BeforeClass
     public static void initTestFixture() throws Exception {
         entityManager = TestsActivator.getInstance().getEntityManagerFactory().createEntityManager();
-        OpenJPAEntityManager oem = OpenJPAPersistence.cast(entityManager);
-        Connection connection = (Connection) oem.getConnection();
+        Connection connection = TestsActivator.getInstance().getPersistenceService().extractConnection(entityManager);
         InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
-		ij.runScript(connection,schemaResource, TestConstants.UTF_8_ENCODING, System.out, TestConstants.UTF_8_ENCODING);
+        TestsActivator.getInstance().getPersistenceService().initSchema(connection, schemaResource);
 		schemaResource.close();
 		dbunitConnection = new DatabaseConnection(connection);
 		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);

@@ -8,4 +8,9 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: osgi.jee.samples.jpa.model
 Meta-Persistence: META-INF/persistence.xml
 Import-Package: javax.persistence;version="1.1.0",
- org.apache.derby.jdbc;version="10.8.2.2"
+ org.apache.derby.jdbc;version="10.8.2.2",
+ org.apache.derby.tools;version="10.8.2.2",
+ org.apache.openjpa.persistence;version="2.0.0",
+ org.osgi.framework;version="1.7.0",
+ osgi.jee.samples.jpa.api.services.persistence
+Bundle-Activator: osgi.jee.samples.jpa.model.ModelActivator

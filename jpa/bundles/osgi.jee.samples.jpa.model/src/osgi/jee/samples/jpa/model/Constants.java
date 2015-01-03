@@ -13,22 +13,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.aries.openjpa.derby;
+package osgi.jee.samples.jpa.model;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface TestConstants {
-    
-    /**
-     * Test related resources.
-     */
-    String DB_SCHEMA_FILE = "studentSchema.ddl";
-    String DB_DATASET_FILE = "studentsDataset.xml";
-    
-    /**
-     * Test related constants
-     */
-    int INITIAL_STUDENTS_COUNT = 5;
+public interface Constants {
+
+    String UTF_8_ENCODING = "UTF-8";
+
 }

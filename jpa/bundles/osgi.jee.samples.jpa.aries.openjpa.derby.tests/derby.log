@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sat Jan 03 17:30:37 CET 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014a-b0a2-57bf-0000022ee980 
-on database directory memory:/home/glefur/repositories/osgi-jee/jpa/bundles/osgi.jee.samples.jpa.aries.openjpa.derby.tests/aries-openjpa-derby  with class loader org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader@306369f[org.apache.derby:10.8.2.2_v201211210650(id=5)] 
+Sat Jan 03 18:03:33 CET 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-014a-b0c0-81c4-000002624880 
+on database directory memory:/home/glefur/repositories/osgi-jee/jpa/bundles/osgi.jee.samples.jpa.aries.openjpa.derby.tests/aries-openjpa-derby  with class loader org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader@16d871c0[org.apache.derby:10.8.2.2_v201211210650(id=5)] 
 Loaded from file:/home/glefur/smartcontext/projects/workspaces/workspace-osgi-jee/.metadata/.plugins/org.eclipse.pde.core/.bundle_pool/plugins/org.apache.derby_10.8.2.2_v201211210650.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_55-b13
