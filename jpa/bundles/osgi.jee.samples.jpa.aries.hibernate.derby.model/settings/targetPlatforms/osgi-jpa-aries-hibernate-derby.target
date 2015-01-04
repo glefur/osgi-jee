@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
+<target name="Target Platform for JPA sample using Aries, OpenJPA and Derby project" sequenceNumber="1420405341">
+  <locations>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.equinox.cm" version="1.0.400.v20130327-1442"/>
+      <unit id="org.eclipse.osgi" version="3.9.1.v20140110-1610"/>
+      <unit id="org.apache.felix.gogo.runtime" version="0.10.0.v201209301036"/>
+      <unit id="org.apache.felix.gogo.shell" version="0.10.0.v201212101605"/>
+      <unit id="org.eclipse.equinox.console" version="1.0.100.v20130429-0953"/>
+      <unit id="org.eclipse.equinox.ds" version="1.4.101.v20130813-1853"/>
+      <unit id="org.eclipse.equinox.util" version="1.0.500.v20130404-1337"/>
+      <unit id="org.eclipse.osgi.services" version="3.3.100.v20130513-1956"/>
+      <unit id="org.eclipse.core.runtime" version="3.9.100.v20131218-1515"/>
+      <unit id="org.eclipse.pde.junit.runtime" version="3.4.300.v20130422-2046"/>
+      <repository id="eclipse" location="http://download.eclipse.org/eclipse/updates/4.3"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.apache.derby" version="10.8.2.2_v201211210650"/>
+      <unit id="osgi.enterprise" version="4.2.0.v201108120515"/>
+      <repository id="orbit" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.apache.commons.collections" version="3.2.1"/>
+      <unit id="org.apache.commons.lang" version="2.5.0"/>
+      <unit id="org.apache.commons.pool" version="1.5.4"/>
+      <unit id="org.apache.servicemix.bundles.serp" version="1.13.1.2"/>
+      <unit id="org.ops4j.pax.logging.pax-logging-api" version="1.5.0"/>
+      <unit id="org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec" version="2.0.0"/>
+      <unit id="org.apache.geronimo.specs.geronimo-jpa_2.0_spec" version="1.1.0"/>
+      <unit id="org.apache.aries.jpa.api" version="1.0.0"/>
+      <unit id="org.apache.aries.jpa.container" version="1.0.0"/>
+      <unit id="org.apache.aries.transaction.manager" version="1.0.0"/>
+      <unit id="org.apache.aries.util" version="1.0.0"/>
+      <unit id="org.hibernate.osgi" version="4.2.7.Final"/>
+      <unit id="org.hibernate.eclipse" version="4.2.7.Final"/>
+      <unit id="org.hibernate.common.hibernate-commons-annotations" version="4.0.4.Final"/>
+      <unit id="org.hibernate.entitymanager" version="4.2.7.Final"/>
+      <unit id="org.apache.servicemix.bundles.dbunit" version="2.4.9.1"/>
+      <repository id="p2CoJaL" location="https://glefur.github.io/p2/p2CoJaL"/>
+    </location>
+  </locations>
+</target>

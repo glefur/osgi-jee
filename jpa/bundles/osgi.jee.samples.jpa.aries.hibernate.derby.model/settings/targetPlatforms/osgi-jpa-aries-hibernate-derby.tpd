@@ -1,0 +1,32 @@
+target "Target Platform for JPA sample using Aries, OpenJPA and Derby project"
+
+include "https://raw.githubusercontent.com/glefur/osgi-jee/master/jpa/env/osgi.jee.samples.jpa.environment/targetPlatforms/osgi-jpa-default.tpd"
+
+with requirements, source
+
+location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
+ org.eclipse.equinox.cm
+}
+
+location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/" {
+ org.apache.derby
+}
+
+location p2CoJaL "https://glefur.github.io/p2/p2CoJaL" {
+ org.apache.commons.collections
+ org.apache.commons.lang
+ org.apache.commons.pool
+ org.apache.servicemix.bundles.serp
+ org.ops4j.pax.logging.pax-logging-api
+ org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec
+ org.apache.geronimo.specs.geronimo-jpa_2.0_spec
+ org.apache.aries.jpa.api
+ org.apache.aries.jpa.container
+ org.apache.aries.transaction.manager
+ org.apache.aries.util
+ org.hibernate.osgi
+ org.hibernate.eclipse
+ org.hibernate.common.hibernate-commons-annotations
+ org.hibernate.entitymanager
+}
+

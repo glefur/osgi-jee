@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.openjpa.derby.services.DerbyDataSourceFactory">
+   <implementation class="osgi.jee.samples.jpa.aries.openjpa.derby.internal.services.DerbyDataSourceFactory"/>
+   <service>
+      <provide interface="org.osgi.service.jdbc.DataSourceFactory"/>
+   </service>
+   <property name="osgi.jdbc.driver.name" type="String" value="derby"/>
+   <property name="osgi.jdbc.driver.class" type="String" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+</scr:component>
