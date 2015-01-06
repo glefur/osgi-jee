@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Business Model for JPA Sample
+Bundle-SymbolicName: osgi.jee.samples.jpa.aries.openjpa.derby.model
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: osgi.jee.samples.jpa.model
+Meta-Persistence: META-INF/persistence.xml
+Import-Package: javax.persistence;version="1.1.0",
+ org.apache.openjpa.persistence;version="2.0.0",
+ org.h2;version="1.3.168",
+ org.h2.tools;version="1.3.168",
+ org.osgi.framework;version="1.7.0",
+ osgi.jee.samples.jpa.api.services.persistence
+Service-Component: OSGI-INF/OpenJPADerbyPersistenceService.xml

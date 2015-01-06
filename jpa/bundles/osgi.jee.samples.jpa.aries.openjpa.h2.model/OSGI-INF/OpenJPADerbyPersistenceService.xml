@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.openjpa.h2.internal.services.AriesOpenJPAH2PersistenceService">
+   <implementation class="osgi.jee.samples.jpa.aries.openjpa.h2.internal.services.AriesOpenJPAH2PersistenceService"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.api.services.persistence.PersistenceService"/>
+   </service>
+   <reference bind="setEntityManagerFactory" cardinality="1..1" interface="javax.persistence.EntityManagerFactory" name="EntityManagerFactory" policy="static"/>
+</scr:component>
