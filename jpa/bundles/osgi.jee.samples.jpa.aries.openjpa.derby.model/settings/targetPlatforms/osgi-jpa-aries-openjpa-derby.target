@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for JPA sample using Aries, OpenJPA and Derby project" sequenceNumber="1420314305">
+<target name="Target Platform for JPA sample using Aries, OpenJPA and Derby project" sequenceNumber="1420527002">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.osgi" version="3.9.1.v20140110-1610"/>
@@ -25,7 +25,6 @@
       <unit id="org.apache.commons.lang" version="2.5.0"/>
       <unit id="org.apache.commons.pool" version="1.5.4"/>
       <unit id="org.apache.servicemix.bundles.serp" version="1.13.1.2"/>
-      <unit id="org.apache.servicemix.bundles.dbunit" version="2.4.9.1"/>
       <unit id="org.ops4j.pax.logging.pax-logging-api" version="1.5.0"/>
       <unit id="org.apache.openjpa" version="2.0.0"/>
       <unit id="org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec" version="2.0.0"/>
@@ -34,6 +33,7 @@
       <unit id="org.apache.aries.jpa.container" version="1.0.0"/>
       <unit id="org.apache.aries.transaction.manager" version="1.0.0"/>
       <unit id="org.apache.aries.util" version="1.0.0"/>
+      <unit id="org.apache.servicemix.bundles.dbunit" version="2.4.9.1"/>
       <repository id="p2CoJaL" location="https://glefur.github.io/p2/p2CoJaL"/>
     </location>
   </locations>

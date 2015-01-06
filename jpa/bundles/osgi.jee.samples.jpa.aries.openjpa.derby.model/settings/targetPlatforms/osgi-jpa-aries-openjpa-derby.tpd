@@ -14,7 +14,6 @@ location p2CoJaL "https://glefur.github.io/p2/p2CoJaL" {
  org.apache.commons.lang
  org.apache.commons.pool
  org.apache.servicemix.bundles.serp
- org.apache.servicemix.bundles.dbunit
  org.ops4j.pax.logging.pax-logging-api
  org.apache.openjpa
  org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec
