@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Business Model for JPA Sample
+Bundle-SymbolicName: osgi.jee.samples.jpa.aries.hibernate.h2.model
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: osgi.jee.samples.jpa.model
+Meta-Persistence: META-INF/persistence.xml
+Import-Package: javassist.util.proxy;version="3.18.1.GA",
+ javax.persistence;version="1.1.0",
+ org.h2;version="1.3.168",
+ org.h2.jdbcx;version="1.3.168",
+ org.h2.tools;version="1.3.168",
+ org.hibernate,
+ org.hibernate.engine.spi;version="4.2.7",
+ org.hibernate.jdbc;version="4.2.7",
+ org.hibernate.proxy;version="4.2.7",
+ org.hibernate.service.jdbc.connections.spi;version="4.2.7",
+ org.osgi.framework;version="1.7.0",
+ org.osgi.service.jdbc;version="1.0.0",
+ org.osgi.util.tracker;version="1.5.1",
+ osgi.jee.samples.jpa.api.services.persistence
+Service-Component: OSGI-INF/HibernateDerbyPersistenceService.xml,
+ OSGI-INF/H2DataSourceFactory.xml
+Eclipse-RegisterBuddy: org.hibernate.eclipse

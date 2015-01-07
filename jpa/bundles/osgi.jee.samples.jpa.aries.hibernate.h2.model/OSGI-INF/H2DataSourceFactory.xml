@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.openjpa.derby.services.H2DataSourceFactory">
+   <implementation class="osgi.jee.samples.jpa.aries.hibernate.h2.internal.services.H2DataSourceFactory"/>
+   <service>
+      <provide interface="org.osgi.service.jdbc.DataSourceFactory"/>
+   </service>
+   <property name="osgi.jdbc.driver.name" type="String" value="h2"/>
+   <property name="osgi.jdbc.driver.class" type="String" value="org.h2.Driver"/>
+</scr:component>
