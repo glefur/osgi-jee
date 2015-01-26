@@ -15,12 +15,23 @@
  */
 package osgi.jee.samples.jpa.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface Constants {
+public interface BigProject {
 
-    String UTF_8_ENCODING = "UTF-8";
+	/**
+	 * @return the budget
+	 */
+	BigDecimal getBudget();
+
+	/**
+	 * @param budget
+	 *            the budget to set
+	 */
+	void setBudget(BigDecimal budget);
 
 }

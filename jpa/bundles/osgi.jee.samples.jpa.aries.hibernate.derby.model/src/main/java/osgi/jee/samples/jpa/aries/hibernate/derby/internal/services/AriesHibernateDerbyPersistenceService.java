@@ -29,7 +29,6 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
-import osgi.jee.samples.jpa.model.Constants;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.

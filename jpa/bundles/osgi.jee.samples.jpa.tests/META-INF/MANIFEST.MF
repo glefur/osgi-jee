@@ -5,7 +5,7 @@ Bundle-SymbolicName: osgi.jee.samples.jpa.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: javax.persistence;version="1.1.0",
+Import-Package: javax.persistence;version="[1.1.0,1.1.0]",
  org.dbunit;version="2.4.9",
  org.dbunit.database;version="2.4.9",
  org.dbunit.dataset;version="2.4.9",
