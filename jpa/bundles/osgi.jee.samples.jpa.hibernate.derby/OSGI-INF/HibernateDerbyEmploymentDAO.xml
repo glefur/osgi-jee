@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.hibernate.derby.dao.HibernateDerbyEmploymentDAO">
+   <implementation class="osgi.jee.samples.jpa.hibernate.derby.internal.dao.HibernateDerbyEmploymentDAO"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.dao.EmploymentDAO"/>
+   </service>
+   <reference bind="setDataBaseHandler" cardinality="1..1" interface="osgi.jee.samples.jpa.db.DataBaseHandler" name="DataBaseHandler" policy="static" target="(target.db=derby)"/>
+   <property name="target.orm" type="String" value="hibernate"/>
+   <property name="target.db" type="String" value="derby"/>
+   <reference bind="setEntityManagerFactory" cardinality="1..1" interface="javax.persistence.EntityManagerFactory" name="EntityManagerFactory" policy="static"/>
+</scr:component>

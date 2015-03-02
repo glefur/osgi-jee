@@ -27,56 +27,96 @@ import osgi.jee.samples.jpa.model.SmallProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
+ * 
  */
 public interface EmploymentDAO {
-	
+
+	/**
+	 * Initializes a connection to the data persistence system and returns a
+	 * object contains all required data to use it.
+	 * 
+	 * @return a {@link DataConnection}.
+	 */
+	DataConnection getDataConnection();
+
 	/**
 	 * Initializes the format of the persisted data.
-	 * @param dataFormat an {@link InputStream} described the expected format.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param dataFormat
+	 *            an {@link InputStream} described the expected format.
+	 * @throws Exception
+	 *             an error occurred during data initiailization.
 	 */
-	void initDataFormat(InputStream dataFormat);
-	
+	void initDataFormat(DataConnection connection, InputStream dataFormat) throws Exception;
+
 	/**
 	 * Persists an adress.
-	 * @param address the {@link Address} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param address
+	 *            the {@link Address} to persist.
 	 */
-	void persistAddress(Address address);
-	
+	void persistAddress(DataConnection connection, Address address);
+
 	/**
 	 * Persists a big project.
-	 * @param bigProject the {@link BigProject} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param bigProject
+	 *            the {@link BigProject} to persist.
 	 */
-	void persistBigProject(BigProject bigProject);
-	
+	void persistBigProject(DataConnection connection, BigProject bigProject);
+
 	/**
 	 * Persists an employee.
-	 * @param employee the {@link Employee} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param employee
+	 *            the {@link Employee} to persist.
 	 */
-	void persistEmployee(Employee employee);
-	
+	void persistEmployee(DataConnection connection, Employee employee);
+
 	/**
 	 * Persists an employment period.
-	 * @param period the {@link EmploymentPeriod} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param period
+	 *            the {@link EmploymentPeriod} to persist.
 	 */
-	void persistEmploymentPeriod(EmploymentPeriod period);
-	
+	void persistEmploymentPeriod(DataConnection connection, EmploymentPeriod period);
+
 	/**
 	 * Persists a phone.
-	 * @param phone the {@link Phone} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param phone
+	 *            the {@link Phone} to persist.
 	 */
-	void persistPhone(Phone phone);
-	
+	void persistPhone(DataConnection connection, Phone phone);
+
 	/**
 	 * Persists a project.
-	 * @param project the {@link Project} to persist.
+	 * 
+	 * @param project
+	 *            the {@link Project} to persist.
 	 */
-	void persistProject(Project project);
-	
+	void persistProject(DataConnection connection, Project project);
+
 	/**
 	 * Persists a small project.
-	 * @param smallProject the {@link SmallProject} to persist.
+	 * 
+	 * @param connection
+	 *            the {@link DataConnection} to use.
+	 * @param smallProject
+	 *            the {@link SmallProject} to persist.
 	 */
-	void persistSmallProject(SmallProject smallProject);
+	void persistSmallProject(DataConnection connection, SmallProject smallProject);
 
 }
