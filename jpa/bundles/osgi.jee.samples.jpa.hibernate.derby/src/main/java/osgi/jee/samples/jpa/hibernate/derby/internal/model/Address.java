@@ -15,14 +15,19 @@
  */
 package osgi.jee.samples.jpa.hibernate.derby.internal.model;
 
-import osgi.jee.samples.jpa.model.Address;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import osgi.jee.samples.jpa.model.IAddress;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
-public class PersistentAddress implements Address {
+@Entity
+public class Address implements IAddress {
 
+	@Id
 	private long id;
 	private String street;
 	private String city;
@@ -32,7 +37,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getId()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getId()
 	 */
 	public long getId() {
 		return id;
@@ -40,7 +45,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setId(long)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setId(long)
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -48,7 +53,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getStreet()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getStreet()
 	 */
 	public String getStreet() {
 		return street;
@@ -56,7 +61,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setStreet(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setStreet(java.lang.String)
 	 */
 	public void setStreet(String street) {
 		this.street = street;
@@ -64,7 +69,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getCity()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getCity()
 	 */
 	public String getCity() {
 		return city;
@@ -72,7 +77,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setCity(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setCity(java.lang.String)
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -80,7 +85,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getProvince()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getProvince()
 	 */
 	public String getProvince() {
 		return province;
@@ -88,7 +93,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setProvince(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setProvince(java.lang.String)
 	 */
 	public void setProvince(String province) {
 		this.province = province;
@@ -96,7 +101,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getCountry()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getCountry()
 	 */
 	public String getCountry() {
 		return country;
@@ -104,7 +109,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setCountry(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setCountry(java.lang.String)
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -112,7 +117,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#getPostalCode()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getPostalCode()
 	 */
 	public String getPostalCode() {
 		return postalCode;
@@ -120,7 +125,7 @@ public class PersistentAddress implements Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Address#setPostalCode(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setPostalCode(java.lang.String)
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;

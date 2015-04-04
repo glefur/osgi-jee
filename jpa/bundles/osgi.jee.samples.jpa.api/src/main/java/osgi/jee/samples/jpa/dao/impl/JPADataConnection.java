@@ -16,6 +16,7 @@
 package osgi.jee.samples.jpa.dao.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import osgi.jee.samples.jpa.dao.DataConnection;
 
@@ -40,6 +41,23 @@ public final class JPADataConnection implements DataConnection {
 	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+	
+	/**
+	 * Creates a query according to the given String.
+	 * @param query {@link String} describing the expected query.
+	 * @return the corresponding {@link Query}.
+	 */
+	public Query createQuery(String query) {
+		return entityManager.createQuery(query);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.DataConnection#close()
+	 */
+	public void close() {
+		entityManager.close();
 	}
 
 }

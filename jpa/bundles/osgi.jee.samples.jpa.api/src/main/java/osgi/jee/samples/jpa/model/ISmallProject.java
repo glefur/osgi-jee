@@ -15,34 +15,10 @@
  */
 package osgi.jee.samples.jpa.model;
 
-import java.util.Date;
-
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface EmploymentPeriod {
-
-	/**
-	 * @return the startDate
-	 */
-	Date getStartDate();
-
-	/**
-	 * @param startDate
-	 *            the startDate to set
-	 */
-	void setStartDate(Date startDate);
-
-	/**
-	 * @return the endDate
-	 */
-	Date getEndDate();
-
-	/**
-	 * @param endDate
-	 *            the endDate to set
-	 */
-	void setEndDate(Date endDate);
+public interface ISmallProject {
 
 }

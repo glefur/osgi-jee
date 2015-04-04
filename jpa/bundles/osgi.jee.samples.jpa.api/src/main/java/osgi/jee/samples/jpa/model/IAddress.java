@@ -19,7 +19,7 @@ package osgi.jee.samples.jpa.model;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface Phone {
+public interface IAddress {
 
 	/**
 	 * @return the id
@@ -33,36 +33,58 @@ public interface Phone {
 	void setId(long id);
 
 	/**
-	 * @return the type
+	 * @return the street
 	 */
-	String getType();
+	String getStreet();
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * @param street
+	 *            the street to set
 	 */
-	void setType(String type);
+	void setStreet(String street);
 
 	/**
-	 * @return the number
+	 * @return the city
 	 */
-	String getNumber();
+	String getCity();
 
 	/**
-	 * @param number
-	 *            the number to set
+	 * @param city
+	 *            the city to set
 	 */
-	void setNumber(String number);
+	void setCity(String city);
 
 	/**
-	 * @return the areaCode
+	 * @return the province
 	 */
-	String getAreaCode();
+	String getProvince();
 
 	/**
-	 * @param areaCode
-	 *            the areaCode to set
+	 * @param province
+	 *            the province to set
 	 */
-	void setAreaCode(String areaCode);
+	void setProvince(String province);
+
+	/**
+	 * @return the country
+	 */
+	String getCountry();
+
+	/**
+	 * @param country
+	 *            the country to set
+	 */
+	void setCountry(String country);
+
+	/**
+	 * @return the postalCode
+	 */
+	String getPostalCode();
+
+	/**
+	 * @param postalCode
+	 *            the postalCode to set
+	 */
+	void setPostalCode(String postalCode);
 
 }

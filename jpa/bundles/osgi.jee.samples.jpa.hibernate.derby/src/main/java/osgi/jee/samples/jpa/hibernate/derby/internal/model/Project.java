@@ -15,49 +15,52 @@
  */
 package osgi.jee.samples.jpa.hibernate.derby.internal.model;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import osgi.jee.samples.jpa.model.EmploymentPeriod;
+import osgi.jee.samples.jpa.model.IProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
-public class PersistentEmploymentPeriod implements EmploymentPeriod {
+@Entity
+public class Project implements IProject {
 
-	private Date startDate;
-	private Date endDate;
+	@Id
+	private long id;
+	private String name;
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentPeriod#getStartDate()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#getId()
 	 */
-	public Date getStartDate() {
-		return startDate;
+	public long getId() {
+		return id;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentPeriod#setStartDate(java.util.Date)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#setId(long)
 	 */
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentPeriod#getEndDate()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#getName()
 	 */
-	public Date getEndDate() {
-		return endDate;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentPeriod#setEndDate(java.util.Date)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#setName(java.lang.String)
 	 */
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

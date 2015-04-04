@@ -23,44 +23,44 @@ public interface EmploymentFactory {
 	
 	/**
 	 * Creates a new address.
-	 * @return the created {@link Address}.
+	 * @return the created {@link IAddress}.
 	 */
-	Address createAddress();
+	IAddress createAddress();
 
 	/**
 	 * Creates a new big project.
-	 * @return the created {@link BigProject}.
+	 * @return the created {@link IBigProject}.
 	 */
-	BigProject createBigProject();
+	IBigProject createBigProject();
 	
 	/**
 	 * Creates a new employee.
-	 * @return the created {@link Employee}.
+	 * @return the created {@link IEmployee}.
 	 */
-	Employee createEmployee();
+	IEmployee createEmployee();
 	
 	/**
 	 * Creates a new employment period.
-	 * @return the created {@link EmploymentPeriod}.
+	 * @return the created {@link IEmploymentPeriod}.
 	 */
-	EmploymentPeriod createEmploymentPeriod();
+	IEmploymentPeriod createEmploymentPeriod();
 	
 	/**
 	 * Creates a new phone.
-	 * @return the created {@link Phone}.
+	 * @return the created {@link IPhone}.
 	 */
-	Phone createPhone();
+	IPhone createPhone();
 	
 	/**
 	 * Creates a new project.
-	 * @return the created {@link Project}.
+	 * @return the created {@link IProject}.
 	 */
-	Project createProject();
+	IProject createProject();
 	
 	/**
 	 * Creates a new small project.
-	 * @return the created {@link SmallProject}.
+	 * @return the created {@link ISmallProject}.
 	 */
-	SmallProject createSmallProject();
+	ISmallProject createSmallProject();
 	
 }

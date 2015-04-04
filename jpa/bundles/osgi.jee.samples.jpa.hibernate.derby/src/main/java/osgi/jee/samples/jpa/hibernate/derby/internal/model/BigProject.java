@@ -13,36 +13,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.model;
+package osgi.jee.samples.jpa.hibernate.derby.internal.model;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+
+import osgi.jee.samples.jpa.model.IBigProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
+ * 
  */
-public interface Project {
+@Entity
+public class BigProject extends Project implements IBigProject {
+
+	private BigDecimal budget;
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.Project#getId()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IBigProject#getBudget()
 	 */
-	long getId();
+	public final BigDecimal getBudget() {
+		return budget;
+	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.Project#setId(long)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IBigProject#setBudget(java.math.BigDecimal)
 	 */
-	void setId(long id);
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.Project#getName()
-	 */
-	String getName();
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.Project#setName(java.lang.String)
-	 */
-	void setName(String name);
+	public final void setBudget(BigDecimal budget) {
+		this.budget = budget;
+	}
 
 }

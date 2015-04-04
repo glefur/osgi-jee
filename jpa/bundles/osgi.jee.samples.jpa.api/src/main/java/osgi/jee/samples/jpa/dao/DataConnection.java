@@ -20,5 +20,10 @@ package osgi.jee.samples.jpa.dao;
  *
  */
 public interface DataConnection {
+	
+	/**
+	 * Closes the connection to the Database.
+	 */
+	public void close();
 
 }

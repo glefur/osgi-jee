@@ -15,14 +15,19 @@
  */
 package osgi.jee.samples.jpa.hibernate.derby.internal.model;
 
-import osgi.jee.samples.jpa.model.Phone;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import osgi.jee.samples.jpa.model.IPhone;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
-public class PersistentPhone implements Phone {
+@Entity
+public class Phone implements IPhone {
 
+	@Id
 	private long id;
 	private String type;
 	private String number;
@@ -30,7 +35,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#getId()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getId()
 	 */
 	public long getId() {
 		return id;
@@ -38,7 +43,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#setId(long)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setId(long)
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -46,7 +51,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#getType()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getType()
 	 */
 	public String getType() {
 		return type;
@@ -54,7 +59,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#setType(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setType(java.lang.String)
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -62,7 +67,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#getNumber()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getNumber()
 	 */
 	public String getNumber() {
 		return number;
@@ -70,7 +75,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#setNumber(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setNumber(java.lang.String)
 	 */
 	public void setNumber(String number) {
 		this.number = number;
@@ -78,7 +83,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#getAreaCode()
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getAreaCode()
 	 */
 	public String getAreaCode() {
 		return areaCode;
@@ -86,7 +91,7 @@ public class PersistentPhone implements Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone#setAreaCode(java.lang.String)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setAreaCode(java.lang.String)
 	 */
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;

@@ -25,6 +25,6 @@ Import-Package: javassist.util.proxy;version="3.18.1.GA",
  osgi.jee.samples.jpa.db,
  osgi.jee.samples.jpa.hibernate.derby.internal.model,
  osgi.jee.samples.jpa.model
-Service-Component: OSGI-INF/HibernateDerbyPersistenceService.xml,OSGI-INF/DerbyDataSourceFactory.xml,
- OSGI-INF/HibernateDerbyEmploymentDAO.xml
+Service-Component: OSGI-INF/DerbyDataSourceFactory.xml,OSGI-INF/HibernateDerbyEmploymentDAO.xml,
+ OSGI-INF/EmploymentFactory.xml
 Eclipse-RegisterBuddy: org.hibernate.eclipse

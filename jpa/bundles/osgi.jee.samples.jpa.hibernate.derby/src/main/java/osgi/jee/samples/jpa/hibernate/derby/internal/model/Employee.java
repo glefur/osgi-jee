@@ -19,28 +19,33 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
-import osgi.jee.samples.jpa.model.Address;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.jpa.model.EmploymentPeriod;
-import osgi.jee.samples.jpa.model.Phone;
-import osgi.jee.samples.jpa.model.Project;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import osgi.jee.samples.jpa.model.IAddress;
+import osgi.jee.samples.jpa.model.IEmployee;
+import osgi.jee.samples.jpa.model.IEmploymentPeriod;
+import osgi.jee.samples.jpa.model.IPhone;
+import osgi.jee.samples.jpa.model.IProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
-public class PersistentEmployee implements Employee {
+@Entity
+public class Employee implements IEmployee {
 
+	@Id
 	private long id;
 	private String firstName;
 	private String lastName;
 	private BigDecimal salary;
-	private List<Phone> phones;
-	private Address address;
-	private Employee manager;
-	private Collection<Employee> managedEmployees;
-	private Collection<Project> projects;
-	private EmploymentPeriod employmentPeriod;
+	private List<IPhone> phones;
+	private IAddress address;
+	private IEmployee manager;
+	private Collection<IEmployee> managedEmployees;
+	private Collection<IProject> projects;
+	private IEmploymentPeriod employmentPeriod;
 
 	/**
 	 * {@inheritDoc}
@@ -110,7 +115,7 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#getPhones()
 	 */
-	public List<Phone> getPhones() {
+	public List<IPhone> getPhones() {
 		return phones;
 	}
 
@@ -118,7 +123,7 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#setPhones(java.util.List)
 	 */
-	public void setPhones(List<Phone> phones) {
+	public void setPhones(List<IPhone> phones) {
 		this.phones = phones;
 	}
 
@@ -126,22 +131,22 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#getAddress()
 	 */
-	public Address getAddress() {
+	public IAddress getAddress() {
 		return address;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#setAddress(osgi.jee.samples.jpa.hibernate.derby.internal.model.Address)
+	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#setAddress(osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress)
 	 */
-	public void setAddress(Address address) {
+	public void setAddress(IAddress address) {
 		this.address = address;
 	}
 
 	/**
 	 * @return the manager
 	 */
-	public Employee getManager() {
+	public osgi.jee.samples.jpa.model.IEmployee getManager() {
 		return manager;
 	}
 
@@ -149,7 +154,7 @@ public class PersistentEmployee implements Employee {
 	 * @param manager
 	 *            the manager to set
 	 */
-	public void setManager(Employee manager) {
+	public void setManager(osgi.jee.samples.jpa.model.IEmployee manager) {
 		this.manager = manager;
 	}
 
@@ -157,7 +162,7 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#getManagedEmployees()
 	 */
-	public Collection<Employee> getManagedEmployees() {
+	public Collection<osgi.jee.samples.jpa.model.IEmployee> getManagedEmployees() {
 		return managedEmployees;
 	}
 
@@ -165,7 +170,7 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#setManagedEmployees(java.util.Collection)
 	 */
-	public void setManagedEmployees(Collection<Employee> managedEmployees) {
+	public void setManagedEmployees(Collection<osgi.jee.samples.jpa.model.IEmployee> managedEmployees) {
 		this.managedEmployees = managedEmployees;
 	}
 
@@ -173,7 +178,7 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#getProjects()
 	 */
-	public Collection<Project> getProjects() {
+	public Collection<IProject> getProjects() {
 		return projects;
 	}
 
@@ -181,14 +186,14 @@ public class PersistentEmployee implements Employee {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee#setProjects(java.util.Collection)
 	 */
-	public void setProjects(Collection<Project> projects) {
+	public void setProjects(Collection<IProject> projects) {
 		this.projects = projects;
 	}
 
 	/**
 	 * @return the employmentPeriod
 	 */
-	public EmploymentPeriod getEmploymentPeriod() {
+	public IEmploymentPeriod getEmploymentPeriod() {
 		return employmentPeriod;
 	}
 
@@ -196,7 +201,7 @@ public class PersistentEmployee implements Employee {
 	 * @param employmentPeriod
 	 *            the employmentPeriod to set
 	 */
-	public void setEmploymentPeriod(EmploymentPeriod employmentPeriod) {
+	public void setEmploymentPeriod(IEmploymentPeriod employmentPeriod) {
 		this.employmentPeriod = employmentPeriod;
 	}
 

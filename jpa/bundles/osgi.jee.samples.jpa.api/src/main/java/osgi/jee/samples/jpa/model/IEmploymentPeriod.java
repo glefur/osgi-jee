@@ -15,23 +15,34 @@
  */
 package osgi.jee.samples.jpa.model;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface BigProject {
+public interface IEmploymentPeriod {
 
 	/**
-	 * @return the budget
+	 * @return the startDate
 	 */
-	BigDecimal getBudget();
+	Date getStartDate();
 
 	/**
-	 * @param budget
-	 *            the budget to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
-	void setBudget(BigDecimal budget);
+	void setStartDate(Date startDate);
+
+	/**
+	 * @return the endDate
+	 */
+	Date getEndDate();
+
+	/**
+	 * @param endDate
+	 *            the endDate to set
+	 */
+	void setEndDate(Date endDate);
 
 }

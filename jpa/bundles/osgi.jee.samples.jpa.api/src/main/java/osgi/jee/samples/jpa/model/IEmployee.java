@@ -23,7 +23,7 @@ import java.util.List;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface Employee {
+public interface IEmployee {
 
 	/**
 	 * @return the id
@@ -72,67 +72,67 @@ public interface Employee {
 	/**
 	 * @return the phones
 	 */
-	List<Phone> getPhones();
+	List<IPhone> getPhones();
 
 	/**
 	 * @param phones
 	 *            the phones to set
 	 */
-	void setPhones(List<Phone> phones);
+	void setPhones(List<IPhone> phones);
 
 	/**
 	 * @return the address
 	 */
-	Address getAddress();
+	IAddress getAddress();
 
 	/**
 	 * @param address
 	 *            the address to set
 	 */
-	void setAddress(Address address);
+	void setAddress(IAddress address);
 
 	/**
 	 * @return the manager
 	 */
-	Employee getManager();
+	IEmployee getManager();
 
 	/**
 	 * @param manager
 	 *            the manager to set
 	 */
-	void setManager(Employee manager);
+	void setManager(IEmployee manager);
 
 	/**
 	 * @return the managedEmployees
 	 */
-	Collection<Employee> getManagedEmployees();
+	Collection<IEmployee> getManagedEmployees();
 
 	/**
 	 * @param managedEmployees
 	 *            the managedEmployees to set
 	 */
-	void setManagedEmployees(Collection<Employee> managedEmployees);
+	void setManagedEmployees(Collection<IEmployee> managedEmployees);
 
 	/**
 	 * @return the projects
 	 */
-	Collection<Project> getProjects();
+	Collection<IProject> getProjects();
 
 	/**
 	 * @param projects
 	 *            the projects to set
 	 */
-	void setProjects(Collection<Project> projects);
+	void setProjects(Collection<IProject> projects);
 
 	/**
 	 * @return the employmentPeriod
 	 */
-	EmploymentPeriod getEmploymentPeriod();
+	IEmploymentPeriod getEmploymentPeriod();
 
 	/**
 	 * @param employmentPeriod
 	 *            the employmentPeriod to set
 	 */
-	void setEmploymentPeriod(EmploymentPeriod employmentPeriod);
+	void setEmploymentPeriod(IEmploymentPeriod employmentPeriod);
 
 }

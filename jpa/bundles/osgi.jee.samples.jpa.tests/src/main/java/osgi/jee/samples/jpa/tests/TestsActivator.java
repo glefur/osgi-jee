@@ -22,11 +22,10 @@ import java.net.URL;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
+import osgi.jee.samples.jpa.dao.EmploymentDAO;
+import osgi.jee.samples.jpa.model.EmploymentFactory;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -35,9 +34,13 @@ import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
 public class TestsActivator implements BundleActivator {
 
     private static final String TEST_RESOURCES_PATH = "src/test/resources/";
-	private static TestsActivator instance;
-    private ServiceTracker<PersistenceService, PersistenceService> persistenceServiceTracker;
+
+    private static TestsActivator instance;
 	private Bundle bundle;
+    
+	private ServiceTracker<EmploymentFactory, EmploymentFactory> employmentFactoryTracker;
+	private ServiceTracker<EmploymentDAO, EmploymentDAO> employmentDAOTracker;
+
         
     /**
      * @return the instance
@@ -54,38 +57,10 @@ public class TestsActivator implements BundleActivator {
     public void start(final BundleContext context) throws Exception {
         instance = this;
         bundle = context.getBundle();
-        persistenceServiceTracker = new ServiceTracker<PersistenceService, PersistenceService>(context, PersistenceService.class, new ServiceTrackerCustomizer<PersistenceService, PersistenceService>() {
-
-			/**
-			 * {@inheritDoc}
-			 * @see org.osgi.util.tracker.ServiceTrackerCustomizer#addingService(org.osgi.framework.ServiceReference)
-			 */
-			@Override
-			public PersistenceService addingService(ServiceReference<PersistenceService> reference) {
-				System.out.println("Gotit!");
-				return context.getService(reference);
-			}
-
-			/**
-			 * {@inheritDoc}
-			 * @see org.osgi.util.tracker.ServiceTrackerCustomizer#modifiedService(org.osgi.framework.ServiceReference, java.lang.Object)
-			 */
-			@Override
-			public void modifiedService(ServiceReference<PersistenceService> reference,	PersistenceService service) {
-				
-			}
-
-			/**
-			 * {@inheritDoc}
-			 * @see org.osgi.util.tracker.ServiceTrackerCustomizer#removedService(org.osgi.framework.ServiceReference, java.lang.Object)
-			 */
-			@Override
-			public void removedService(ServiceReference<PersistenceService> reference, PersistenceService service) {
-				
-			}
-        	
-		});
-        persistenceServiceTracker.open();
+        employmentFactoryTracker = new ServiceTracker<EmploymentFactory, EmploymentFactory>(context, EmploymentFactory.class, null);
+        employmentFactoryTracker.open();
+        employmentDAOTracker = new ServiceTracker<EmploymentDAO, EmploymentDAO>(context, EmploymentDAO.class, null);
+        employmentDAOTracker.open();
     }
 
     /**
@@ -94,13 +69,18 @@ public class TestsActivator implements BundleActivator {
      */
     @Override
     public void stop(BundleContext arg0) throws Exception {
-    	persistenceServiceTracker.close();
+    	employmentDAOTracker.close();
+    	employmentFactoryTracker.close();
     }
     
-    public PersistenceService getPersistenceService() {
-    	return persistenceServiceTracker.getService();
+    public EmploymentFactory getEmploymentFactory() {
+    	return employmentFactoryTracker.getService();
     }
     
+    public EmploymentDAO getEmploymentDAO() {
+		return employmentDAOTracker.getService();
+	}
+        
     public InputStream getResource(String path) throws IOException {
     	URL entry = bundle.getEntry(path);
     	if (entry != null) {

@@ -31,13 +31,13 @@ import osgi.jee.samples.jpa.dao.DataConnection;
 import osgi.jee.samples.jpa.dao.EmploymentDAO;
 import osgi.jee.samples.jpa.dao.impl.JPADataConnection;
 import osgi.jee.samples.jpa.db.DataBaseHandler;
-import osgi.jee.samples.jpa.model.Address;
-import osgi.jee.samples.jpa.model.BigProject;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.jpa.model.EmploymentPeriod;
-import osgi.jee.samples.jpa.model.Phone;
-import osgi.jee.samples.jpa.model.Project;
-import osgi.jee.samples.jpa.model.SmallProject;
+import osgi.jee.samples.jpa.model.IAddress;
+import osgi.jee.samples.jpa.model.IBigProject;
+import osgi.jee.samples.jpa.model.IEmployee;
+import osgi.jee.samples.jpa.model.IEmploymentPeriod;
+import osgi.jee.samples.jpa.model.IPhone;
+import osgi.jee.samples.jpa.model.IProject;
+import osgi.jee.samples.jpa.model.ISmallProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -89,9 +89,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistAddress(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.Address)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress)
 	 */
-	public void persistAddress(DataConnection connection, Address address) {
+	public void persistAddress(DataConnection connection, IAddress address) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -104,9 +104,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistBigProject(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.BigProject)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.IBigProject)
 	 */
-	public void persistBigProject(DataConnection connection, BigProject bigProject) {
+	public void persistBigProject(DataConnection connection, IBigProject bigProject) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -120,7 +120,7 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistEmployee(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
 	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee)
 	 */
-	public void persistEmployee(DataConnection connection, Employee employee) {
+	public void persistEmployee(DataConnection connection, IEmployee employee) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -132,9 +132,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistEmploymentPeriod(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentPeriod)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.IEmploymentPeriod)
 	 */
-	public void persistEmploymentPeriod(DataConnection connection, EmploymentPeriod period) {
+	public void persistEmploymentPeriod(DataConnection connection, IEmploymentPeriod period) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -146,9 +146,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistPhone(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.Phone)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone)
 	 */
-	public void persistPhone(DataConnection connection, Phone phone) {
+	public void persistPhone(DataConnection connection, IPhone phone) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -160,9 +160,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistProject(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.Project)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject)
 	 */
-	public void persistProject(DataConnection connection, Project project) {
+	public void persistProject(DataConnection connection, IProject project) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();
@@ -174,9 +174,9 @@ public class HibernateDerbyEmploymentDAO implements EmploymentDAO {
 	 * {@inheritDoc}
 	 * 
 	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.dao.EmploymentDAO#persistSmallProject(osgi.jee.samples.jpa.hibernate.derby.internal.dao.DataConnection,
-	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.SmallProject)
+	 *      osgi.jee.samples.jpa.hibernate.derby.internal.model.ISmallProject)
 	 */
-	public void persistSmallProject(DataConnection connection, SmallProject smallProject) {
+	public void persistSmallProject(DataConnection connection, ISmallProject smallProject) {
 		assert connection instanceof JPADataConnection : "Unable to perform persistence with this kind of connection";
 		EntityManager entityManager = ((JPADataConnection) connection).getEntityManager();
 		entityManager.getTransaction().begin();

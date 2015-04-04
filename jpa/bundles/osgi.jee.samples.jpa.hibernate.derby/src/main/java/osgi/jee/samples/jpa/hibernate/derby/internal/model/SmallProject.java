@@ -15,12 +15,15 @@
  */
 package osgi.jee.samples.jpa.hibernate.derby.internal.model;
 
-import osgi.jee.samples.jpa.model.SmallProject;
+import javax.persistence.Entity;
+
+import osgi.jee.samples.jpa.model.ISmallProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class PersistentSmallProject  extends PersistentProject implements SmallProject {
+@Entity
+public class SmallProject  extends Project implements ISmallProject {
 
 }

@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.dbunit.DatabaseUnitException;
@@ -36,9 +35,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
-import osgi.jee.samples.jpa.model.Student;
-import osgi.jee.samples.jpa.tests.TestConstants;
-import osgi.jee.samples.jpa.tests.TestsActivator;
+import osgi.jee.samples.jpa.dao.EmploymentDAO;
+import osgi.jee.samples.jpa.dao.impl.JPADataConnection;
+import osgi.jee.samples.jpa.model.IEmployee;
+import osgi.jee.samples.jpa.model.EmploymentFactory;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -46,53 +46,61 @@ import osgi.jee.samples.jpa.tests.TestsActivator;
  */
 public class SampleTest {
     
-	private static EntityManager entityManager;
+	private static JPADataConnection dbConnection;
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
 
 
     @BeforeClass
     public static void initTestFixture() throws Exception {
-        PersistenceService persistenceService = TestsActivator.getInstance().getPersistenceService();
-		entityManager = persistenceService.createEntityManager();
-        Connection connection = persistenceService.extractConnection(entityManager);
-        InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
-        persistenceService.initSchema(connection, schemaResource);
-		schemaResource.close();
-		dbunitConnection = new DatabaseConnection(connection);
-		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);
-		dataset = new FlatXmlDataSetBuilder().build(datasetResource);
-		datasetResource.close();
+    	EmploymentDAO employmentDAO = TestsActivator.getInstance().getEmploymentDAO();
+    	dbConnection = (JPADataConnection) employmentDAO.getDataConnection();
+//        PersistenceService persistenceService = TestsActivator.getInstance().getPersistenceService();
+//		entityManager = persistenceService.createEntityManager();
+//        Connection connection = persistenceService.extractConnection(entityManager);
+//        InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
+//        persistenceService.initSchema(connection, schemaResource);
+//		schemaResource.close();
+//		dbunitConnection = new DatabaseConnection(connection);
+//		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);
+//		dataset = new FlatXmlDataSetBuilder().build(datasetResource);
+//		datasetResource.close();
     }
 
     
-    @Before
-    public void initTest() throws DatabaseUnitException, SQLException {
-    	DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataset);
-    }
+//    @Before
+//    public void initTest() throws DatabaseUnitException, SQLException {
+//    	DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataset);
+//    }
 
     @Test
     public void test() {
-    	Query query = entityManager.createQuery("Select s from Student s");
-    	@SuppressWarnings("unchecked")
-		List<Student> students = query.getResultList();
-    	for (Student student : students) {
-			System.out.println("Student: " + student);
-		}
-    	assertEquals("Invalid students count.", TestConstants.INITIAL_STUDENTS_COUNT, students.size()); 
+    	EmploymentFactory employmentFactory = TestsActivator.getInstance().getEmploymentFactory();
+    	IEmployee employee = employmentFactory.createEmployee();
+    	employee.setId(1);
+    	employee.setFirstName("Hey");
+    	employee.setLastName("Hey");
+    	TestsActivator.getInstance().getEmploymentDAO().persistEmployee(dbConnection, employee);
+//    	Query query = dbConnection.createQuery("Select e from EMPLOYEE e");
+//    	@SuppressWarnings("unchecked")
+//		List<IEmployee> employees = query.getResultList();
+//    	for (IEmployee employee : employees) {
+//			System.out.println("IEmployee: " + employee);
+//		}
+//    	assertEquals("Invalid students count.", TestConstants.INITIAL_STUDENTS_COUNT, employees.size()); 
  
     }
 
-    public void finalizeTest() throws SQLException {
-    	dbunitConnection.close();
-    }
+//    public void finalizeTest() throws SQLException {
+//    	dbunitConnection.close();
+//    }
 
     /**
      * Cleans up the session.
      */
     @AfterClass
     public static void closeTestFixture() {
-        entityManager.close();
+        dbConnection.close();
     }
 
 }

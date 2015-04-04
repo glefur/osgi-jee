@@ -17,13 +17,13 @@ package osgi.jee.samples.jpa.dao;
 
 import java.io.InputStream;
 
-import osgi.jee.samples.jpa.model.Address;
-import osgi.jee.samples.jpa.model.BigProject;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.jpa.model.EmploymentPeriod;
-import osgi.jee.samples.jpa.model.Phone;
-import osgi.jee.samples.jpa.model.Project;
-import osgi.jee.samples.jpa.model.SmallProject;
+import osgi.jee.samples.jpa.model.IAddress;
+import osgi.jee.samples.jpa.model.IBigProject;
+import osgi.jee.samples.jpa.model.IEmployee;
+import osgi.jee.samples.jpa.model.IEmploymentPeriod;
+import osgi.jee.samples.jpa.model.IPhone;
+import osgi.jee.samples.jpa.model.IProject;
+import osgi.jee.samples.jpa.model.ISmallProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -57,9 +57,9 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param address
-	 *            the {@link Address} to persist.
+	 *            the {@link IAddress} to persist.
 	 */
-	void persistAddress(DataConnection connection, Address address);
+	void persistAddress(DataConnection connection, IAddress address);
 
 	/**
 	 * Persists a big project.
@@ -67,9 +67,9 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param bigProject
-	 *            the {@link BigProject} to persist.
+	 *            the {@link IBigProject} to persist.
 	 */
-	void persistBigProject(DataConnection connection, BigProject bigProject);
+	void persistBigProject(DataConnection connection, IBigProject bigProject);
 
 	/**
 	 * Persists an employee.
@@ -77,9 +77,9 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param employee
-	 *            the {@link Employee} to persist.
+	 *            the {@link IEmployee} to persist.
 	 */
-	void persistEmployee(DataConnection connection, Employee employee);
+	void persistEmployee(DataConnection connection, IEmployee employee);
 
 	/**
 	 * Persists an employment period.
@@ -87,9 +87,9 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param period
-	 *            the {@link EmploymentPeriod} to persist.
+	 *            the {@link IEmploymentPeriod} to persist.
 	 */
-	void persistEmploymentPeriod(DataConnection connection, EmploymentPeriod period);
+	void persistEmploymentPeriod(DataConnection connection, IEmploymentPeriod period);
 
 	/**
 	 * Persists a phone.
@@ -97,17 +97,17 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param phone
-	 *            the {@link Phone} to persist.
+	 *            the {@link IPhone} to persist.
 	 */
-	void persistPhone(DataConnection connection, Phone phone);
+	void persistPhone(DataConnection connection, IPhone phone);
 
 	/**
 	 * Persists a project.
 	 * 
 	 * @param project
-	 *            the {@link Project} to persist.
+	 *            the {@link IProject} to persist.
 	 */
-	void persistProject(DataConnection connection, Project project);
+	void persistProject(DataConnection connection, IProject project);
 
 	/**
 	 * Persists a small project.
@@ -115,8 +115,8 @@ public interface EmploymentDAO {
 	 * @param connection
 	 *            the {@link DataConnection} to use.
 	 * @param smallProject
-	 *            the {@link SmallProject} to persist.
+	 *            the {@link ISmallProject} to persist.
 	 */
-	void persistSmallProject(DataConnection connection, SmallProject smallProject);
+	void persistSmallProject(DataConnection connection, ISmallProject smallProject);
 
 }

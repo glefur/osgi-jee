@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.hibernate.derby.model.EmploymentFactory">
+   <implementation class="osgi.jee.samples.jpa.hibernate.derby.internal.model.EmploymentFactoryImpl"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.model.EmploymentFactory"/>
+   </service>
+</scr:component>

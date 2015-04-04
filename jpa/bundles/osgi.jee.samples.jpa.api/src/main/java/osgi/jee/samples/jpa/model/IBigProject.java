@@ -13,34 +13,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.hibernate.derby.internal.model;
+package osgi.jee.samples.jpa.model;
 
 import java.math.BigDecimal;
 
-import osgi.jee.samples.jpa.model.BigProject;
-
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- * 
+ *
  */
-public class PersistentBigProject extends PersistentProject implements BigProject {
-
-	private BigDecimal budget;
+public interface IBigProject {
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.BigProject#getBudget()
+	 * @return the budget
 	 */
-	public final BigDecimal getBudget() {
-		return budget;
-	}
+	BigDecimal getBudget();
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.BigProject#setBudget(java.math.BigDecimal)
+	 * @param budget
+	 *            the budget to set
 	 */
-	public final void setBudget(BigDecimal budget) {
-		this.budget = budget;
-	}
+	void setBudget(BigDecimal budget);
 
 }
