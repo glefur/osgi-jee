@@ -19,120 +19,176 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
+ * 
  */
-public interface IEmployee {
+@Entity
+public class Employee {
+
+	@Id
+	private long id;
+	private String firstName;
+	private String lastName;
+	private BigDecimal salary;
+	private List<Phone> phones;
+	private Address address;
+	private Employee manager;
+	private Collection<Employee> managedEmployees;
+	private Collection<Project> projects;
+	private EmploymentPeriod employmentPeriod;
 
 	/**
 	 * @return the id
 	 */
-	long getId();
+	public long getId() {
+		return id;
+	}
 
 	/**
 	 * @param id
 	 *            the id to set
 	 */
-	void setId(long id);
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the firstName
 	 */
-	String getFirstName();
+	public String getFirstName() {
+		return firstName;
+	}
 
 	/**
 	 * @param firstName
 	 *            the firstName to set
 	 */
-	void setFirstName(String firstName);
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
 	/**
 	 * @return the lastName
 	 */
-	String getLastName();
+	public String getLastName() {
+		return lastName;
+	}
 
 	/**
 	 * @param lastName
 	 *            the lastName to set
 	 */
-	void setLastName(String lastName);
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	/**
 	 * @return the salary
 	 */
-	BigDecimal getSalary();
+	public BigDecimal getSalary() {
+		return salary;
+	}
 
 	/**
 	 * @param salary
 	 *            the salary to set
 	 */
-	void setSalary(BigDecimal salary);
+	public void setSalary(BigDecimal salary) {
+		this.salary = salary;
+	}
 
 	/**
 	 * @return the phones
 	 */
-	List<IPhone> getPhones();
+	public List<Phone> getPhones() {
+		return phones;
+	}
 
 	/**
 	 * @param phones
 	 *            the phones to set
 	 */
-	void setPhones(List<IPhone> phones);
+	public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
 
 	/**
 	 * @return the address
 	 */
-	IAddress getAddress();
+	public Address getAddress() {
+		return address;
+	}
 
 	/**
 	 * @param address
 	 *            the address to set
 	 */
-	void setAddress(IAddress address);
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	/**
 	 * @return the manager
 	 */
-	IEmployee getManager();
+	public Employee getManager() {
+		return manager;
+	}
 
 	/**
 	 * @param manager
 	 *            the manager to set
 	 */
-	void setManager(IEmployee manager);
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
 
 	/**
 	 * @return the managedEmployees
 	 */
-	Collection<IEmployee> getManagedEmployees();
+	public Collection<Employee> getManagedEmployees() {
+		return managedEmployees;
+	}
 
 	/**
 	 * @param managedEmployees
 	 *            the managedEmployees to set
 	 */
-	void setManagedEmployees(Collection<IEmployee> managedEmployees);
+	public void setManagedEmployees(Collection<Employee> managedEmployees) {
+		this.managedEmployees = managedEmployees;
+	}
 
 	/**
 	 * @return the projects
 	 */
-	Collection<IProject> getProjects();
+	public Collection<Project> getProjects() {
+		return projects;
+	}
 
 	/**
 	 * @param projects
 	 *            the projects to set
 	 */
-	void setProjects(Collection<IProject> projects);
+	public void setProjects(Collection<Project> projects) {
+		this.projects = projects;
+	}
 
 	/**
 	 * @return the employmentPeriod
 	 */
-	IEmploymentPeriod getEmploymentPeriod();
+	public EmploymentPeriod getEmploymentPeriod() {
+		return employmentPeriod;
+	}
 
 	/**
 	 * @param employmentPeriod
 	 *            the employmentPeriod to set
 	 */
-	void setEmploymentPeriod(IEmploymentPeriod employmentPeriod);
+	public void setEmploymentPeriod(EmploymentPeriod employmentPeriod) {
+		this.employmentPeriod = employmentPeriod;
+	}
 
 }

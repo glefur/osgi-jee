@@ -13,19 +13,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.hibernate.derby.internal.model;
+package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import osgi.jee.samples.jpa.model.IAddress;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-public class Address implements IAddress {
+public class Address {
 
 	@Id
 	private long id;
@@ -37,7 +35,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getId()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getId()
 	 */
 	public long getId() {
 		return id;
@@ -45,7 +43,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setId(long)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setId(long)
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -53,7 +51,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getStreet()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getStreet()
 	 */
 	public String getStreet() {
 		return street;
@@ -61,7 +59,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setStreet(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setStreet(java.lang.String)
 	 */
 	public void setStreet(String street) {
 		this.street = street;
@@ -69,7 +67,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getCity()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getCity()
 	 */
 	public String getCity() {
 		return city;
@@ -77,7 +75,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setCity(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setCity(java.lang.String)
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -85,7 +83,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getProvince()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getProvince()
 	 */
 	public String getProvince() {
 		return province;
@@ -93,7 +91,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setProvince(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setProvince(java.lang.String)
 	 */
 	public void setProvince(String province) {
 		this.province = province;
@@ -101,7 +99,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getCountry()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getCountry()
 	 */
 	public String getCountry() {
 		return country;
@@ -109,7 +107,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setCountry(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setCountry(java.lang.String)
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -117,7 +115,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#getPostalCode()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getPostalCode()
 	 */
 	public String getPostalCode() {
 		return postalCode;
@@ -125,7 +123,7 @@ public class Address implements IAddress {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IAddress#setPostalCode(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IAddress#setPostalCode(java.lang.String)
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;

@@ -13,19 +13,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.hibernate.derby.internal.model;
+package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import osgi.jee.samples.jpa.model.IPhone;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-public class Phone implements IPhone {
+public class Phone {
 
 	@Id
 	private long id;
@@ -35,7 +33,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getId()
+	 * @see osgi.jee.samples.jpa.model.IPhone#getId()
 	 */
 	public long getId() {
 		return id;
@@ -43,7 +41,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setId(long)
+	 * @see osgi.jee.samples.jpa.model.IPhone#setId(long)
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -51,7 +49,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getType()
+	 * @see osgi.jee.samples.jpa.model.IPhone#getType()
 	 */
 	public String getType() {
 		return type;
@@ -59,7 +57,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setType(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IPhone#setType(java.lang.String)
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -67,7 +65,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getNumber()
+	 * @see osgi.jee.samples.jpa.model.IPhone#getNumber()
 	 */
 	public String getNumber() {
 		return number;
@@ -75,7 +73,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setNumber(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IPhone#setNumber(java.lang.String)
 	 */
 	public void setNumber(String number) {
 		this.number = number;
@@ -83,7 +81,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#getAreaCode()
+	 * @see osgi.jee.samples.jpa.model.IPhone#getAreaCode()
 	 */
 	public String getAreaCode() {
 		return areaCode;
@@ -91,7 +89,7 @@ public class Phone implements IPhone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IPhone#setAreaCode(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IPhone#setAreaCode(java.lang.String)
 	 */
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;

@@ -13,19 +13,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.hibernate.derby.internal.model;
+package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import osgi.jee.samples.jpa.model.IProject;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-public class Project implements IProject {
+public class Project {
 
 	@Id
 	private long id;
@@ -33,7 +31,7 @@ public class Project implements IProject {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#getId()
+	 * @see osgi.jee.samples.jpa.model.IProject#getId()
 	 */
 	public long getId() {
 		return id;
@@ -41,7 +39,7 @@ public class Project implements IProject {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#setId(long)
+	 * @see osgi.jee.samples.jpa.model.IProject#setId(long)
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -49,7 +47,7 @@ public class Project implements IProject {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#getName()
+	 * @see osgi.jee.samples.jpa.model.IProject#getName()
 	 */
 	public String getName() {
 		return name;
@@ -57,7 +55,7 @@ public class Project implements IProject {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.hibernate.derby.internal.model.IProject#setName(java.lang.String)
+	 * @see osgi.jee.samples.jpa.model.IProject#setName(java.lang.String)
 	 */
 	public void setName(String name) {
 		this.name = name;

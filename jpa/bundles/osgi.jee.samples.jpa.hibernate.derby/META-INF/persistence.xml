@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
 	<persistence-unit name="hibernate-derby" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>osgi.jee.samples.jpa.hibernate.derby.internal.model.Employee</class>
+		<class>osgi.jee.samples.jpa.model.Employee</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>

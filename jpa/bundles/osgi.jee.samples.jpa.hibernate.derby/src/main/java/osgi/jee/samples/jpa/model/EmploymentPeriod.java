@@ -15,10 +15,47 @@
  */
 package osgi.jee.samples.jpa.model;
 
+import java.util.Date;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
+ * 
  */
-public interface ISmallProject {
+public class EmploymentPeriod {
+
+	private Date startDate;
+	private Date endDate;
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.model.IEmploymentPeriod#getStartDate()
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.model.IEmploymentPeriod#setStartDate(java.util.Date)
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.model.IEmploymentPeriod#getEndDate()
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.model.IEmploymentPeriod#setEndDate(java.util.Date)
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 }
