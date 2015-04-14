@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
 import osgi.jee.samples.jpa.dao.EmploymentDAO;
-import osgi.jee.samples.jpa.dao.impl.jpa.JPADataConnection;
+import osgi.jee.samples.jpa.dao.internal.connection.JPADataConnection;
 import osgi.jee.samples.jpa.model.IEmployee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 

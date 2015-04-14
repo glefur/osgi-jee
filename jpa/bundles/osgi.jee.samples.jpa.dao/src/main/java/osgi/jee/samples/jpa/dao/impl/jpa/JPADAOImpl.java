@@ -18,24 +18,26 @@ package osgi.jee.samples.jpa.dao.impl.jpa;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
-import osgi.jee.samples.jpa.dao.GenericDAO;
+import osgi.jee.samples.jpa.dao.DataConnection;
+import osgi.jee.samples.jpa.dao.JPADAO;
+import osgi.jee.samples.jpa.dao.internal.connection.JPADataConnection;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class JPADAOImpl<T> implements GenericDAO<T> {
+public class JPADAOImpl<T> implements JPADAO<T> {
 
-	private EntityManager entityManager;
+	private EntityManagerFactory entityManagerFactory;
 	private Class<T> type;
 
 	/**
-	 * @param entityManager the entityManager to set
+	 * @param entityManagerFactory the entityManagerFactory to set
 	 */
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+		this.entityManagerFactory = entityManagerFactory;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -47,38 +49,51 @@ public class JPADAOImpl<T> implements GenericDAO<T> {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.dao.GenericDAO#create(java.lang.Object)
+	 * @see osgi.jee.samples.jpa.dao.JPADAO#createDataConnection()
 	 */
 	@Override
-	public final T create(final T t) {
-		this.entityManager.persist(t);
+	public JPADataConnection createDataConnection() {
+		return new JPADataConnection(entityManagerFactory.createEntityManager());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.GenericDAO#create(osgi.jee.samples.jpa.dao.DataConnection, java.lang.Object)
+	 */
+	@Override
+	public final T create(DataConnection dataConnection, final T t) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		((JPADataConnection)dataConnection).getEntityManager().persist(t);
 		return t;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.dao.GenericDAO#delete(java.lang.Object)
+	 * @see osgi.jee.samples.jpa.dao.GenericDAO#delete(osgi.jee.samples.jpa.dao.DataConnection, java.lang.Object)
 	 */
 	@Override
-	public final void delete(final T entity) {
-		this.entityManager.remove(entity);
+	public final void delete(DataConnection dataConnection, final T entity) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		((JPADataConnection)dataConnection).getEntityManager().remove(entity);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.dao.GenericDAO#find(java.lang.Object)
+	 * @see osgi.jee.samples.jpa.dao.GenericDAO#find(osgi.jee.samples.jpa.dao.DataConnection, java.lang.Object)
 	 */
 	@Override
-	public final T find(final Object id) {
-		return (T) this.entityManager.find(type, id);
+	public final T find(DataConnection dataConnection, final Object id) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		return (T) ((JPADataConnection)dataConnection).getEntityManager().find(type, id);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.dao.GenericDAO#update(java.lang.Object)
+	 * @see osgi.jee.samples.jpa.dao.GenericDAO#update(osgi.jee.samples.jpa.dao.DataConnection, java.lang.Object)
 	 */
 	@Override
-	public final T update(final T t) {
-		return this.entityManager.merge(t);    
+	public final T update(DataConnection dataConnection, final T t) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		return ((JPADataConnection)dataConnection).getEntityManager().merge(t);    
 	}
 }

@@ -26,25 +26,25 @@ public interface GenericDAO<T> {
 	 * @param entity the entity to persist.
 	 * @return the persisted entity.
 	 */
-	T create(T entity);
+	T create(DataConnection dataConnection, T entity);
 
 	/**
 	 * Removes an existing entity from the persisting system.
 	 * @param entity the entity to remove. 
 	 */
-	void delete(T entity);
+	void delete(DataConnection dataConnection, T entity);
 
 	/**
 	 * Finds a entity given its id.
 	 * @param id the entity id.
 	 * @return the found entity if exists <code>null</code> otherwise.
 	 */
-	T find(Object id);
+	T find(DataConnection dataConnection, Object id);
 
 	/**
 	 * Updates the given entity.
 	 * @param t the entity to update.
 	 * @return the processed entity.
 	 */
-	T update(T t);
+	T update(DataConnection dataConnection, T t);
 }

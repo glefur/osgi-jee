@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bundle providing various service for Derby databases
+Bundle-SymbolicName: osgi.jee.samples.jpa.db.derby.internal.datasource
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.apache.derby.jdbc;version="10.8.2.2",
+ org.osgi.service.jdbc;version="1.0.0"
+Service-Component: OSGI-INF/DerbyDataSourceFactory.xml
