@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2014 Goulwen Le Fur
+ * Copyright (C) 2015 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,34 @@ package osgi.jee.samples.jpa.dao;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
+ * 
  */
-public interface DataConnection {
-	
-	/**
-	 * Closes the connection to the Database.
-	 */
-	public void close();
+public interface GenericDAO<T> {
 
+	/**
+	 * Persists a new entity.
+	 * @param entity the entity to persist.
+	 * @return the persisted entity.
+	 */
+	T create(T entity);
+
+	/**
+	 * Removes an existing entity from the persisting system.
+	 * @param entity the entity to remove. 
+	 */
+	void delete(T entity);
+
+	/**
+	 * Finds a entity given its id.
+	 * @param id the entity id.
+	 * @return the found entity if exists <code>null</code> otherwise.
+	 */
+	T find(Object id);
+
+	/**
+	 * Updates the given entity.
+	 * @param t the entity to update.
+	 * @return the processed entity.
+	 */
+	T update(T t);
 }

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Business Model for JPA Sample
-Bundle-SymbolicName: osgi.jee.samples.jpa.hibernate.derby
+Bundle-SymbolicName: osgi.jee.samples.jpa.model
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

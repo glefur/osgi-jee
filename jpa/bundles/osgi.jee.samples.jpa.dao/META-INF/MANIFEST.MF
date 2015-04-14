@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bundle providing standard DAO implementation
+Bundle-SymbolicName: osgi.jee.samples.jpa.dao
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: javax.persistence;version="1.1.0"
+Export-Package: osgi.jee.samples.jpa.dao,
+ osgi.jee.samples.jpa.dao.impl
