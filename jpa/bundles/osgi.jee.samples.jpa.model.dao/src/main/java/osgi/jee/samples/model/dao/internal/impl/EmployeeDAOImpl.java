@@ -13,16 +13,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.model.dao;
+package osgi.jee.samples.model.dao.internal.impl;
 
-import osgi.jee.samples.jpa.dao.GenericDAO;
-import osgi.jee.samples.jpa.dao.impl.GenericDAOImpl;
+import osgi.jee.samples.jpa.dao.impl.jpa.JPADAOImpl;
 import osgi.jee.samples.jpa.model.Employee;
+import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAO extends GenericDAOImpl<Employee> implements GenericDAO<Employee> {
+public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
 
 }

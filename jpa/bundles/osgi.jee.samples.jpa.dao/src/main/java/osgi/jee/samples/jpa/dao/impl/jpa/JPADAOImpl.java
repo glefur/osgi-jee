@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.dao.impl;
+package osgi.jee.samples.jpa.dao.impl.jpa;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -26,7 +26,7 @@ import osgi.jee.samples.jpa.dao.GenericDAO;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class GenericDAOImpl<T> implements GenericDAO<T> {
+public class JPADAOImpl<T> implements GenericDAO<T> {
 
 	private EntityManager entityManager;
 	private Class<T> type;
@@ -39,7 +39,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public GenericDAOImpl() {
+	public JPADAOImpl() {
 		Type t = getClass().getGenericSuperclass();
 		ParameterizedType pt = (ParameterizedType) t;
 		type = (Class<T>) pt.getActualTypeArguments()[0];

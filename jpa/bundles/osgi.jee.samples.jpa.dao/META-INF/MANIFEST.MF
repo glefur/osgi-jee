@@ -5,6 +5,6 @@ Bundle-SymbolicName: osgi.jee.samples.jpa.dao
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: javax.persistence;version="1.1.0"
+Import-Package: javax.persistence;version="1.1.0";resolution:=optional
 Export-Package: osgi.jee.samples.jpa.dao,
- osgi.jee.samples.jpa.dao.impl
+ osgi.jee.samples.jpa.dao.impl.jpa
