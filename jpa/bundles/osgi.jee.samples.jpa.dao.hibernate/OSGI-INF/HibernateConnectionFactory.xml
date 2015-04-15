@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.dao.connection.HibernateConnectionFactory">
+   <implementation class="osgi.jee.samples.jpa.dao.hibernate.internal.connection.HibernateConnectionFactory"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.dao.connection.DataConnectionFactory"/>
+   </service>
+</scr:component>

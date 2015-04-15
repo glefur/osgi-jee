@@ -13,16 +13,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.model.dao.internal.impl;
+package osgi.jee.samples.jpa.db.derby.internal.services;
 
-import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import java.io.InputStream;
+import java.sql.Connection;
+
+import org.apache.derby.tools.ij;
+
+import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
+public class DerbyDataBaseHandler implements DataBaseHandler {
+
+	private static final String UTF_8_ENCODING = "utf-8";
+	
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.db.DataBaseHandler#initSchema(java.sql.Connection, java.io.InputStream)
+	 */
+	@Override
+	public void initSchema(Connection connection, InputStream schemaResource) throws Exception {
+		ij.runScript(connection,schemaResource, UTF_8_ENCODING, System.out, UTF_8_ENCODING);
+	}
 
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry">
+   <implementation class="osgi.jee.samples.jpa.dao.internal.connection.DataConnectionFactoryRegistryImpl"/>
+   <reference bind="register" cardinality="0..n" interface="osgi.jee.samples.jpa.dao.connection.DataConnectionFactory" name="DataConnectionFactory" policy="dynamic" unbind="unregister"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry"/>
+   </service>
+</scr:component>

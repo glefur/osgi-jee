@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bundle providing Hibernate specific implementations for DAO Services
+Bundle-SymbolicName: osgi.jee.samples.jpa.dao.hibernate
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: javax.persistence;version="1.1.0",
+ org.hibernate;version="4.2.7",
+ org.hibernate.engine.spi;version="4.2.7",
+ org.hibernate.service.jdbc.connections.spi;version="4.2.7",
+ osgi.jee.samples.jpa.dao,
+ osgi.jee.samples.jpa.dao.connection,
+ osgi.jee.samples.jpa.dao.impl.connection,
+ osgi.jee.samples.jpa.util.services
+Service-Component: OSGI-INF/HibernateConnection.xml,
+ OSGI-INF/HibernateConnectionFactory.xml

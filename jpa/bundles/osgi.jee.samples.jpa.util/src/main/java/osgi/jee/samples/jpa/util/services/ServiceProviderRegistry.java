@@ -13,16 +13,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.model.dao.internal.impl;
+package osgi.jee.samples.jpa.util.services;
 
-import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import java.util.Collection;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
+public interface ServiceProviderRegistry<S, K> {
+	
+	<SERVICE_PROVIDER extends ServiceProvider<S, K>> void register(SERVICE_PROVIDER serviceProvider);
+	
+	<SERVICE_PROVIDER extends ServiceProvider<S, K>> void unregister(SERVICE_PROVIDER serviceProvider);
+	
+	S getService(K key);
+	
+	Collection<S> getAllServices(K key);
 
 }

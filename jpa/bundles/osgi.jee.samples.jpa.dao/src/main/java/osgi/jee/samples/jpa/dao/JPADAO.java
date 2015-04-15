@@ -15,7 +15,7 @@
  */
 package osgi.jee.samples.jpa.dao;
 
-import osgi.jee.samples.jpa.dao.internal.connection.JPADataConnection;
+import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.

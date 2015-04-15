@@ -13,16 +13,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.model.dao.internal.impl;
+package osgi.jee.samples.jpa.dao.hibernate.internal.connection;
 
-import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import javax.persistence.EntityManager;
+
+import osgi.jee.samples.jpa.dao.connection.DataConnectionFactory;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
+public class HibernateConnectionFactory implements DataConnectionFactory {
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.util.services.ServiceProvider#provides(java.lang.Object)
+	 */
+	@Override
+	public boolean provides(EntityManager entityManager) {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.util.services.ServiceProvider#getService(java.lang.Object)
+	 */
+	@Override
+	public HibernateConnection getService(EntityManager entityManager) {
+		return new HibernateConnection(entityManager);
+	}
 
 }

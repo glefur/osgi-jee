@@ -16,13 +16,13 @@
 package osgi.jee.samples.model.dao.internal.impl;
 
 import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import osgi.jee.samples.jpa.model.Address;
+import osgi.jee.samples.model.dao.AddressDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
+public class AddressDAOImpl extends JPADAOImpl<Address> implements AddressDAO {
 
 }

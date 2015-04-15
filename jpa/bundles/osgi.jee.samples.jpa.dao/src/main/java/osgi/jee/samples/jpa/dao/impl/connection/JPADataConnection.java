@@ -13,16 +13,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.model.dao.internal.impl;
+package osgi.jee.samples.jpa.dao.impl.connection;
 
-import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import javax.persistence.EntityManager;
+
+import osgi.jee.samples.jpa.dao.connection.DataConnection;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO {
+public abstract class JPADataConnection implements DataConnection {
+
+	protected final EntityManager entityManager;
+
+	public JPADataConnection(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	/**
+	 * @return the entityManager
+	 */
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
 
 }

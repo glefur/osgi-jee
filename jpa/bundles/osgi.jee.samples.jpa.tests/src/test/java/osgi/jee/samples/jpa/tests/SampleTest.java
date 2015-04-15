@@ -15,30 +15,18 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-
-import javax.persistence.Query;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
-import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
-import osgi.jee.samples.jpa.dao.EmploymentDAO;
-import osgi.jee.samples.jpa.dao.internal.connection.JPADataConnection;
-import osgi.jee.samples.jpa.model.IEmployee;
-import osgi.jee.samples.jpa.model.EmploymentFactory;
+import osgi.jee.samples.model.dao.AddressDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -46,41 +34,32 @@ import osgi.jee.samples.jpa.model.EmploymentFactory;
  */
 public class SampleTest {
     
-	private static JPADataConnection dbConnection;
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
+	private AddressDAO addressDAO;
 
 
-    @BeforeClass
-    public static void initTestFixture() throws Exception {
-    	EmploymentDAO employmentDAO = TestsActivator.getInstance().getEmploymentDAO();
-    	dbConnection = (JPADataConnection) employmentDAO.getDataConnection();
-//        PersistenceService persistenceService = TestsActivator.getInstance().getPersistenceService();
-//		entityManager = persistenceService.createEntityManager();
-//        Connection connection = persistenceService.extractConnection(entityManager);
-//        InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
-//        persistenceService.initSchema(connection, schemaResource);
-//		schemaResource.close();
-//		dbunitConnection = new DatabaseConnection(connection);
-//		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);
-//		dataset = new FlatXmlDataSetBuilder().build(datasetResource);
-//		datasetResource.close();
-    }
+//    @BeforeClass
+//    public static void initTestFixture() throws Exception {
+//    }
 
     
-//    @Before
-//    public void initTest() throws DatabaseUnitException, SQLException {
+    @Before
+    public void initTest() throws DatabaseUnitException, SQLException {
+    	ServiceReference<AddressDAO> serviceReference = FrameworkUtil.getBundle(TestsActivator.getInstance().getClass()).getBundleContext().getServiceReference(AddressDAO.class);
+    	addressDAO = FrameworkUtil.getBundle(TestsActivator.getInstance().getClass()).getBundleContext().getService(serviceReference);
 //    	DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataset);
-//    }
+    }
 
     @Test
     public void test() {
-    	EmploymentFactory employmentFactory = TestsActivator.getInstance().getEmploymentFactory();
-    	IEmployee employee = employmentFactory.createEmployee();
-    	employee.setId(1);
-    	employee.setFirstName("Hey");
-    	employee.setLastName("Hey");
-    	TestsActivator.getInstance().getEmploymentDAO().persistEmployee(dbConnection, employee);
+    	assert addressDAO != null:"Unable to get the DAO for Address objects";
+//    	EmploymentFactory employmentFactory = TestsActivator.getInstance().getEmploymentFactory();
+//    	IEmployee employee = employmentFactory.createEmployee();
+//    	employee.setId(1);
+//    	employee.setFirstName("Hey");
+//    	employee.setLastName("Hey");
+//    	TestsActivator.getInstance().getEmploymentDAO().persistEmployee(dbConnection, employee);
 //    	Query query = dbConnection.createQuery("Select e from EMPLOYEE e");
 //    	@SuppressWarnings("unchecked")
 //		List<IEmployee> employees = query.getResultList();
@@ -100,7 +79,7 @@ public class SampleTest {
      */
     @AfterClass
     public static void closeTestFixture() {
-        dbConnection.close();
+//        dbConnection.close();
     }
 
 }
