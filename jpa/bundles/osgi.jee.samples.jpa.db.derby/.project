@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>osgi.jee.samples.jpa.db.derby.internal.datasource</name>
+	<name>osgi.jee.samples.jpa.db.derby</name>
 	<comment></comment>
 	<projects>
 	</projects>
