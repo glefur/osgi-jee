@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.aries.hibernate.derby.internal.services;
+package osgi.jee.samples.jpa.db.derby.internal.datasource;
 
 import java.sql.Driver;
 import java.sql.SQLException;
