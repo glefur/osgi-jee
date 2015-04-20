@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.persistence;version="1.1.0",
+ org.apache.derby.jdbc;version="10.8.2.2",
  org.hibernate;version="4.2.7",
  org.hibernate.engine.spi;version="4.2.7",
  org.hibernate.service.jdbc.connections.spi;version="4.2.7",

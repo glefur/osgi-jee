@@ -12,7 +12,7 @@
  			<property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:hibernate-derby;create=true" />
  			<property name="databaseName" value="hibernate-derby" />
  			<property name="hibernate.hbm2ddl.auto" value="create"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
 			<property name="show_sql" value="true"/>
 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
 		</properties>
