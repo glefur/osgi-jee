@@ -84,9 +84,9 @@ public class SampleTest {
 		newAddress.setCountry("Germany");
 		newAddress.setProvince("N/A");
 		newAddress.setPostalCode("20095");
-		((JPADataConnection)dataConnection).getEntityManager().getTransaction().begin();
+		dataConnection.beginTransaction();
 		addressDAO.create(dataConnection, newAddress);
-		((JPADataConnection)dataConnection).getEntityManager().getTransaction().commit();
+		dataConnection.commit();
 		assertEquals("Invalid addresses count.", TestConstants.INITIAL_ADDRESSES_COUNT + 1, addressDAO.findAll(dataConnection).size());
 	}
 

@@ -40,6 +40,24 @@ public abstract class JPADataConnection implements DataConnection {
 
 	/**
 	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.connection.DataConnection#beginTransaction()
+	 */
+	@Override
+	public void beginTransaction() {
+		entityManager.getTransaction().begin();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.connection.DataConnection#commit()
+	 */
+	@Override
+	public void commit() {
+		entityManager.getTransaction().commit();
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.dao.connection.DataConnection#close()
 	 */
 	@Override

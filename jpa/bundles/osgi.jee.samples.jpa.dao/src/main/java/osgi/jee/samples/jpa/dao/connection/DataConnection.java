@@ -25,6 +25,10 @@ public interface DataConnection {
 	
 	Connection getSQLConnection();
 	
+	void beginTransaction();
+	
+	void commit();
+	
 	void close();
 
 }
