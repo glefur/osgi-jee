@@ -7,5 +7,7 @@ Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.derby.jdbc;version="10.8.2.2",
  org.apache.derby.tools;version="10.8.2.2",
- org.osgi.service.jdbc;version="1.0.0"
-Service-Component: OSGI-INF/DerbyDataSourceFactory.xml
+ org.osgi.service.jdbc;version="1.0.0",
+ osgi.jee.samples.jpa.dao.db
+Service-Component: OSGI-INF/DerbyDataSourceFactory.xml,
+ OSGI-INF/DerbyDataBaseHandler.xml

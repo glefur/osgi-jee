@@ -36,6 +36,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
+import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.model.Address;
 
 /**
@@ -55,7 +56,8 @@ public class SampleTest {
 		entityManager = persistenceService.createEntityManager();
         Connection connection = persistenceService.extractConnection(entityManager);
         InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
-        persistenceService.initSchema(connection, schemaResource);
+        DataBaseHandler dataBaseHandler = TestsActivator.getInstance().getDataBaseHandler();
+        dataBaseHandler.initSchema(connection, schemaResource);
 		schemaResource.close();
 		dbunitConnection = new DatabaseConnection(connection);
 		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);

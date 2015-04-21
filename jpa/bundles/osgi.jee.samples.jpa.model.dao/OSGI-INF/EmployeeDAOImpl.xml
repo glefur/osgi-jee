@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.model.dao.impl.EmployeeDAO">
+   <implementation class="osgi.jee.samples.model.dao.internal.impl.EmployeeDAOImpl"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.dao.GenericDAO"/>
+      <provide interface="osgi.jee.samples.model.dao.EmployeeDAO"/>
+   </service>
+   <reference bind="setEntityManagerFactory" cardinality="1..1" interface="javax.persistence.EntityManagerFactory" name="EntityManagerFactory" policy="static"/>
+   <reference bind="setDataConnectionFactoryRegistry" cardinality="1..1" interface="osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry" name="DataConnectionFactoryRegistry" policy="static"/>
+</scr:component>

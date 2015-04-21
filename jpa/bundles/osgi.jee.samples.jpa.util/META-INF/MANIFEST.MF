@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bundle providing some utilities for the sample
+Bundle-SymbolicName: osgi.jee.samples.jpa.util
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: osgi.jee.samples.jpa.util.services,
+ osgi.jee.samples.jpa.util.services.impl
