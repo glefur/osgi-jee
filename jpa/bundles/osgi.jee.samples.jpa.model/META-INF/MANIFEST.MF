@@ -20,5 +20,6 @@ Import-Package: javassist.util.proxy;version="3.18.1.GA",
  org.osgi.service.jdbc;version="1.0.0",
  org.osgi.util.tracker;version="1.5.1",
  osgi.jee.samples.jpa.api.services.persistence
-Service-Component: OSGI-INF/HibernateDerbyPersistenceService.xml
+Service-Component: OSGI-INF/HibernateDerbyPersistenceService.xml,
+ OSGI-INF/EmploymentFactory.xml
 Eclipse-RegisterBuddy: org.hibernate.eclipse
