@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<dataset>
+	<address id='1' street='1935 Lombard Street' city='San Fransisco' province='California' country='United States' postalCode='N/A'/>
+	<address id='2' street='30 rue des alouettes' city='Paris' province='N/A' country='France' postalCode='75000'/>
+</dataset>

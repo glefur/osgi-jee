@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.hibernate.derby.internal.services.AriesHibernateDerbyPersistenceService">
-   <implementation class="osgi.jee.samples.jpa.aries.hibernate.derby.internal.services.AriesHibernateDerbyPersistenceService"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.jpa.aries.hibernate.h2.internal.services.AriesHibernateH2PersistenceService">
+   <implementation class="osgi.jee.samples.jpa.aries.hibernate.h2.internal.services.AriesHibernateH2PersistenceService"/>
    <service>
       <provide interface="osgi.jee.samples.jpa.api.services.persistence.PersistenceService"/>
    </service>

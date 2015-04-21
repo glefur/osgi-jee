@@ -36,9 +36,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.api.services.persistence.PersistenceService;
-import osgi.jee.samples.jpa.model.Student;
-import osgi.jee.samples.jpa.tests.TestConstants;
-import osgi.jee.samples.jpa.tests.TestsActivator;
+import osgi.jee.samples.jpa.model.Address;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -73,13 +71,13 @@ public class SampleTest {
 
     @Test
     public void test() {
-    	Query query = entityManager.createQuery("Select s from Student s");
+    	Query query = entityManager.createQuery("Select a from Address a");
     	@SuppressWarnings("unchecked")
-		List<Student> students = query.getResultList();
-    	for (Student student : students) {
-			System.out.println("Student: " + student);
+		List<Address> addresses = query.getResultList();
+    	for (Address address : addresses) {
+			System.out.println("Address: " + address);
 		}
-    	assertEquals("Invalid students count.", TestConstants.INITIAL_STUDENTS_COUNT, students.size()); 
+    	assertEquals("Invalid addresses count.", TestConstants.INITIAL_ADDRESSES_COUNT, addresses.size()); 
  
     }
 
