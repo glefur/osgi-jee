@@ -16,6 +16,7 @@
 package osgi.jee.samples.jpa.dao.hibernate.internal.connection;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactory;
 
@@ -31,7 +32,8 @@ public class HibernateConnectionFactory implements DataConnectionFactory {
 	 */
 	@Override
 	public boolean provides(EntityManager entityManager) {
-		return true;
+		EntityManagerFactory factory = entityManager.getEntityManagerFactory();
+		return factory.getClass().getName().indexOf("hibernate") >= 0;
 	}
 
 	/**
