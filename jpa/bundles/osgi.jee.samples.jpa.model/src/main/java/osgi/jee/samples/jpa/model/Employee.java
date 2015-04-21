@@ -21,6 +21,10 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -34,10 +38,15 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private BigDecimal salary;
+	@OneToMany
 	private List<Phone> phones;
+	@OneToOne
 	private Address address;
+	@ManyToOne
 	private Employee manager;
+	@OneToMany
 	private Collection<Employee> managedEmployees;
+	@ManyToMany
 	private Collection<Project> projects;
 	private EmploymentPeriod employmentPeriod;
 

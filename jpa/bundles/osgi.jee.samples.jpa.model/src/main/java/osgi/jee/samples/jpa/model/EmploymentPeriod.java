@@ -17,10 +17,13 @@ package osgi.jee.samples.jpa.model;
 
 import java.util.Date;
 
+import javax.persistence.Embeddable;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
+@Embeddable
 public class EmploymentPeriod {
 
 	private Date startDate;
