@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collection;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -39,6 +38,7 @@ import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
 import osgi.jee.samples.jpa.model.Address;
+import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.model.dao.AddressDAO;
 
 /**
@@ -50,7 +50,6 @@ public class SampleTest {
 	private static DataConnection dataConnection;
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
-
 
 	@BeforeClass
 	public static void initTestFixture() throws Exception {
@@ -77,12 +76,18 @@ public class SampleTest {
 	@Test
 	public void test() {
 		AddressDAO addressDAO = TestsActivator.getInstance().getAddressDAO();
-		Collection<Address> addresses = addressDAO.findAll(dataConnection);
-		for (Address address : addresses) {
-			System.out.println("Address: " + address);
-		}
-		assertEquals("Invalid addresses count.", TestConstants.INITIAL_ADDRESSES_COUNT, addresses.size()); 
-
+		assertEquals("Invalid addresses count.", TestConstants.INITIAL_ADDRESSES_COUNT, addressDAO.findAll(dataConnection).size());
+		EmploymentFactory employmentFactory = TestsActivator.getInstance().getEmploymentFactory();
+		Address newAddress = employmentFactory.createAddress();
+		newAddress.setStreet("Gerhart-Hauptmann-Platz 32");
+		newAddress.setCity("Hamburg");
+		newAddress.setCountry("Germany");
+		newAddress.setProvince("N/A");
+		newAddress.setPostalCode("20095");
+		((JPADataConnection)dataConnection).getEntityManager().getTransaction().begin();
+		addressDAO.create(dataConnection, newAddress);
+		((JPADataConnection)dataConnection).getEntityManager().getTransaction().commit();
+		assertEquals("Invalid addresses count.", TestConstants.INITIAL_ADDRESSES_COUNT + 1, addressDAO.findAll(dataConnection).size());
 	}
 
 	public void finalizeTest() throws SQLException {
