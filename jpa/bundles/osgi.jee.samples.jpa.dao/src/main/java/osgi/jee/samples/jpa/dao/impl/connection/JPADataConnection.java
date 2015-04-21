@@ -38,4 +38,13 @@ public abstract class JPADataConnection implements DataConnection {
 		return entityManager;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.connection.DataConnection#close()
+	 */
+	@Override
+	public void close() {
+		entityManager.close();
+	}
+
 }

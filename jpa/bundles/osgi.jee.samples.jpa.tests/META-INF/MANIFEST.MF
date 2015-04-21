@@ -14,9 +14,13 @@ Import-Package: javax.persistence;version="1.1.0",
  org.osgi.framework;version="1.7.0",
  org.osgi.service.jpa;version="1.0.0",
  org.osgi.util.tracker;version="1.5.1",
- osgi.jee.samples.jpa.api.services.persistence,
+ osgi.jee.samples.jpa.dao,
+ osgi.jee.samples.jpa.dao.connection,
  osgi.jee.samples.jpa.dao.db,
- osgi.jee.samples.jpa.model
+ osgi.jee.samples.jpa.dao.impl.connection,
+ osgi.jee.samples.jpa.model,
+ osgi.jee.samples.jpa.util.services,
+ osgi.jee.samples.model.dao
 Require-Bundle: org.junit;bundle-version="4.11.0"
 Bundle-Activator: osgi.jee.samples.jpa.tests.TestsActivator
 Bundle-ActivationPolicy: lazy

@@ -17,52 +17,25 @@ package osgi.jee.samples.jpa.dao.impl;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 
-import javax.persistence.EntityManagerFactory;
-
-import osgi.jee.samples.jpa.dao.JPADAO;
+import osgi.jee.samples.jpa.dao.GenericDAO;
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
-import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class JPADAOImpl<T> implements JPADAO<T> {
+public class JPADAOImpl<T> implements GenericDAO<T> {
 
-	private EntityManagerFactory entityManagerFactory;
-	private DataConnectionFactoryRegistry dataConnectionFactoryRegistry;
 	private Class<T> type;
-
-	/**
-	 * @param entityManagerFactory the entityManagerFactory to set
-	 */
-	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
-
-	/**
-	 * @param dataConnectionFactoryRegistry the dataConnectionFactoryRegistry to set
-	 */
-	public void setDataConnectionFactoryRegistry(DataConnectionFactoryRegistry dataConnectionFactoryRegistry) {
-		this.dataConnectionFactoryRegistry = dataConnectionFactoryRegistry;
-	}
 
 	@SuppressWarnings("unchecked")
 	public JPADAOImpl() {
 		Type t = getClass().getGenericSuperclass();
 		ParameterizedType pt = (ParameterizedType) t;
 		type = (Class<T>) pt.getActualTypeArguments()[0];
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.dao.JPADAO#createDataConnection()
-	 */
-	@Override
-	public JPADataConnection createDataConnection() {
-		return (JPADataConnection) dataConnectionFactoryRegistry.getService(entityManagerFactory.createEntityManager());
 	}
 
 	/**
@@ -104,5 +77,16 @@ public class JPADAOImpl<T> implements JPADAO<T> {
 	public final T update(DataConnection dataConnection, final T t) {
 		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
 		return ((JPADataConnection)dataConnection).getEntityManager().merge(t);    
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.dao.GenericDAO#findAll(osgi.jee.samples.jpa.dao.connection.DataConnection)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public final Collection<T> findAll(DataConnection dataConnection) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		return ((JPADataConnection)dataConnection).getEntityManager().createQuery("Select t from " + type.getSimpleName() + " t").getResultList();
 	}
 }

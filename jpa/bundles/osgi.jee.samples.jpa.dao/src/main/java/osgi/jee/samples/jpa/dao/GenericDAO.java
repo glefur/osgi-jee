@@ -15,6 +15,8 @@
  */
 package osgi.jee.samples.jpa.dao;
 
+import java.util.Collection;
+
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
 
 /**
@@ -49,4 +51,10 @@ public interface GenericDAO<T> {
 	 * @return the processed entity.
 	 */
 	T update(DataConnection dataConnection, T t);
+	
+	/**
+	 * @param dataConnection
+	 * @return
+	 */
+	Collection<T> findAll(DataConnection dataConnection);
 }
