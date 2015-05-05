@@ -26,9 +26,9 @@ public interface DataBaseHandler {
 	
 	
 	/**
-	 * Initializes the database schema described in the given resource into the database connection.
+	 * Initializes the database Schema described in the given resource into the database connection.
 	 * @param connection database {@link Connection} to initialize.
-	 * @param schemaResource {@link InputStream} describing the database schema to initialize.
+	 * @param schemaResource {@link InputStream} describing the database Schema to initialize.
 	 */
 	void initSchema(Connection connection, InputStream schemaResource) throws Exception;
 

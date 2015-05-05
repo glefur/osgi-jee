@@ -15,9 +15,13 @@
  */
 package osgi.jee.samples.jpa.dao.impl.connection;
 
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
+import osgi.jee.samples.jpa.dao.connection.meta.Schema;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -36,6 +40,21 @@ public abstract class JPADataConnection implements DataConnection {
 	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+	
+
+	/**
+	 * {@inheritDoc}
+	 * @throws SQLException 
+	 * @see osgi.jee.samples.jpa.dao.connection.DataConnection#getSchema()
+	 */
+	@Override
+	public Schema getSchema() throws SQLException {
+		DatabaseMetaData metaData = getSQLConnection().getMetaData();
+		if (metaData != null) {
+			return new Schema(metaData);
+		}
+		return null;
 	}
 
 	/**

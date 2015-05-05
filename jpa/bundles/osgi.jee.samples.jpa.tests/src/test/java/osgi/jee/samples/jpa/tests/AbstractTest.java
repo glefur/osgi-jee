@@ -49,16 +49,16 @@ public class AbstractTest {
 	protected static DataConnection dataConnection;
 
 	/**
-	 * @return whether the data schema should be initialized or not.
+	 * @return whether the data Schema should be initialized or not.
 	 */
 	protected static boolean initDataSchema() {
-		return true;
+		return false;
 	}
 
 	/**
 	 * @return whether the data set should be initialized or not.
 	 */
-	protected boolean initDataSet() {
+	protected static boolean initDataSet() {
 		return true;
 	}
 
@@ -82,36 +82,40 @@ public class AbstractTest {
 	 */
 	@AfterClass
 	public static void closeTestFixture() throws SQLException {
+//		System.out.println(dataConnection.getSchema().toDDL());
 		dbunitConnection.close();
 		dataConnection.close();
 	}
 
 	/**
+	 * @throws DatabaseUnitException 
+	 * @throws IOException 
 	 * 
 	 */
-	private static void initDataConnection() {
+	private static void initDataConnection() throws DatabaseUnitException, IOException {
 		EntityManagerFactory emf = TestsActivator.getInstance().getEntityManagerFactory();
 		DataConnectionFactoryRegistry registry = TestsActivator.getInstance().getDataConnectionFactoryRegistry();
 		dataConnection = registry.getService(emf.createEntityManager());
 		assert dataConnection instanceof JPADataConnection:"Bad DataConnection created. Unable to perform the test.";
+		if (initDataSet()) {
+			dbunitConnection = new DatabaseConnection(dataConnection.getSQLConnection());
+			InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);
+			dataset = new FlatXmlDataSetBuilder().build(datasetResource);
+			datasetResource.close();
+		}
 	}
 
 	/**
-	 * @throws IOException
 	 * @throws Exception
 	 * @throws DatabaseUnitException
 	 * @throws DataSetException
 	 */
-	private static void performDataSchemaInitialization() throws IOException, Exception, DatabaseUnitException, DataSetException {
+	private static void performDataSchemaInitialization() throws Exception {
 		Connection connection = dataConnection.getSQLConnection();
 		InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
 		DataBaseHandler dataBaseHandler = TestsActivator.getInstance().getDataBaseHandler();
 		dataBaseHandler.initSchema(connection, schemaResource);
 		schemaResource.close();
-		dbunitConnection = new DatabaseConnection(connection);
-		InputStream datasetResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_DATASET_FILE);
-		dataset = new FlatXmlDataSetBuilder().build(datasetResource);
-		datasetResource.close();
 	}
 
 	/**

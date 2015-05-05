@@ -14,5 +14,4 @@ Import-Package: javax.persistence;version="1.1.0",
  osgi.jee.samples.jpa.dao.connection,
  osgi.jee.samples.jpa.dao.impl.connection,
  osgi.jee.samples.jpa.util.services
-Service-Component: OSGI-INF/HibernateConnection.xml,
- OSGI-INF/HibernateConnectionFactory.xml
+Service-Component: OSGI-INF/HibernateConnectionFactory.xml

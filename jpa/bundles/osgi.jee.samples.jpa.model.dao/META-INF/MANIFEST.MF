@@ -9,6 +9,5 @@ Import-Package: javax.persistence;version="1.1.0",
  osgi.jee.samples.jpa.dao,
  osgi.jee.samples.jpa.dao.impl,
  osgi.jee.samples.jpa.model
-Service-Component: OSGI-INF/EmployeeDAOImpl.xml,
- OSGI-INF/AddressDAO.xml
+Service-Component: OSGI-INF/AddressDAO.xml
 Export-Package: osgi.jee.samples.model.dao

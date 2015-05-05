@@ -16,6 +16,9 @@
 package osgi.jee.samples.jpa.dao.connection;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import osgi.jee.samples.jpa.dao.connection.meta.Schema;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -30,5 +33,8 @@ public interface DataConnection {
 	void commit();
 	
 	void close();
-
+	
+	Schema getSchema() throws SQLException;
+	
+	
 }
