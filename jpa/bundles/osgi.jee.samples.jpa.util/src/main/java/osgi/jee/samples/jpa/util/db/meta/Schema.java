@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.dao.connection.meta;
+package osgi.jee.samples.jpa.util.db.meta;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -53,22 +53,5 @@ public class Schema {
 	
 	public Table getTable(String name) {
 		return tables.get(name);
-	}
-
-	public String toDDL() {
-		StringBuilder builder = new StringBuilder();
-		try {
-			for (Table table : getTables()) {
-				builder.append(table.toDDL());
-			}
-			for (Table table : getTables()) {
-				for (ForeignKey fk : table.getForeignKeys()) {
-					builder.append(fk.toDDL());
-				}
-			}
-		} catch (SQLException e) {
-			builder.append("Error build DDL schema: Unable to retrieve schema tables from metadata");
-		}
-		return builder.toString();
 	}
 }

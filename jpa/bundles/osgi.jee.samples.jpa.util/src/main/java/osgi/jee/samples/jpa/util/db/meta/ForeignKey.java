@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.dao.connection.meta;
+package osgi.jee.samples.jpa.util.db.meta;
 
 
 /**
@@ -50,7 +50,7 @@ public class ForeignKey {
 	/**
 	 * @return the sourceColumn
 	 */
-	public Column getSourceColumns() {
+	public Column getSourceColumn() {
 		return sourceColumn;
 	}
 
@@ -64,34 +64,8 @@ public class ForeignKey {
 	/**
 	 * @return the targetColumn
 	 */
-	public Column getTargetColumns() {
+	public Column getTargetColumn() {
 		return targetColumn;
-	}
-
-	/**
-	 * @return
-	 */
-	public String toDDL() {
-		StringBuilder builder = 
-				new StringBuilder("ALTER TABLE ")
-						.append(sourceTable.getName())
-						.append(" ADD CONSTRAINT ")
-						.append(buildFKName())
-						.append(" FOREIGN KEY (")
-						.append(sourceColumn.getName())
-						.append(") REFERENCES ")
-						.append(targetTable.getName())
-						.append(" (")
-						.append(targetColumn.getName())
-						.append(");\n");
-		return builder.toString();
-	}
-
-	/**
-	 * @return
-	 */
-	private String buildFKName() {
-		return "FK_" + sourceTable.getName() + "_" + targetTable.getName();
 	}
 
 }

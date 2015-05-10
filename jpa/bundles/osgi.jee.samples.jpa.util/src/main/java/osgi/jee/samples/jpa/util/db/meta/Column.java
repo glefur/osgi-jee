@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.dao.connection.meta;
+package osgi.jee.samples.jpa.util.db.meta;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -59,18 +59,6 @@ public class Column {
 	 */
 	public boolean isNotNull() {
 		return notNull;
-	}
-	
-	public String toDDL() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(name).append(' ').append(type);
-		if ("VARCHAR".equals(type)) {
-			builder
-				.append('(')
-				.append(length)
-				.append(')');
-		}
-		return builder.toString();
 	}
 	
 }

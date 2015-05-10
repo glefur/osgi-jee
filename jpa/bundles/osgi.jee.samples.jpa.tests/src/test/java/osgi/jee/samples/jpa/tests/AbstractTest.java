@@ -36,6 +36,8 @@ import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
+import osgi.jee.samples.jpa.util.db.DbService;
+import osgi.jee.samples.jpa.util.db.meta.Schema;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -81,8 +83,11 @@ public class AbstractTest {
 	 * Cleans up the session.
 	 */
 	@AfterClass
-	public static void closeTestFixture() throws SQLException {
-//		System.out.println(dataConnection.getSchema().toDDL());
+	public static void closeTestFixture() throws Exception {
+//		DbService dbService = TestsActivator.getInstance().getDbService();
+//		Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
+//		System.out.println(dbService.toDDL(schema));
+//		System.out.println(dbService.toDataSet(dataConnection.getSQLConnection(), schema));
 		dbunitConnection.close();
 		dataConnection.close();
 	}

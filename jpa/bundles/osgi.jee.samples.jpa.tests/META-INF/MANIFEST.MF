@@ -16,10 +16,11 @@ Import-Package: javax.persistence;version="1.1.0",
  org.osgi.util.tracker;version="1.5.1",
  osgi.jee.samples.jpa.dao,
  osgi.jee.samples.jpa.dao.connection,
- osgi.jee.samples.jpa.dao.connection.meta,
  osgi.jee.samples.jpa.dao.db,
  osgi.jee.samples.jpa.dao.impl.connection,
  osgi.jee.samples.jpa.model,
+ osgi.jee.samples.jpa.util.db,
+ osgi.jee.samples.jpa.util.db.meta,
  osgi.jee.samples.jpa.util.services,
  osgi.jee.samples.model.dao
 Require-Bundle: org.junit;bundle-version="4.11.0"

@@ -28,6 +28,7 @@ import org.osgi.framework.ServiceReference;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
+import osgi.jee.samples.jpa.util.db.DbService;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.model.dao.AddressDAO;
 
@@ -79,6 +80,11 @@ public class TestsActivator implements BundleActivator {
     public DataBaseHandler getDataBaseHandler() {
     	ServiceReference<DataBaseHandler> reference = bundle.getBundleContext().getServiceReference(DataBaseHandler.class);
     	return bundle.getBundleContext().getService(reference);
+    }
+    
+    public DbService getDbService() {
+    	ServiceReference<DbService> reference = bundle.getBundleContext().getServiceReference(DbService.class);
+    	return bundle.getBundleContext().getService(reference);    	
     }
     
     public EmploymentFactory getEmploymentFactory() {

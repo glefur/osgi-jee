@@ -13,14 +13,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.dao.connection.meta;
+package osgi.jee.samples.jpa.util.db.meta;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -123,40 +122,4 @@ public class Table {
 		return foreignKeys;
 	}
 
-	/**
-	 * @return
-	 */
-	public String toDDL() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DROP TABLE " + name + ";\n");
-		builder.append("CREATE TABLE " + name + " (\n");
-		try {
-			for (Iterator<Column> iterColumns = getColumns().iterator(); iterColumns.hasNext(); ) {
-				Column column = iterColumns.next();
-				builder.append(column.toDDL());
-				if (iterColumns.hasNext() || getPrimaryKeys().size() > 0) {
-					builder.append(',');
-				} 
-				builder.append('\n');
-			}
-			if (getPrimaryKeys().size() > 0) {
-				builder.append("PRIMARY KEY (");
-				for (Iterator<Column> iterColumns = getPrimaryKeys().iterator(); iterColumns.hasNext(); ) {
-					Column column = iterColumns.next();
-					builder.append(column.getName());
-					if (iterColumns.hasNext()) {
-						builder.append(',');
-					} 
-				}
-				builder.append(")\n");
-			}
-			
-			
-		} catch (SQLException e) {
-			builder.append("Error on build table schema: Unable to retrieve table's columns");
-		}
-		builder.append(");\n");
-		return builder.toString();
-	}
-	
 }
