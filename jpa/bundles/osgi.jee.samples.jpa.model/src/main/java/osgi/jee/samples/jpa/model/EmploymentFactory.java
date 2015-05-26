@@ -64,14 +64,6 @@ public class EmploymentFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createProject()
-	 */
-	public Project createProject() {
-		return new Project();
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createSmallProject()
 	 */
 	public SmallProject createSmallProject() {

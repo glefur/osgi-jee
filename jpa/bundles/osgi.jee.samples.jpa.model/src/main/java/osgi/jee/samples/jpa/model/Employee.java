@@ -16,10 +16,14 @@
 package osgi.jee.samples.jpa.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -34,6 +38,7 @@ import javax.persistence.OneToOne;
 public class Employee {
 
 	@Id
+	@GeneratedValue
 	private long id;
 	private String firstName;
 	private String lastName;
@@ -45,9 +50,9 @@ public class Employee {
 	@ManyToOne
 	private Employee manager;
 	@OneToMany
-	private Collection<Employee> managedEmployees;
+	private Set<Employee> managedEmployees;
 	@ManyToMany
-	private Collection<Project> projects;
+	private Set<Project> projects;
 	private EmploymentPeriod employmentPeriod;
 
 	/**
@@ -124,6 +129,27 @@ public class Employee {
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
+	
+	/**
+	 * Adds a new phone to the phones list.
+	 * @param phone the phone to add.
+	 */
+	public void addPhone(Phone phone) {
+		if (this.phones == null) {
+			phones = new ArrayList<Phone>();
+		}
+		phones.add(phone);
+	}
+	
+	/**
+	 * Removes a phone from the phones list.
+	 * @param phone the phone to remove.
+	 */
+	public void deletePhone(Phone phone) {
+		if (phones != null) {
+			phones.remove(phone);
+		}
+	}
 
 	/**
 	 * @return the address
@@ -153,12 +179,15 @@ public class Employee {
 	 */
 	public void setManager(Employee manager) {
 		this.manager = manager;
+		if (manager.managedEmployees == null || !manager.managedEmployees.contains(this)) {
+			manager.addManagedEmployee(this);
+		}
 	}
 
 	/**
 	 * @return the managedEmployees
 	 */
-	public Collection<Employee> getManagedEmployees() {
+	public Set<Employee> getManagedEmployees() {
 		return managedEmployees;
 	}
 
@@ -166,10 +195,35 @@ public class Employee {
 	 * @param managedEmployees
 	 *            the managedEmployees to set
 	 */
-	public void setManagedEmployees(Collection<Employee> managedEmployees) {
+	public void setManagedEmployees(Set<Employee> managedEmployees) {
 		this.managedEmployees = managedEmployees;
 	}
+	
+	/**
+	 * Adds a new employee in the list of managed employees.
+	 * @param employee the {@link Employee} to add.
+	 */
+	public void addManagedEmployee(Employee employee) {
+		if (managedEmployees == null) {
+			managedEmployees = new HashSet<Employee>();
+		}
+		managedEmployees.add(employee);
+		if (employee.manager != this) {
+			employee.manager = this;
+		}
+	}
 
+	/**
+	 * Removes a new employee from the list of managed employees.
+	 * @param employee the {@link Employee} to remove.
+	 */
+	public void removeManagedEmployee(Employee employee) {
+		if (managedEmployees != null) {
+			managedEmployees.remove(employee);
+			employee.manager = null;
+		}
+	}
+	
 	/**
 	 * @return the projects
 	 */
@@ -181,8 +235,29 @@ public class Employee {
 	 * @param projects
 	 *            the projects to set
 	 */
-	public void setProjects(Collection<Project> projects) {
+	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
+	}
+
+	/**
+	 * Adds a project to the employee's list of projects.
+	 * @param project the project to add.
+	 */
+	public void addProject(Project project) {
+		if (projects == null) {
+			projects = new HashSet<Project>();
+		}
+		projects.add(project);
+	}
+	
+	/**
+	 * Removes a project from the employee's list of projects.
+	 * @param project the project to remove.
+	 */
+	public void removeProject(Project project) {
+		if (projects != null) {
+			projects.remove(project);
+		}
 	}
 
 	/**

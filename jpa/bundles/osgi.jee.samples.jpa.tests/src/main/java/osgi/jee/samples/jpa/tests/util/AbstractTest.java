@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.tests;
+package osgi.jee.samples.jpa.tests.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +36,8 @@ import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
+import osgi.jee.samples.jpa.tests.TestConstants;
+import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.jpa.util.db.DbService;
 import osgi.jee.samples.jpa.util.db.meta.Schema;
 
@@ -43,7 +45,7 @@ import osgi.jee.samples.jpa.util.db.meta.Schema;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class AbstractTest {
+public abstract class AbstractTest {
 	
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
@@ -84,11 +86,12 @@ public class AbstractTest {
 	 */
 	@AfterClass
 	public static void closeTestFixture() throws Exception {
-//		DbService dbService = TestsActivator.getInstance().getDbService();
-//		Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
+		DbService dbService = TestsActivator.getInstance().getService(DbService.class);
+		Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
 //		System.out.println(dbService.toDDL(schema));
-//		System.out.println(dbService.toDataSet(dataConnection.getSQLConnection(), schema));
-		dbunitConnection.close();
+		System.out.println(dbService.toDataSet(dataConnection.getSQLConnection(), schema));
+		if (dbunitConnection != null)
+			dbunitConnection.close();
 		dataConnection.close();
 	}
 
@@ -98,8 +101,8 @@ public class AbstractTest {
 	 * 
 	 */
 	private static void initDataConnection() throws DatabaseUnitException, IOException {
-		EntityManagerFactory emf = TestsActivator.getInstance().getEntityManagerFactory();
-		DataConnectionFactoryRegistry registry = TestsActivator.getInstance().getDataConnectionFactoryRegistry();
+		EntityManagerFactory emf = TestsActivator.getInstance().getService(EntityManagerFactory.class);
+		DataConnectionFactoryRegistry registry = TestsActivator.getInstance().getService(DataConnectionFactoryRegistry.class);
 		dataConnection = registry.getService(emf.createEntityManager());
 		assert dataConnection instanceof JPADataConnection:"Bad DataConnection created. Unable to perform the test.";
 		if (initDataSet()) {
@@ -118,7 +121,7 @@ public class AbstractTest {
 	private static void performDataSchemaInitialization() throws Exception {
 		Connection connection = dataConnection.getSQLConnection();
 		InputStream schemaResource = TestsActivator.getInstance().getTestResource(TestConstants.DB_SCHEMA_FILE);
-		DataBaseHandler dataBaseHandler = TestsActivator.getInstance().getDataBaseHandler();
+		DataBaseHandler dataBaseHandler = TestsActivator.getInstance().getService(DataBaseHandler.class);
 		dataBaseHandler.initSchema(connection, schemaResource);
 		schemaResource.close();
 	}

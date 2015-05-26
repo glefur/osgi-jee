@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2014 Goulwen Le Fur
+ * Copyright (C) 2015 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,30 +13,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.jpa.tests;
+package osgi.jee.samples.model.dao.internal.impl;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-
-import org.junit.Test;
-
-import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.jpa.tests.util.AbstractTest;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import osgi.jee.samples.jpa.dao.impl.JPADAOImpl;
+import osgi.jee.samples.jpa.model.Phone;
+import osgi.jee.samples.model.dao.PhoneDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class SampleTest extends AbstractTest {
+public class PhoneDAOImpl extends JPADAOImpl<Phone> implements PhoneDAO {
 
-	@Test
-	public void test() {
-//		Sampler.generateEmploymentSample(dataConnection);
-		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		Collection<Employee> findAll = employeeDAO.findAll(dataConnection);
-		assertTrue(findAll.size() == 14);
-
-	}
 }

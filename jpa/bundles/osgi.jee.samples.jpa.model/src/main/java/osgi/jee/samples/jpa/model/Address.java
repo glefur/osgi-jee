@@ -16,6 +16,7 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
@@ -26,6 +27,7 @@ import javax.persistence.Id;
 public class Address {
 
 	@Id
+	@GeneratedValue
 	private long id;
 	private String street;
 	private String city;

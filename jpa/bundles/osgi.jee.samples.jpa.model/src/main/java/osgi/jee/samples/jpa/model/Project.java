@@ -16,18 +16,23 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-public class Project {
+public abstract class Project {
 
 	@Id
+	@GeneratedValue
 	private long id;
 	private String name;
+	@OneToOne
+	private Employee teamLeader;
 
 	/**
 	 * {@inheritDoc}
@@ -59,6 +64,21 @@ public class Project {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the teamLeader
+	 */
+	public Employee getTeamLeader() {
+		return teamLeader;
+	}
+
+	/**
+	 * @param teamLeader the teamLeader to set
+	 */
+	public void setTeamLeader(Employee teamLeader) {
+		this.teamLeader = teamLeader;
+		teamLeader.addProject(this);
 	}
 
 }
