@@ -26,5 +26,7 @@ public interface TestConstants {
      */
     String DB_SCHEMA_FILE = "employmentSchema.ddl";
     String DB_DATASET_FILE = "employmentDataset.xml";
+
     
+    String PARIZEAU_LASTNAME = "Parizeau";
 }

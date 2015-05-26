@@ -15,14 +15,13 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
+import osgi.jee.samples.jpa.tests.util.TestConstants;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -31,12 +30,22 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
  */
 public class SampleTest extends AbstractTest {
 
+	/**
+	 * 
+	 */
+	private static final String NEW_NAME = "Michon";
+
 	@Test
 	public void test() {
-//		Sampler.generateEmploymentSample(dataConnection);
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		Collection<Employee> findAll = employeeDAO.findAll(dataConnection);
-		assertTrue(findAll.size() == 14);
-
+		Employee parizeau = employeeDAO.findByName(dataConnection, TestConstants.PARIZEAU_LASTNAME);
+		assertNotNull(parizeau);
+		parizeau.setLastName(NEW_NAME);
+		assertEquals(parizeau.getRealName(), NEW_NAME);
+		assertEquals(parizeau.getLastName(), Employee.FAKE_NAME);
+		dataConnection.beginTransaction();
+		employeeDAO.update(dataConnection, parizeau);
+		assertNull(employeeDAO.findByName(dataConnection, NEW_NAME));
+		assertNotNull(employeeDAO.findByName(dataConnection, Employee.FAKE_NAME));
 	}
 }

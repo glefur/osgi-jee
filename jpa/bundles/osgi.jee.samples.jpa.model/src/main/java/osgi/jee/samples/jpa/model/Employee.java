@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,7 +37,11 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
+@Access(AccessType.FIELD)
 public class Employee {
+	
+	public static final String FAKE_NAME = "Doe";
+	
 
 	@Id
 	@GeneratedValue
@@ -88,7 +94,13 @@ public class Employee {
 	/**
 	 * @return the lastName
 	 */
+	@Access(AccessType.PROPERTY)
 	public String getLastName() {
+		// returns a fake value
+		return FAKE_NAME;
+	}
+	
+	public String getRealName() {
 		return lastName;
 	}
 
