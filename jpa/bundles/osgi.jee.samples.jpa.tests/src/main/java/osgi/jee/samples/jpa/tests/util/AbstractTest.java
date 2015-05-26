@@ -36,7 +36,6 @@ import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
-import osgi.jee.samples.jpa.tests.TestConstants;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.jpa.util.db.DbService;
 import osgi.jee.samples.jpa.util.db.meta.Schema;
@@ -55,15 +54,29 @@ public abstract class AbstractTest {
 	/**
 	 * @return whether the data Schema should be initialized or not.
 	 */
-	protected static boolean initDataSchema() {
+	private static boolean initDataSchema() {
 		return false;
 	}
 
 	/**
 	 * @return whether the data set should be initialized or not.
 	 */
-	protected static boolean initDataSet() {
+	private static boolean initDataSet() {
 		return true;
+	}
+	
+	/**
+	 * @return whether the data schema should be displayed at the end of the test or not.
+	 */
+	private static boolean displaySchema() {
+		return false;
+	}
+
+	/**
+	 * @return whether the data set should be displayed at the end of the test or not.
+	 */
+	private static boolean displayDataSet() {
+		return false;
 	}
 
 	@BeforeClass
@@ -86,10 +99,14 @@ public abstract class AbstractTest {
 	 */
 	@AfterClass
 	public static void closeTestFixture() throws Exception {
-		DbService dbService = TestsActivator.getInstance().getService(DbService.class);
-		Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
-//		System.out.println(dbService.toDDL(schema));
-		System.out.println(dbService.toDataSet(dataConnection.getSQLConnection(), schema));
+		if (displaySchema() || displayDataSet()) {
+			DbService dbService = TestsActivator.getInstance().getService(DbService.class);
+			Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
+			if (displaySchema())
+				System.out.println(dbService.toDDL(schema));
+			if (displayDataSet())
+				System.out.println(dbService.toDataSet(dataConnection.getSQLConnection(), schema));
+		}
 		if (dbunitConnection != null)
 			dbunitConnection.close();
 		dataConnection.close();
