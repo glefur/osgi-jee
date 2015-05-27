@@ -17,11 +17,19 @@ package osgi.jee.samples.jpa.tests;
 
 import static org.junit.Assert.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.model.Employee;
+import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
-import osgi.jee.samples.jpa.tests.util.TestConstants;
+import osgi.jee.samples.jpa.tests.util.Sampler;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -30,22 +38,47 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
  */
 public class SampleTest extends AbstractTest {
 
-	/**
-	 * 
-	 */
-	private static final String NEW_NAME = "Michon";
-
 	@Test
 	public void test() {
-		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		Employee parizeau = employeeDAO.findByName(dataConnection, TestConstants.PARIZEAU_LASTNAME);
-		assertNotNull(parizeau);
-		parizeau.setLastName(NEW_NAME);
-		assertEquals(parizeau.getRealName(), NEW_NAME);
-		assertEquals(parizeau.getLastName(), Employee.FAKE_NAME);
-		dataConnection.beginTransaction();
-		employeeDAO.update(dataConnection, parizeau);
-		assertNull(employeeDAO.findByName(dataConnection, NEW_NAME));
-		assertNotNull(employeeDAO.findByName(dataConnection, Employee.FAKE_NAME));
+
+		try {
+			EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
+			Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
+			henriMenard.setYearOfService(11);
+			Employee corinneParizeau = Sampler.createCorinneParizeau(employmentFactory, henriMenard);
+			corinneParizeau.setYearOfService(8);
+
+			dataConnection.beginTransaction();
+			Sampler.persistEmployee(dataConnection, henriMenard);
+			Sampler.persistEmployee(dataConnection, corinneParizeau);
+			dataConnection.commit();
+			Statement statement = dataConnection.getSQLConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM EMP_DATA");
+			Map<Long, Object[]> results = new HashMap<Long, Object[]>(2);
+			while (resultSet.next()) {
+				Long emp_id = resultSet.getLong("EMP_ID");
+				String mgr_id = resultSet.getString("MGR_ID");
+				int yos = resultSet.getInt("YEAR_OF_SERV");
+				results.put(emp_id, new Object[] {mgr_id, yos});
+			}
+			assertEquals("Bad result count", 2, results.size());
+			EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+			Employee foundHenriMenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+			Object[] henriMenardData = results.get(foundHenriMenard.getId());
+			assertNotNull("Unable to found Henri Ménard data", henriMenardData);
+			assertNull("Bad manager definition for Henri Ménard", henriMenardData[0]);
+			assertEquals("Bad Year of Service definition for Henri Ménard", henriMenard.getYearOfService(), henriMenardData[1]);
+			Employee foundCorinneParizeau = employeeDAO.findByName(dataConnection, Sampler.CORINNE_PARIZEAU_LASTNAME);
+			Object[] corinneParizeauData = results.get(foundCorinneParizeau.getId());
+			assertNotNull("Unable to found Corinne Parizeau data", corinneParizeauData);
+			assertEquals("Bad manager definition for Corinne Parizeau", foundHenriMenard.getId(), Long.parseLong((String) corinneParizeauData[0])); 
+			assertEquals("Bad Year of Service definition for Corinne Parizeau", corinneParizeau.getYearOfService(), corinneParizeauData[1]);
+			
+			
+		} catch (ParseException e) {
+			fail("Unable to create an employee");
+		} catch (SQLException e) {
+			fail("Unable to perform SQL query");
+		}
 	}
 }

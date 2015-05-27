@@ -62,7 +62,7 @@ public abstract class AbstractTest {
 	 * @return whether the data set should be initialized or not.
 	 */
 	private static boolean initDataSet() {
-		return true;
+		return false;
 	}
 	
 	/**

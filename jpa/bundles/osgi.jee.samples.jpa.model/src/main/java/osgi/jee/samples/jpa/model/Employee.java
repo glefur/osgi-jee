@@ -22,27 +22,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Table;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-@Access(AccessType.FIELD)
+@Table(name="EMPLOYEE")
+@SecondaryTable(name="EMP_DATA", pkJoinColumns = @PrimaryKeyJoinColumn(name="EMP_ID", referencedColumnName="ID"))
 public class Employee {
 	
-	public static final String FAKE_NAME = "Doe";
-	
-
 	@Id
 	@GeneratedValue
 	private long id;
@@ -53,13 +53,17 @@ public class Employee {
 	private List<Phone> phones;
 	@OneToOne
 	private Address address;
-	@ManyToOne
+	@OneToOne
+	@JoinColumn(name="MGR_ID", table="EMP_DATA", referencedColumnName="ID")
 	private Employee manager;
 	@OneToMany
 	private Set<Employee> managedEmployees;
 	@ManyToMany
 	private Set<Project> projects;
 	private EmploymentPeriod employmentPeriod;
+	@Column(name="YEAR_OF_SERV", table="EMP_DATA")
+	private int yearOfService;
+	
 
 	/**
 	 * @return the id
@@ -94,13 +98,7 @@ public class Employee {
 	/**
 	 * @return the lastName
 	 */
-	@Access(AccessType.PROPERTY)
 	public String getLastName() {
-		// returns a fake value
-		return FAKE_NAME;
-	}
-	
-	public String getRealName() {
 		return lastName;
 	}
 
@@ -285,6 +283,20 @@ public class Employee {
 	 */
 	public void setEmploymentPeriod(EmploymentPeriod employmentPeriod) {
 		this.employmentPeriod = employmentPeriod;
+	}
+
+	/**
+	 * @return the yearOfService
+	 */
+	public int getYearOfService() {
+		return yearOfService;
+	}
+
+	/**
+	 * @param yearOfService the yearOfService to set
+	 */
+	public void setYearOfService(int yearOfService) {
+		this.yearOfService = yearOfService;
 	}
 
 }
