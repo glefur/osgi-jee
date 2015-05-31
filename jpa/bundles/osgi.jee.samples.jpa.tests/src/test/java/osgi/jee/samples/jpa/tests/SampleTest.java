@@ -21,8 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 
@@ -30,6 +28,10 @@ import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
+import osgi.jee.samples.jpa.util.db.DbService;
+import osgi.jee.samples.jpa.util.db.meta.Column;
+import osgi.jee.samples.jpa.util.db.meta.Schema;
+import osgi.jee.samples.jpa.util.db.meta.Table;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -44,41 +46,41 @@ public class SampleTest extends AbstractTest {
 		try {
 			EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
 			Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
-			henriMenard.setYearOfService(11);
-			Employee corinneParizeau = Sampler.createCorinneParizeau(employmentFactory, henriMenard);
-			corinneParizeau.setYearOfService(8);
-
+			ResultSet rs = dataConnection.getSQLConnection().prepareStatement("values ( next value for PHN_SEQ )").executeQuery();
+			rs.next();
+			long nextPhoneIdSeq = rs.getLong(1);
+			long nextPhoneId = (nextPhoneIdSeq + 1) * 50; 
 			dataConnection.beginTransaction();
 			Sampler.persistEmployee(dataConnection, henriMenard);
-			Sampler.persistEmployee(dataConnection, corinneParizeau);
 			dataConnection.commit();
-			Statement statement = dataConnection.getSQLConnection().createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM EMP_DATA");
-			Map<Long, Object[]> results = new HashMap<Long, Object[]>(2);
-			while (resultSet.next()) {
-				Long emp_id = resultSet.getLong("EMP_ID");
-				String mgr_id = resultSet.getString("MGR_ID");
-				int yos = resultSet.getInt("YEAR_OF_SERV");
-				results.put(emp_id, new Object[] {mgr_id, yos});
+			DbService dbService = TestsActivator.getInstance().getService(DbService.class);
+			Schema schema = dbService.getSchema(dataConnection.getSQLConnection());
+			Statement stmt = dataConnection.getSQLConnection().createStatement();
+			ResultSet query = stmt.executeQuery("SELECT * FROM SEQUENCE_TABLE");
+			long employeeLastId = -1;
+			while (query.next()) {
+				employeeLastId = query.getLong("SEQ_COUNT");
 			}
-			assertEquals("Bad result count", 2, results.size());
 			EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 			Employee foundHenriMenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
-			Object[] henriMenardData = results.get(foundHenriMenard.getId());
-			assertNotNull("Unable to found Henri Ménard data", henriMenardData);
-			assertNull("Bad manager definition for Henri Ménard", henriMenardData[0]);
-			assertEquals("Bad Year of Service definition for Henri Ménard", henriMenard.getYearOfService(), henriMenardData[1]);
-			Employee foundCorinneParizeau = employeeDAO.findByName(dataConnection, Sampler.CORINNE_PARIZEAU_LASTNAME);
-			Object[] corinneParizeauData = results.get(foundCorinneParizeau.getId());
-			assertNotNull("Unable to found Corinne Parizeau data", corinneParizeauData);
-			assertEquals("Bad manager definition for Corinne Parizeau", foundHenriMenard.getId(), Long.parseLong((String) corinneParizeauData[0])); 
-			assertEquals("Bad Year of Service definition for Corinne Parizeau", corinneParizeau.getYearOfService(), corinneParizeauData[1]);
+			// We have generated 1 id, so the value column should be set at 1
+			assertEquals("Bad object id", foundHenriMenard.getId(), employeeLastId);
+			Table employeeTable = schema.getTable("EMPLOYEE");
+			Column employeeIDColumn = employeeTable.getColumn("ID");
+			// a id generated with sequence strategy should not be mapped on auto-incremented column
+			assertFalse("ID column of Employee Table shouldn't be auto-incremented", employeeIDColumn.isAutoIncrement());
 			
+			long id = foundHenriMenard.getPhones().get(0).getId();
+			assertEquals("Phone IDs don't seem to be generated using a sequence", id, nextPhoneId);
+			
+			Table addressTable = schema.getTable("ADDRESS");
+			Column addressIdColumn = addressTable.getColumn("ID");
+			assertTrue("ID column of Address Table should be auto-incremented", addressIdColumn.isAutoIncrement());
 			
 		} catch (ParseException e) {
 			fail("Unable to create an employee");
 		} catch (SQLException e) {
-			fail("Unable to perform SQL query");
-		}
+			fail("Unable to perform SQL query " + e.getMessage());
+		} 
 	}
 }

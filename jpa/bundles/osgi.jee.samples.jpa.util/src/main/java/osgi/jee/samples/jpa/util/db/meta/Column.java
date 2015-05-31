@@ -24,12 +24,16 @@ public class Column {
 	private String name;
 	private String type;
 	private int length;
+	private boolean generated;
+	private boolean autoIncrement;
 	private boolean notNull;
 	
-	public Column(String name, String type, int length, boolean notNull) {
+	public Column(String name, String type, int length, boolean generated, boolean autoIncrement, boolean notNull) {
 		this.name = name;
 		this.type = type;
 		this.length = length;
+		this.generated = generated;
+		this.autoIncrement = autoIncrement;
 		this.notNull = notNull;
 	}
 
@@ -52,6 +56,20 @@ public class Column {
 	 */
 	public int getLength() {
 		return length;
+	}
+
+	/**
+	 * @return the generated
+	 */
+	public boolean isGenerated() {
+		return generated;
+	}
+
+	/**
+	 * @return the autoIncrement
+	 */
+	public boolean isAutoIncrement() {
+		return autoIncrement;
 	}
 
 	/**

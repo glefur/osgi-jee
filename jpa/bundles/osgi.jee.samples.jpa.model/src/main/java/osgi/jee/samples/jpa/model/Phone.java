@@ -17,7 +17,9 @@ package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -27,7 +29,8 @@ import javax.persistence.Id;
 public class Phone {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHN_SEQ")
+	@SequenceGenerator(name="PHN_SEQ", sequenceName="PHN_SEQ", allocationSize=50)
 	private long id;
 	private String type;
 	private String number;

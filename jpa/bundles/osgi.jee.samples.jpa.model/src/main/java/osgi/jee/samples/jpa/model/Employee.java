@@ -22,17 +22,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -40,11 +38,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="EMPLOYEE")
-@SecondaryTable(name="EMP_DATA", pkJoinColumns = @PrimaryKeyJoinColumn(name="EMP_ID", referencedColumnName="ID"))
 public class Employee {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GEN")
+	@TableGenerator(name="TABLE_GEN", table="SEQUENCE_TABLE", pkColumnName="EMP_SEQ", valueColumnName="SEQ_COUNT")
 	private long id;
 	private String firstName;
 	private String lastName;
@@ -54,15 +52,12 @@ public class Employee {
 	@OneToOne
 	private Address address;
 	@OneToOne
-	@JoinColumn(name="MGR_ID", table="EMP_DATA", referencedColumnName="ID")
 	private Employee manager;
 	@OneToMany
 	private Set<Employee> managedEmployees;
 	@ManyToMany
 	private Set<Project> projects;
 	private EmploymentPeriod employmentPeriod;
-	@Column(name="YEAR_OF_SERV", table="EMP_DATA")
-	private int yearOfService;
 	
 
 	/**
@@ -283,20 +278,6 @@ public class Employee {
 	 */
 	public void setEmploymentPeriod(EmploymentPeriod employmentPeriod) {
 		this.employmentPeriod = employmentPeriod;
-	}
-
-	/**
-	 * @return the yearOfService
-	 */
-	public int getYearOfService() {
-		return yearOfService;
-	}
-
-	/**
-	 * @param yearOfService the yearOfService to set
-	 */
-	public void setYearOfService(int yearOfService) {
-		this.yearOfService = yearOfService;
 	}
 
 }

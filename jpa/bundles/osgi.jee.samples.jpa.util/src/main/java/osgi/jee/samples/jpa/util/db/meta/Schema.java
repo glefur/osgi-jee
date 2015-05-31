@@ -51,7 +51,10 @@ public class Schema {
 		return tables.values();
 	}
 	
-	public Table getTable(String name) {
+	public Table getTable(String name) throws SQLException {
+		if (tables == null) {
+			getTables();
+		}
 		return tables.get(name);
 	}
 }

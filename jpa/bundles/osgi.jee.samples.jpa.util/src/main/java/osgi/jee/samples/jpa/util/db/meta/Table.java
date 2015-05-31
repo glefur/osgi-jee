@@ -69,8 +69,10 @@ public class Table {
 				String colName = columns2.getString(4);
 				String type = columns2.getString(6);
 				int length = columns2.getInt(7);
+				boolean generated = "YES".equals(columns2.getString("IS_GENERATEDCOLUMN"));
+				boolean autoIncrement = "YES".equals(columns2.getString("IS_AUTOINCREMENT"));
 				int nullableInt = columns2.getInt(11);
-				Column col = new Column(colName, type, length, nullableInt == DatabaseMetaData.columnNoNulls);
+				Column col = new Column(colName, type, length, generated, autoIncrement, nullableInt == DatabaseMetaData.columnNoNulls);
 				columns.put(colName, col);
 			}
 		}
@@ -78,7 +80,10 @@ public class Table {
 		return columns.values();
 	}
 	
-	public Column getColumn(String name) {
+	public Column getColumn(String name) throws SQLException {
+		if (columns == null) {
+			getColumns();
+		}
 		return columns.get(name);
 	}
 
