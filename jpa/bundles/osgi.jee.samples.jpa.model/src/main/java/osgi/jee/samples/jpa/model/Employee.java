@@ -23,27 +23,29 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+
+import osgi.jee.samples.jpa.model.id.EmployeePK;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-@Table(name="EMPLOYEE")
+@IdClass(EmployeePK.class)
 public class Employee {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="TABLE_GEN")
-	@TableGenerator(name="TABLE_GEN", table="SEQUENCE_TABLE", pkColumnName="EMP_SEQ", valueColumnName="SEQ_COUNT")
-	private long id;
+	private long companyId;
+	@Id
+	private long departmentId;
+	@Id
+	private long employeeId;
+	
 	private String firstName;
 	private String lastName;
 	private BigDecimal salary;
@@ -59,20 +61,46 @@ public class Employee {
 	private Set<Project> projects;
 	private EmploymentPeriod employmentPeriod;
 	
-
 	/**
-	 * @return the id
+	 * @return the companyId
 	 */
-	public long getId() {
-		return id;
+	public long getCompanyId() {
+		return companyId;
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @return the departmentId
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public long getDepartmentId() {
+		return departmentId;
+	}
+
+	/**
+	 * @return the employeeId
+	 */
+	public long getEmployeeId() {
+		return employeeId;
+	}
+
+	/**
+	 * @param companyId the companyId to set
+	 */
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
+
+	/**
+	 * @param departmentId the departmentId to set
+	 */
+	public void setDepartmentId(long departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	/**
+	 * @param employeeId the employeeId to set
+	 */
+	public void setEmployeeId(long employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	/**

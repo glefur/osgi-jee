@@ -38,7 +38,7 @@ public class Address {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IAddress#getId()
+	 * @see osgi.jee.samples.jpa.model.IAddress#getCompanyId()
 	 */
 	public long getId() {
 		return id;

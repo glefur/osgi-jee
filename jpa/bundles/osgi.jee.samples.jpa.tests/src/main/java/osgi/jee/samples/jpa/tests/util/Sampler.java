@@ -43,12 +43,17 @@ public class Sampler {
 	/**
 	 * 
 	 */
-	public static final String CORINNE_PARIZEAU_LASTNAME = "Parizeau";
+	public static final String HENRI_MENARD_FIRSTNAME = "Henri";
 
 	/**
 	 * 
 	 */
 	public static final String HENRI_MENARD_LASTNAME = "Ménard";
+	
+	/**
+	 * 
+	 */
+	public static final String CORINNE_PARIZEAU_LASTNAME = "Parizeau";
 
 	/**
 	 * France country name literal
@@ -369,7 +374,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createHenriMenard(EmploymentFactory employmentFactory) throws ParseException {
-		Employee henriMenard = createEmployee(employmentFactory, "Henri", HENRI_MENARD_LASTNAME, "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2004", null);
+		Employee henriMenard = createEmployee(employmentFactory, HENRI_MENARD_FIRSTNAME, HENRI_MENARD_LASTNAME, "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2004", null);
 		return henriMenard;
 	}
 

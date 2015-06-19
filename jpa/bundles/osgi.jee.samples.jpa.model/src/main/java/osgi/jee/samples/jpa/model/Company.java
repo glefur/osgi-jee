@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2014 Goulwen Le Fur
+ * Copyright (C) 2015 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,69 +16,39 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- * 
+ *
  */
 @Entity
-public abstract class Project {
-
+public class Company {
+	
 	@Id
-	@GeneratedValue
-	private long id;
+	private long companyId;
+	
 	private String name;
-	@OneToOne
-	private Employee teamLeader;
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#getCompanyId()
+	 * @return the companyId
 	 */
-	public long getId() {
-		return id;
+	public long getCompanyId() {
+		return companyId;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#setId(long)
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#getName()
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#setName(java.lang.String)
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the teamLeader
-	 */
-	public Employee getTeamLeader() {
-		return teamLeader;
-	}
-
-	/**
-	 * @param teamLeader the teamLeader to set
-	 */
-	public void setTeamLeader(Employee teamLeader) {
-		this.teamLeader = teamLeader;
-		teamLeader.addProject(this);
 	}
 
 }

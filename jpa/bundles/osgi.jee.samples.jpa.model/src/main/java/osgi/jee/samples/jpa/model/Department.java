@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2014 Goulwen Le Fur
+ * Copyright (C) 2015 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,70 +15,49 @@
  */
 package osgi.jee.samples.jpa.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+
+import osgi.jee.samples.jpa.model.id.DepartmentPK;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- * 
+ *
  */
 @Entity
-public abstract class Project {
+public class Department {
 
-	@Id
-	@GeneratedValue
-	private long id;
+	@EmbeddedId
+	private DepartmentPK departmentId;
+	
 	private String name;
-	@OneToOne
-	private Employee teamLeader;
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#getCompanyId()
+	 * @return the departmentId
 	 */
-	public long getId() {
-		return id;
+	public DepartmentPK getDepartmentId() {
+		return departmentId;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#setId(long)
+	 * @param departmentId the departmentId to set
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setDepartmentId(DepartmentPK departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#getName()
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IProject#setName(java.lang.String)
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the teamLeader
-	 */
-	public Employee getTeamLeader() {
-		return teamLeader;
-	}
-
-	/**
-	 * @param teamLeader the teamLeader to set
-	 */
-	public void setTeamLeader(Employee teamLeader) {
-		this.teamLeader = teamLeader;
-		teamLeader.addProject(this);
 	}
 
 }

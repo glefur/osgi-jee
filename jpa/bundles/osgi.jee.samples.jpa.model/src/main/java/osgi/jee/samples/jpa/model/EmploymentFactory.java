@@ -23,48 +23,64 @@ package osgi.jee.samples.jpa.model;
 public class EmploymentFactory {
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createAddress()
+	 * Creates a new address.
+	 * @return the created {@link Address}.
 	 */
 	public Address createAddress() {
 		return new Address();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createBigProject()
+	 * Creates a new big project.
+	 * @return the created {@link BigProject}.
 	 */
 	public BigProject createBigProject() {
 		return new BigProject();
 	}
+	
+	/**
+	 * Creates a new company.
+	 * @return the created {@link Company}.
+	 */
+	public Company createCompany() {
+		return new Company();
+	}
+	
+	/**
+	 * Creates a new department.
+	 * @return the created {@link Department}.
+	 */
+	public Department createDepartment() {
+		return new Department();
+	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createEmployee()
+	 * Creates a new employee
+	 * @return the created {@link Employee}.
 	 */
 	public Employee createEmployee() {
 		return new Employee();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createEmploymentPeriod()
+	 * Creates a new employment period.
+	 * @return the created {@link EmploymentPeriod}.
 	 */
 	public EmploymentPeriod createEmploymentPeriod() {
 		return new EmploymentPeriod();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createPhone()
+	 * Creates a new phone.
+	 * @return the created {@link Phone}.
 	 */
 	public Phone createPhone() {
 		return new Phone();
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.EmploymentFactory#createSmallProject()
+	 * Creates a new small project.
+	 * @return the created {@link SmallProject}.
 	 */
 	public SmallProject createSmallProject() {
 		return new SmallProject();

@@ -38,7 +38,7 @@ public class Phone {
 
 	/**
 	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IPhone#getId()
+	 * @see osgi.jee.samples.jpa.model.IPhone#getCompanyId()
 	 */
 	public long getId() {
 		return id;
