@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2015 Goulwen Le Fur
+ * Copyright (C) 2014 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,47 +21,35 @@ import java.io.Serializable;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class EmployeePK implements Serializable {
+public class PhonePK implements Serializable {
 	
-	private static final long serialVersionUID = 7435831471854391356L;
-
-	private long companyId;
-
-	private long departmentId;
-
-	private long employeeId;
-	
-
-	public EmployeePK() { }
-
-	public EmployeePK(long companyId, long departmentId, long employeeId) {
-		this.companyId = companyId;
-		this.departmentId = departmentId;
-		this.employeeId = employeeId;
-	}
-
 	/**
-	 * {@inheritDoc}
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * 
 	 */
+	private static final long serialVersionUID = 3356695275121075828L;
+	
+	private String type;
+	private long owner;
+	
+	public PhonePK() {}
+
+	public PhonePK(String type, long owner) {
+		super();
+		this.type = type;
+		this.owner = owner;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof EmployeePK) {
-			EmployeePK pk = (EmployeePK) obj;
-			return companyId == pk.companyId 
-					&& departmentId == pk.departmentId
-					&& employeeId == pk.employeeId;
-		} else {
-			return false;
+		if (obj instanceof PhonePK) {
+			return type.equals(((PhonePK) obj).type) && owner == ((PhonePK)obj).owner;
 		}
+		return false;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		return (int) (employeeId + departmentId + companyId);
-	}	
+		return (int) (type.hashCode() + owner);
+	}
+	
 }

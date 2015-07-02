@@ -16,41 +16,32 @@
 package osgi.jee.samples.jpa.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import osgi.jee.samples.jpa.model.id.EmployeePK;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
-@IdClass(EmployeePK.class)
 public class Employee {
 	
 	@Id
-	private long companyId;
-	@Id
-	private long departmentId;
-	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long employeeId;
 	
 	private String firstName;
 	private String lastName;
 	private BigDecimal salary;
-	@OneToMany
-	private List<Phone> phones;
 	@OneToOne
 	private Address address;
 	@OneToOne
@@ -62,45 +53,10 @@ public class Employee {
 	private EmploymentPeriod employmentPeriod;
 	
 	/**
-	 * @return the companyId
-	 */
-	public long getCompanyId() {
-		return companyId;
-	}
-
-	/**
-	 * @return the departmentId
-	 */
-	public long getDepartmentId() {
-		return departmentId;
-	}
-
-	/**
 	 * @return the employeeId
 	 */
 	public long getEmployeeId() {
 		return employeeId;
-	}
-
-	/**
-	 * @param companyId the companyId to set
-	 */
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
-	}
-
-	/**
-	 * @param departmentId the departmentId to set
-	 */
-	public void setDepartmentId(long departmentId) {
-		this.departmentId = departmentId;
-	}
-
-	/**
-	 * @param employeeId the employeeId to set
-	 */
-	public void setEmployeeId(long employeeId) {
-		this.employeeId = employeeId;
 	}
 
 	/**
@@ -146,42 +102,6 @@ public class Employee {
 	 */
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
-	}
-
-	/**
-	 * @return the phones
-	 */
-	public List<Phone> getPhones() {
-		return phones;
-	}
-
-	/**
-	 * @param phones
-	 *            the phones to set
-	 */
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
-	}
-	
-	/**
-	 * Adds a new phone to the phones list.
-	 * @param phone the phone to add.
-	 */
-	public void addPhone(Phone phone) {
-		if (this.phones == null) {
-			phones = new ArrayList<Phone>();
-		}
-		phones.add(phone);
-	}
-	
-	/**
-	 * Removes a phone from the phones list.
-	 * @param phone the phone to remove.
-	 */
-	public void deletePhone(Phone phone) {
-		if (phones != null) {
-			phones.remove(phone);
-		}
 	}
 
 	/**

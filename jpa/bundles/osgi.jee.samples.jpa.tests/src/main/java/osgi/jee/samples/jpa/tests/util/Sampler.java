@@ -30,7 +30,6 @@ import osgi.jee.samples.jpa.model.SmallProject;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.model.dao.AddressDAO;
 import osgi.jee.samples.model.dao.EmployeeDAO;
-import osgi.jee.samples.model.dao.PhoneDAO;
 import osgi.jee.samples.model.dao.ProjectDAO;
 
 /**
@@ -200,13 +199,13 @@ public class Sampler {
 		address.setPostalCode(postalCode);
 		address.setCountry(country);
 		employee.setAddress(address);
-
+		
 		Phone phone = employmentFactory.createPhone();
 		phone.setNumber(phoneNumber);
 		phone.setType(type);
 		phone.setAreaCode(areaCode);
-		employee.addPhone(phone);
-
+		phone.setOwner(employee);
+		
 		EmploymentPeriod employmentPeriod = employmentFactory.createEmploymentPeriod();
 		employmentPeriod.setStartDate(dateFormat.parse(startDate));
 		if (endDate != null) {
@@ -381,11 +380,11 @@ public class Sampler {
 	public static void persistEmployee(DataConnection dataConnection, Employee employee) {
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 		AddressDAO addressDAO = TestsActivator.getInstance().getService(AddressDAO.class);
-		PhoneDAO phoneDAO = TestsActivator.getInstance().getService(PhoneDAO.class);
 		addressDAO.create(dataConnection, employee.getAddress());
-		for (Phone phone : employee.getPhones()) {				
-			phoneDAO.create(dataConnection, phone);
-		}
+//		PhoneDAO phoneDAO = TestsActivator.getInstance().getService(PhoneDAO.class);
+//		for (Phone phone : employee.getPhones()) {				
+//			phoneDAO.create(dataConnection, phone);
+//		}
 		employeeDAO.create(dataConnection, employee);
 	}
 

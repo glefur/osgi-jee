@@ -16,41 +16,31 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import osgi.jee.samples.jpa.model.id.PhonePK;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  * 
  */
 @Entity
+@IdClass(PhonePK.class)
 public class Phone {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHN_SEQ")
-	@SequenceGenerator(name="PHN_SEQ", sequenceName="PHN_SEQ", allocationSize=50)
-	private long id;
 	private String type;
+	
+	@ManyToOne
+	@Id
+	@JoinColumn(name="OWNER_ID", referencedColumnName = "EMPLOYEEID")
+	private Employee owner;
+	
 	private String number;
 	private String areaCode;
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IPhone#getCompanyId()
-	 */
-	public long getId() {
-		return id;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.jpa.model.IPhone#setId(long)
-	 */
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -66,6 +56,20 @@ public class Phone {
 	 */
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public Employee getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Employee owner) {
+		this.owner = owner;
 	}
 
 	/**
