@@ -30,6 +30,7 @@ import osgi.jee.samples.jpa.model.SmallProject;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.model.dao.AddressDAO;
 import osgi.jee.samples.model.dao.EmployeeDAO;
+import osgi.jee.samples.model.dao.PhoneDAO;
 import osgi.jee.samples.model.dao.ProjectDAO;
 
 /**
@@ -38,6 +39,7 @@ import osgi.jee.samples.model.dao.ProjectDAO;
  */
 public class Sampler {
 	
+
 
 	/**
 	 * 
@@ -49,6 +51,11 @@ public class Sampler {
 	 */
 	public static final String HENRI_MENARD_LASTNAME = "Ménard";
 	
+	/**
+	 * 
+	 */
+	public static final String HENRI_MENARD_START_DATE = "17/04/2004";
+
 	/**
 	 * 
 	 */
@@ -204,7 +211,7 @@ public class Sampler {
 		phone.setNumber(phoneNumber);
 		phone.setType(type);
 		phone.setAreaCode(areaCode);
-		phone.setOwner(employee);
+		employee.addPhone(phone);
 		
 		EmploymentPeriod employmentPeriod = employmentFactory.createEmploymentPeriod();
 		employmentPeriod.setStartDate(dateFormat.parse(startDate));
@@ -373,7 +380,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createHenriMenard(EmploymentFactory employmentFactory) throws ParseException {
-		Employee henriMenard = createEmployee(employmentFactory, HENRI_MENARD_FIRSTNAME, HENRI_MENARD_LASTNAME, "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2004", null);
+		Employee henriMenard = createEmployee(employmentFactory, HENRI_MENARD_FIRSTNAME, HENRI_MENARD_LASTNAME, "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, HENRI_MENARD_START_DATE, null);
 		return henriMenard;
 	}
 
@@ -381,10 +388,10 @@ public class Sampler {
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 		AddressDAO addressDAO = TestsActivator.getInstance().getService(AddressDAO.class);
 		addressDAO.create(dataConnection, employee.getAddress());
-//		PhoneDAO phoneDAO = TestsActivator.getInstance().getService(PhoneDAO.class);
-//		for (Phone phone : employee.getPhones()) {				
-//			phoneDAO.create(dataConnection, phone);
-//		}
+		PhoneDAO phoneDAO = TestsActivator.getInstance().getService(PhoneDAO.class);
+		for (Phone phone : employee.getPhones()) {				
+			phoneDAO.create(dataConnection, phone);
+		}
 		employeeDAO.create(dataConnection, employee);
 	}
 

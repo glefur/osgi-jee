@@ -16,20 +16,22 @@
 package osgi.jee.samples.jpa.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
-import osgi.jee.samples.jpa.model.Phone;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.model.dao.EmployeeDAO;
-import osgi.jee.samples.model.dao.PhoneDAO;
+import osgi.jee.samples.jpa.util.db.meta.Table;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -38,42 +40,24 @@ import osgi.jee.samples.model.dao.PhoneDAO;
 public class SampleTest extends AbstractTest {
 
 	@Test
-	public void test() throws SQLException {
-
-		// Creating and persisting example company
+	public void test() throws SQLException, ParseException {
+		
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		Employee henriMenard = employmentFactory.createEmployee();
-		henriMenard.setFirstName(Sampler.HENRI_MENARD_FIRSTNAME);
-		henriMenard.setLastName(Sampler.HENRI_MENARD_LASTNAME);
-		
+		Table employeeTable = dataConnection.getSchema().getTable("EMPLOYEE");
+		assertNotNull("EMPLOYEE table should have a START_DATE column", employeeTable.getColumn("START_DATE"));
+		assertNotNull("EMPLOYEE table should have a END_DATE column", employeeTable.getColumn("END_DATE"));
+		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
 		dataConnection.beginTransaction();
-		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		employeeDAO.create(dataConnection, henriMenard);
+		Sampler.persistEmployee(dataConnection, henriMenard);
 		dataConnection.commit();
+		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("SELECT START_DATE FROM EMPLOYEE WHERE LASTNAME='" + Sampler.HENRI_MENARD_LASTNAME + "'");
+		ResultSet result = stmt.executeQuery();
+		assertEquals("Too many results", 1, result.getFetchSize());
+		result.next();
+		Date persistedDate = new Date(result.getDate("START_DATE").getTime());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date expectedDate = sdf.parse(Sampler.HENRI_MENARD_START_DATE);
+		assertEquals("Dates are not the same", expectedDate, persistedDate);
 		
-		Phone hmPhone = employmentFactory.createPhone();
-		hmPhone.setType("PRO");
-		hmPhone.setNumber("000");
-		hmPhone.setOwner(henriMenard);
-		
-		dataConnection.beginTransaction();
-		PhoneDAO phoneDAO = TestsActivator.getInstance().getService(PhoneDAO.class);
-		phoneDAO.create(dataConnection, hmPhone);
-		dataConnection.commit();
-		
-		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("SELECT EMPLOYEEID FROM EMPLOYEE");
-		stmt.execute();
-		ResultSet resultSet = stmt.getResultSet();
-		assertEquals("", 1, resultSet.getFetchSize());
-		resultSet.next();
-		long generatedEmployeeID = resultSet.getLong("EMPLOYEEID");
-		
-		PreparedStatement stmt2 = dataConnection.getSQLConnection().prepareStatement("SELECT OWNER_ID FROM PHONE");
-		stmt2.execute();
-		ResultSet resultSet2 = stmt2.getResultSet();
-		assertEquals("", 1, resultSet2.getFetchSize());
-		resultSet2.next();
-		long linkedEmployeeID = resultSet2.getLong("OWNER_ID");
-		assertEquals("Bad foreign key serialization for phones", generatedEmployeeID, linkedEmployeeID);
 	}
 }

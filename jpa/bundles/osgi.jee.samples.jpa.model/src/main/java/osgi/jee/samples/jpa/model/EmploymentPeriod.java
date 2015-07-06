@@ -17,6 +17,7 @@ package osgi.jee.samples.jpa.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -26,7 +27,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class EmploymentPeriod {
 
+	@Column(name="START_DATE")
 	private Date startDate;
+	@Column(name="END_DATE")
 	private Date endDate;
 
 	/**
