@@ -49,7 +49,7 @@ public abstract class AbstractTest {
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
 
-	protected static DataConnection dataConnection;
+	protected static DataConnection dataConnection = null;
 
 	/**
 	 * @return whether the data Schema should be initialized or not.
@@ -118,9 +118,7 @@ public abstract class AbstractTest {
 	 * 
 	 */
 	private static void initDataConnection() throws DatabaseUnitException, IOException {
-		EntityManagerFactory emf = TestsActivator.getInstance().getService(EntityManagerFactory.class);
-		DataConnectionFactoryRegistry registry = TestsActivator.getInstance().getService(DataConnectionFactoryRegistry.class);
-		dataConnection = registry.getService(emf.createEntityManager());
+		dataConnection = createDataConnection();
 		assert dataConnection instanceof JPADataConnection:"Bad DataConnection created. Unable to perform the test.";
 		if (initDataSet()) {
 			dbunitConnection = new DatabaseConnection(dataConnection.getSQLConnection());
@@ -128,6 +126,16 @@ public abstract class AbstractTest {
 			dataset = new FlatXmlDataSetBuilder().build(datasetResource);
 			datasetResource.close();
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	protected static DataConnection createDataConnection() {
+		EntityManagerFactory emf = TestsActivator.getInstance().getService(EntityManagerFactory.class);
+		DataConnectionFactoryRegistry registry = TestsActivator.getInstance().getService(DataConnectionFactoryRegistry.class);
+		DataConnection myDataConnection = registry.getService(emf.createEntityManager());
+		return myDataConnection;
 	}
 
 	/**

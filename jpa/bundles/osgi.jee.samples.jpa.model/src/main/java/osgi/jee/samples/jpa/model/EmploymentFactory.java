@@ -64,10 +64,10 @@ public class EmploymentFactory {
 
 	/**
 	 * Creates a new employment period.
-	 * @return the created {@link EmploymentPeriod}.
+	 * @return the created {@link Period}.
 	 */
-	public EmploymentPeriod createEmploymentPeriod() {
-		return new EmploymentPeriod();
+	public Period createPeriod() {
+		return new Period();
 	}
 
 	/**
@@ -84,6 +84,14 @@ public class EmploymentFactory {
 	 */
 	public SmallProject createSmallProject() {
 		return new SmallProject();
+	}
+	
+	/**
+	 * Creates a new User.
+	 * @return the created {@link User}.
+	 */
+	public User createUser() {
+		return new User();
 	}
 
 }

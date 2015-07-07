@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.model.dao.UserDAO">
+   <implementation class="osgi.jee.samples.model.dao.internal.impl.UserDAOImpl"/>
+   <service>
+      <provide interface="osgi.jee.samples.jpa.dao.GenericDAO"/>
+      <provide interface="osgi.jee.samples.model.dao.UserDAO"/>
+   </service>
+</scr:component>

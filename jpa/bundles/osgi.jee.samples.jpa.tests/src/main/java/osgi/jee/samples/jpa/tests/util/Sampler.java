@@ -24,7 +24,7 @@ import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.BigProject;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
-import osgi.jee.samples.jpa.model.EmploymentPeriod;
+import osgi.jee.samples.jpa.model.Period;
 import osgi.jee.samples.jpa.model.Phone;
 import osgi.jee.samples.jpa.model.SmallProject;
 import osgi.jee.samples.jpa.tests.TestsActivator;
@@ -213,7 +213,7 @@ public class Sampler {
 		phone.setAreaCode(areaCode);
 		employee.addPhone(phone);
 		
-		EmploymentPeriod employmentPeriod = employmentFactory.createEmploymentPeriod();
+		Period employmentPeriod = employmentFactory.createPeriod();
 		employmentPeriod.setStartDate(dateFormat.parse(startDate));
 		if (endDate != null) {
 			employmentPeriod.setEndDate(dateFormat.parse(endDate));			

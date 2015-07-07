@@ -56,7 +56,7 @@ public class Employee {
 	@ManyToMany
 	private Set<Project> projects;
 	@Embedded
-	private EmploymentPeriod employmentPeriod;
+	private Period employmentPeriod;
 	
 	/**
 	 * @return the employeeId
@@ -258,7 +258,7 @@ public class Employee {
 	/**
 	 * @return the employmentPeriod
 	 */
-	public EmploymentPeriod getEmploymentPeriod() {
+	public Period getEmploymentPeriod() {
 		return employmentPeriod;
 	}
 
@@ -266,7 +266,7 @@ public class Employee {
 	 * @param employmentPeriod
 	 *            the employmentPeriod to set
 	 */
-	public void setEmploymentPeriod(EmploymentPeriod employmentPeriod) {
+	public void setEmploymentPeriod(Period employmentPeriod) {
 		this.employmentPeriod = employmentPeriod;
 	}
 

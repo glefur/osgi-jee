@@ -15,8 +15,7 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,9 +28,13 @@ import org.junit.Test;
 
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
+import osgi.jee.samples.jpa.model.Period;
+import osgi.jee.samples.jpa.model.User;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
 import osgi.jee.samples.jpa.util.db.meta.Table;
+import osgi.jee.samples.model.dao.EmployeeDAO;
+import osgi.jee.samples.model.dao.UserDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -46,18 +49,38 @@ public class SampleTest extends AbstractTest {
 		Table employeeTable = dataConnection.getSchema().getTable("EMPLOYEE");
 		assertNotNull("EMPLOYEE table should have a START_DATE column", employeeTable.getColumn("START_DATE"));
 		assertNotNull("EMPLOYEE table should have a END_DATE column", employeeTable.getColumn("END_DATE"));
-		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
+		Table userTable = dataConnection.getSchema().getTable("USERS");
+		assertNotNull("USERS table should have a VALID_SDATE column", userTable.getColumn("VALID_SDATE"));
+		assertNotNull("USERS table should have a VALID_EDATE column", userTable.getColumn("VALID_EDATE"));
+		Employee employee = employmentFactory.createEmployee();
+		employee.setFirstName(Sampler.HENRI_MENARD_FIRSTNAME);
+		employee.setLastName(Sampler.HENRI_MENARD_LASTNAME);
+		User hmenard = employmentFactory.createUser();
+		hmenard.setUsername("hmenard");
+		Period period = employmentFactory.createPeriod();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		Date hmenardStartDate = sdf.parse(Sampler.HENRI_MENARD_START_DATE);
+		period.setStartDate(hmenardStartDate);
+		employee.setEmploymentPeriod(period);
+		hmenard.setValidityPeriod(period);
 		dataConnection.beginTransaction();
-		Sampler.persistEmployee(dataConnection, henriMenard);
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+		employeeDAO.create(dataConnection, employee);
+		UserDAO userDAO = TestsActivator.getInstance().getService(UserDAO.class);
+		userDAO.create(dataConnection, hmenard);
 		dataConnection.commit();
-		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("SELECT START_DATE FROM EMPLOYEE WHERE LASTNAME='" + Sampler.HENRI_MENARD_LASTNAME + "'");
+		
+		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("SELECT VALID_SDATE FROM USERS");
 		ResultSet result = stmt.executeQuery();
-		assertEquals("Too many results", 1, result.getFetchSize());
+		assertEquals("Bad USERS table states", 1, result.getFetchSize());
 		result.next();
-		Date persistedDate = new Date(result.getDate("START_DATE").getTime());
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date expectedDate = sdf.parse(Sampler.HENRI_MENARD_START_DATE);
-		assertEquals("Dates are not the same", expectedDate, persistedDate);
+		java.sql.Date validityStartDate = result.getDate("VALID_SDATE");
+		assertEquals("Bad Validity date persistence", hmenardStartDate.getTime(), validityStartDate.getTime());
+		
+		Employee foundHMenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		User foundUser = userDAO.findByUsername(dataConnection, "hmenard");
+		// Despite what is described in the book, this JPA provider is able to share the object instance between object.
+		assertTrue("The two periods should be the same object instance", foundHMenard.getEmploymentPeriod() == foundUser.getValidityPeriod());
 		
 	}
 }

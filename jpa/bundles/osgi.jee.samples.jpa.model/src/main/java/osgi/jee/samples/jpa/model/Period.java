@@ -25,7 +25,7 @@ import javax.persistence.Embeddable;
  * 
  */
 @Embeddable
-public class EmploymentPeriod {
+public class Period {
 
 	@Column(name="START_DATE")
 	private Date startDate;
