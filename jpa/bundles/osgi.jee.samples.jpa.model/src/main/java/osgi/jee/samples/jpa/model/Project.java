@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -30,6 +31,8 @@ public abstract class Project {
 	@Id
 	@GeneratedValue
 	private long id;
+	@Version
+	private long version;
 	private String name;
 	@OneToOne
 	private Employee teamLeader;

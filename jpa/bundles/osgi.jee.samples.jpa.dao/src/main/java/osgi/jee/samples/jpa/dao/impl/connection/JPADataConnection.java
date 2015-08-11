@@ -15,13 +15,14 @@
  */
 package osgi.jee.samples.jpa.dao.impl.connection;
 
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
+import osgi.jee.samples.jpa.util.db.DbService;
 import osgi.jee.samples.jpa.util.db.meta.Schema;
+import osgi.jee.samples.jpa.util.services.OSGIHelper;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -50,9 +51,9 @@ public abstract class JPADataConnection implements DataConnection {
 	 */
 	@Override
 	public Schema getSchema() throws SQLException {
-		DatabaseMetaData metaData = getSQLConnection().getMetaData();
-		if (metaData != null) {
-			return new Schema(metaData);
+		DbService service = OSGIHelper.getService(getClass(), DbService.class);
+		if (service != null) {
+			return service.getSchema(getSQLConnection());
 		}
 		return null;
 	}

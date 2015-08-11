@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
@@ -33,6 +36,8 @@ import osgi.jee.samples.jpa.util.db.meta.Column;
 import osgi.jee.samples.jpa.util.db.meta.ForeignKey;
 import osgi.jee.samples.jpa.util.db.meta.Schema;
 import osgi.jee.samples.jpa.util.db.meta.Table;
+import osgi.jee.samples.jpa.util.internal.db.meta.ConnectedSchema;
+import osgi.jee.samples.jpa.util.internal.db.meta.MetaDBUtil;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -48,9 +53,58 @@ public class DbServiceImpl implements DbService {
 	public Schema getSchema(Connection connection) throws SQLException {
 		DatabaseMetaData metaData = connection.getMetaData();
 		if (metaData != null) {
-			return new Schema(metaData);
+			return new ConnectedSchema(metaData);
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.util.db.DbService#copy(osgi.jee.samples.jpa.util.db.meta.Schema)
+	 */
+	@Override
+	public Schema copy(Schema src) throws SQLException {
+		return MetaDBUtil.clone(src);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.util.db.DbService#buildReverseMap(osgi.jee.samples.jpa.util.db.meta.Schema)
+	 */
+	public Map<Table, Collection<ForeignKey>> buildReverseMap(Schema schema) throws SQLException {
+		Map<Table, Collection<ForeignKey>> result = new HashMap<Table, Collection<ForeignKey>>();
+		for (Table table : schema.getTables()) {
+			for (ForeignKey foreignKey : table.getForeignKeys()) {
+				Table targetTable = foreignKey.getTargetTable();
+				Collection<ForeignKey> foreignKeys = result.get(targetTable);
+				if (foreignKeys == null) {
+					foreignKeys = new ArrayList<ForeignKey>();
+					result.put(targetTable, foreignKeys);
+				}
+				foreignKeys.add(foreignKey);
+			}
+		}
+		return result ;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.jpa.util.db.DbService#removeFromReverseMap(java.util.Map, osgi.jee.samples.jpa.util.db.meta.Table)
+	 */
+	@Override
+	public void removeFromReverseMap(Map<Table, Collection<ForeignKey>> reverseMap, Table table) throws SQLException {
+		for (ForeignKey foreignKey : table.getForeignKeys()) {
+			Table targetTable = foreignKey.getTargetTable();
+			Collection<ForeignKey> collection = reverseMap.get(targetTable);
+			if (collection != null) {
+				if (collection.contains(foreignKey)) {
+					collection.remove(foreignKey);
+					if (collection.isEmpty()) {
+						reverseMap.remove(targetTable);
+					}
+				}
+			}
+		}
 	}
 
 	/**

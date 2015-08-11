@@ -17,6 +17,7 @@ package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -27,6 +28,8 @@ public class Company {
 	
 	@Id
 	private long companyId;
+	@Version
+	private long version;
 	
 	private String name;
 

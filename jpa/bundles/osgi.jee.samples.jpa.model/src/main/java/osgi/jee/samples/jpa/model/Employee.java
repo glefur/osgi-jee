@@ -30,6 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -41,6 +42,8 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long employeeId;
+	@Version
+	private long version;
 	
 	private String firstName;
 	private String lastName;
@@ -63,6 +66,13 @@ public class Employee {
 	 */
 	public long getEmployeeId() {
 		return employeeId;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public long getVersion() {
+		return version;
 	}
 
 	/**

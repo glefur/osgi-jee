@@ -17,6 +17,7 @@ package osgi.jee.samples.jpa.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Version;
 
 import osgi.jee.samples.jpa.model.id.DepartmentPK;
 
@@ -29,6 +30,8 @@ public class Department {
 
 	@EmbeddedId
 	private DepartmentPK departmentId;
+	@Version
+	private long version;
 	
 	private String name;
 

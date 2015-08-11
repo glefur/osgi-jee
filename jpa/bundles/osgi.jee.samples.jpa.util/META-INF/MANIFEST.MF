@@ -13,4 +13,5 @@ Service-Component: OSGI-INF/DbService.xml
 Import-Package: org.dbunit;version="2.4.9",
  org.dbunit.database,
  org.dbunit.dataset;version="2.4.9",
- org.dbunit.dataset.xml;version="2.4.9"
+ org.dbunit.dataset.xml;version="2.4.9",
+ org.osgi.framework;version="1.7.0"

@@ -15,40 +15,18 @@
  */
 package osgi.jee.samples.jpa.util.db.meta;
 
+import java.sql.DatabaseMetaData;
+
+import osgi.jee.samples.jpa.util.internal.db.meta.ConnectedSchema;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public interface Column {
+public class MetaDBFactory {
 
-	/**
-	 * @return the name
-	 */
-	String getName();
-
-	/**
-	 * @return the type
-	 */
-	String getType();
-
-	/**
-	 * @return the length
-	 */
-	int getLength();
-
-	/**
-	 * @return the generated
-	 */
-	boolean isGenerated();
-
-	/**
-	 * @return the autoIncrement
-	 */
-	boolean isAutoIncrement();
-
-	/**
-	 * @return the notNull
-	 */
-	boolean isNotNull();
-
+	public Schema createSchema(DatabaseMetaData metadata) {
+		return new ConnectedSchema(metadata);
+	}
+	
 }

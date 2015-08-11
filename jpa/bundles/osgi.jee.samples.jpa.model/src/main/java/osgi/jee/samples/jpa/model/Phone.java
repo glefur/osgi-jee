@@ -18,6 +18,7 @@ package osgi.jee.samples.jpa.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -29,6 +30,9 @@ public class Phone {
 	@Id
 	@GeneratedValue
 	private long id;
+	@Version
+	private long version;
+
 	private String type;
 	private String number;
 	private String areaCode;

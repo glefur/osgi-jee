@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2015 Goulwen Le Fur
+ * Copyright (C) 2014 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,46 +15,13 @@
  */
 package osgi.jee.samples.jpa.util.db.meta;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
- */
-public class Schema {
+public interface Schema {
 
-	private DatabaseMetaData metaData;
-	private Map<String, Table> tables = null;
+	Table getTable(String name) throws SQLException;
 
-	public Schema(DatabaseMetaData metaData) {
-		this.metaData = metaData;
-	}
-
-	public Collection<Table> getTables() throws SQLException {
-		if (tables == null) {
-			tables = new HashMap<String, Table>();
-			ResultSet tables2 = metaData.getTables(null, null, null, null);
-			while (tables2.next()) {
-				String name = tables2.getString(3);
-				if (!name.startsWith("SYS")) {
-					Table table = new Table(metaData, name);
-					table.setSchema(this);
-					tables.put(name, table);
-				}
-			}
-		}
-		return tables.values();
-	}
+	Collection<Table> getTables() throws SQLException;
 	
-	public Table getTable(String name) throws SQLException {
-		if (tables == null) {
-			getTables();
-		}
-		return tables.get(name);
-	}
 }

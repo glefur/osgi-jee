@@ -1,7 +1,7 @@
 /**
  * OSGi/JEE Sample.
  * 
- * Copyright (C) 2015 Goulwen Le Fur
+ * Copyright (C) 2014 Goulwen Le Fur
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,57 +15,30 @@
  */
 package osgi.jee.samples.jpa.util.db.meta;
 
-
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class ForeignKey {
-	
-	private Table sourceTable;
-	private Column sourceColumn;
-	private Table targetTable;
-	private Column targetColumn;
-	
-	/**
-	 * @param sourceTable
-	 * @param sourceColumn
-	 * @param targetTable
-	 * @param targetColumn
-	 */
-	public ForeignKey(Table sourceTable, Column sourceColumn, Table targetTable, Column targetColumn) {
-		this.sourceTable = sourceTable;
-		this.sourceColumn = sourceColumn;
-		this.targetTable = targetTable;
-		this.targetColumn = targetColumn;
-	}
+public interface ForeignKey {
 
 	/**
 	 * @return the sourceTable
 	 */
-	public Table getSourceTable() {
-		return sourceTable;
-	}
+	Table getSourceTable();
 
 	/**
 	 * @return the sourceColumn
 	 */
-	public Column getSourceColumn() {
-		return sourceColumn;
-	}
+	Column getSourceColumn();
 
 	/**
 	 * @return the targetTable
 	 */
-	public Table getTargetTable() {
-		return targetTable;
-	}
+	Table getTargetTable();
 
 	/**
 	 * @return the targetColumn
 	 */
-	public Column getTargetColumn() {
-		return targetColumn;
-	}
+	Column getTargetColumn();
 
 }

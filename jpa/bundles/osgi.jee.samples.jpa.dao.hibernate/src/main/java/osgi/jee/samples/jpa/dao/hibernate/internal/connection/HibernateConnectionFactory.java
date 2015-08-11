@@ -25,7 +25,7 @@ import osgi.jee.samples.jpa.dao.connection.DataConnectionFactory;
  *
  */
 public class HibernateConnectionFactory implements DataConnectionFactory {
-
+	
 	/**
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.jpa.util.services.ServiceProvider#provides(java.lang.Object)

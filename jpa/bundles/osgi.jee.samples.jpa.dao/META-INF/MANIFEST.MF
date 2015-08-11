@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: glefur
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.persistence;version="1.1.0";resolution:=optional,
+ osgi.jee.samples.jpa.util.db,
  osgi.jee.samples.jpa.util.db.meta,
  osgi.jee.samples.jpa.util.services,
  osgi.jee.samples.jpa.util.services.impl

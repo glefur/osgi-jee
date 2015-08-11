@@ -17,8 +17,13 @@ package osgi.jee.samples.jpa.tests.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -38,7 +43,9 @@ import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.jpa.util.db.DbService;
+import osgi.jee.samples.jpa.util.db.meta.ForeignKey;
 import osgi.jee.samples.jpa.util.db.meta.Schema;
+import osgi.jee.samples.jpa.util.db.meta.Table;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -76,7 +83,7 @@ public abstract class AbstractTest {
 	 * @return whether the data set should be displayed at the end of the test or not.
 	 */
 	private static boolean displayDataSet() {
-		return false;
+		return true;
 	}
 
 	@BeforeClass
@@ -88,9 +95,12 @@ public abstract class AbstractTest {
 	}
 
 	@Before
-	public void initTest() throws DatabaseUnitException, SQLException {
+	public void initTest() throws DatabaseUnitException, SQLException, UnsupportedEncodingException {
 		if (initDataSet()) {
 			performDataSetInitialization();
+		}
+		else {
+			clearDataBase(dataConnection);
 		}
 	}
 
@@ -127,6 +137,45 @@ public abstract class AbstractTest {
 			datasetResource.close();
 		}
 	}
+	
+	
+	private static void clearDataBase(DataConnection dataConnection) throws SQLException {
+		DbService dbService = TestsActivator.getInstance().getService(DbService.class);
+		Connection sqlConnection = dataConnection.getSQLConnection();
+		Schema copy = dbService.copy(dataConnection.getSchema());
+		Map<Table, Collection<ForeignKey>> reverseMap = dbService.buildReverseMap(copy);
+		while (!copy.getTables().isEmpty()) {
+			for (Table table : new ArrayList<Table>(copy.getTables())) {
+				if (canDelete(reverseMap, table)) {
+					dbService.removeFromReverseMap(reverseMap, table);
+					copy.getTables().remove(table);
+					PreparedStatement stmt = sqlConnection.prepareStatement("DELETE FROM " + table.getName());
+					stmt.execute();
+				}
+				
+			}
+		}
+		
+	}
+
+	/**
+	 * @param reverseMap
+	 * @param table
+	 * @return
+	 */
+	private static boolean canDelete(Map<Table, Collection<ForeignKey>> reverseMap, Table table) {
+		Collection<ForeignKey> foreignKeys = reverseMap.get(table);
+		if (foreignKeys == null || foreignKeys.isEmpty()) {
+			return true;
+		} else {
+			for (ForeignKey foreignKey : foreignKeys) {
+				if (foreignKey.getSourceTable() != table) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
 
 	/**
 	 * @return
@@ -156,7 +205,7 @@ public abstract class AbstractTest {
 	 * @throws SQLException
 	 */
 	private void performDataSetInitialization() throws DatabaseUnitException, SQLException {
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataset);
+		DatabaseOperation.INSERT.execute(dbunitConnection, dataset);
 	}
 
 }
