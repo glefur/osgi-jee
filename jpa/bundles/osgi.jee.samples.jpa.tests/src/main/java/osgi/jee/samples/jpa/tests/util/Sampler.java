@@ -18,12 +18,14 @@ package osgi.jee.samples.jpa.tests.util;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.BigProject;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
+import osgi.jee.samples.jpa.model.Gender;
 import osgi.jee.samples.jpa.model.Period;
 import osgi.jee.samples.jpa.model.Phone;
 import osgi.jee.samples.jpa.model.SmallProject;
@@ -38,37 +40,12 @@ import osgi.jee.samples.model.dao.ProjectDAO;
  *
  */
 public class Sampler {
-	
 
-
-	/**
-	 * 
-	 */
 	public static final String HENRI_MENARD_FIRSTNAME = "Henri";
-
-	/**
-	 * 
-	 */
 	public static final String HENRI_MENARD_LASTNAME = "Ménard";
-	
-	/**
-	 * 
-	 */
 	public static final String HENRI_MENARD_START_DATE = "17/04/2004";
-
-	/**
-	 * 
-	 */
 	public static final String CORINNE_PARIZEAU_LASTNAME = "Parizeau";
-
-	/**
-	 * France country name literal
-	 */
 	public static final String FRANCE = "France";
-	
-	/**
-	 * 'Pro' phone type literal
-	 */
 	public static final String PHONE_TYPE_PRO = "Pro";
 
 
@@ -194,11 +171,12 @@ public class Sampler {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Employee createEmployee(EmploymentFactory employmentFactory, String firstName, String lastName, String street, String city,
-			String postalCode, String country, String phoneNumber, String type, String areaCode, String startDate, String endDate) throws ParseException {
+	public static Employee createEmployee(EmploymentFactory employmentFactory, String firstName, String lastName, Gender gender, Calendar birthDate, String street, String city, String postalCode, String country, String phoneNumber, String type, String areaCode, String startDate, String endDate) throws ParseException {
 		Employee employee = employmentFactory.createEmployee();
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
+		employee.setGender(gender);
+		employee.setBirthDate(birthDate);
 
 		Address address = employmentFactory.createAddress();
 		address.setStreet(street);
@@ -229,7 +207,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createMathildeJette(EmploymentFactory employmentFactory, Employee valentineGagne) throws ParseException {
-		Employee mathildeJette = createEmployee(employmentFactory, "Mathilde", "Jetté", "42 rue Michel Ange", "Le Havre", "76610", FRANCE, "02.70.91.02.97", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "24/08/2012", null);
+		Employee mathildeJette = createEmployee(employmentFactory, "Mathilde", "Jetté", Gender.FEMALE,createBirthDate(22, 11, 1966), "42 rue Michel Ange", "Le Havre", "76610", FRANCE, "02.70.91.02.97", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "24/08/2012", null);
 		mathildeJette.setManager(valentineGagne);
 		return mathildeJette;
 	}
@@ -241,7 +219,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createFrancoisePetit(EmploymentFactory employmentFactory, Employee brigitteBoisclair) throws ParseException {
-		Employee francoisePetit = createEmployee(employmentFactory, "Françoise", "Petit", "40 rue Gouin de Beauchesne", "Saint-Paul", "97460", FRANCE, "02.93.09.72.46", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "13/02/2012", null);
+		Employee francoisePetit = createEmployee(employmentFactory, "Françoise", "Petit", Gender.FEMALE, createBirthDate(27, 7, 1973), "40 rue Gouin de Beauchesne", "Saint-Paul", "97460", FRANCE, "02.93.09.72.46", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "13/02/2012", null);
 		francoisePetit.setManager(brigitteBoisclair);
 		return francoisePetit;
 	}
@@ -252,7 +230,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createThimoteeBeaulac(EmploymentFactory employmentFactory) throws ParseException {
-		Employee timotheeBeaulac = createEmployee(employmentFactory, "Timothée", "Beaulac", "67 Rue Joseph Vernet", "Baie-Mahault", "97122", FRANCE, "05.78.93.91.48", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/03/2007", "30/04/2013");
+		Employee timotheeBeaulac = createEmployee(employmentFactory, "Timothée", "Beaulac", Gender.MALE, createBirthDate(3, 3, 1983), "67 Rue Joseph Vernet", "Baie-Mahault", "97122", FRANCE, "05.78.93.91.48", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/03/2007", "30/04/2013");
 		return timotheeBeaulac;
 	}
 
@@ -263,7 +241,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createNicolasDionne(EmploymentFactory employmentFactory, Employee brigitteBoisclair) throws ParseException {
-		Employee nicolasDionne = createEmployee(employmentFactory, "Nicolas", "Dionne", "21 rue des Coudriers", "Mont-Saint-Aignan", "76130", FRANCE, "02.28.30.99.71", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/01/2010", null);
+		Employee nicolasDionne = createEmployee(employmentFactory, "Nicolas", "Dionne", Gender.MALE, createBirthDate(13, 11, 1969), "21 rue des Coudriers", "Mont-Saint-Aignan", "76130", FRANCE, "02.28.30.99.71", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/01/2010", null);
 		nicolasDionne.setManager(brigitteBoisclair);
 		return nicolasDionne;
 	}
@@ -275,7 +253,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createBrigitteBoisclair(EmploymentFactory employmentFactory, Employee valentineGagne) throws ParseException {
-		Employee brigitteBoisclair = createEmployee(employmentFactory, "Brigitte", "Boisclair", "10 rue des six frères Ruellan", "Saint-Sebastien-Sur-Loire", "44230", FRANCE, "02.73.54.13.82", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "22/09/2008", null);
+		Employee brigitteBoisclair = createEmployee(employmentFactory, "Brigitte", "Boisclair", Gender.FEMALE, createBirthDate(15, 12, 1976), "10 rue des six frères Ruellan", "Saint-Sebastien-Sur-Loire", "44230", FRANCE, "02.73.54.13.82", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "22/09/2008", null);
 		brigitteBoisclair.setManager(valentineGagne);
 		return brigitteBoisclair;
 	}
@@ -287,7 +265,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createJacquesAllard(EmploymentFactory employmentFactory, Employee josetteDuval) throws ParseException {
-		Employee jacquesAllard = createEmployee(employmentFactory, "Jacques", "Allard", "79 rue du Président Roosevelt", "Savigny-Le-Temple", "77176", FRANCE, "01.62.71.65.41", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/06/2013", null);
+		Employee jacquesAllard = createEmployee(employmentFactory, "Jacques", "Allard", Gender.MALE, createBirthDate(14, 2, 1973), "79 rue du Président Roosevelt", "Savigny-Le-Temple", "77176", FRANCE, "01.62.71.65.41", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/06/2013", null);
 		jacquesAllard.setManager(josetteDuval);
 		return jacquesAllard;
 	}
@@ -298,7 +276,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createRobertPhaneuf(EmploymentFactory employmentFactory) throws ParseException {
-		Employee robertPhaneuf = createEmployee(employmentFactory, "Robert", "Phaneuf", "51 rue de la Hulotais", "Saint-Pol-Sur-Mer", "59430", 	FRANCE, "03.31.17.66.86", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/03/2009", "17/04/2011");
+		Employee robertPhaneuf = createEmployee(employmentFactory, "Robert", "Phaneuf", Gender.MALE, createBirthDate(1, 2, 1958), "51 rue de la Hulotais", "Saint-Pol-Sur-Mer", "59430", 	FRANCE, "03.31.17.66.86", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/03/2009", "17/04/2011");
 		return robertPhaneuf;
 	}
 
@@ -309,7 +287,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createTillyLapointe(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
-		Employee tillyLapointe = createEmployee(employmentFactory, "Tilly", "Lapointe", "5 avenue de Provence", "Vannes", "56000", FRANCE, "02.46.59.15.46", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/02/2007", null);
+		Employee tillyLapointe = createEmployee(employmentFactory, "Tilly", "Lapointe", Gender.MALE, createBirthDate(18, 10, 1966), "5 avenue de Provence", "Vannes", "56000", FRANCE, "02.46.59.15.46", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/02/2007", null);
 		tillyLapointe.setManager(corrineParizeau);
 		return tillyLapointe;
 	}
@@ -321,7 +299,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createHonoreDubeau(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
-		Employee honoreDubeau = createEmployee(employmentFactory, "Honore", "Dubeau", "79 rue Banaudon", "Lyon", "69009", FRANCE, "04.42.93.38.71", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/07/2010", null);
+		Employee honoreDubeau = createEmployee(employmentFactory, "Honore", "Dubeau", Gender.MALE, createBirthDate(12, 12, 1978), "79 rue Banaudon", "Lyon", "69009", FRANCE, "04.42.93.38.71", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/07/2010", null);
 		honoreDubeau.setManager(corrineParizeau);
 		return honoreDubeau;
 	}
@@ -333,7 +311,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createJosetteDuval(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
-		Employee josetteDuval = createEmployee(employmentFactory, "Josette", "Duval", "40 rue Saint Germain", "Gap", "05000", FRANCE, "04.53.53.82.77", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2006", null);
+		Employee josetteDuval = createEmployee(employmentFactory, "Josette", "Duval", Gender.FEMALE, createBirthDate(14, 10, 1965), "40 rue Saint Germain", "Gap", "05000", FRANCE, "04.53.53.82.77", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2006", null);
 		josetteDuval.setManager(corrineParizeau);
 		return josetteDuval;
 	}
@@ -345,7 +323,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createDidierCourcelle(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
-		Employee didierCourcelle = createEmployee(employmentFactory, "Didier", "Courcelle", "30 boulevard de la Liberation", "Marseille", "13011", FRANCE, "04.40.74.81.90", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "1/03/2009", null);
+		Employee didierCourcelle = createEmployee(employmentFactory, "Didier", "Courcelle", Gender.MALE, createBirthDate(22, 9, 1965), "30 boulevard de la Liberation", "Marseille", "13011", FRANCE, "04.40.74.81.90", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "1/03/2009", null);
 		didierCourcelle.setManager(corrineParizeau);
 		return didierCourcelle;
 	}
@@ -357,7 +335,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createValentineGagne(EmploymentFactory employmentFactory, Employee henriMenard) throws ParseException {
-		Employee valentineGagne = createEmployee(employmentFactory, "Valentine", "Gagné", "11 rue St Ferréol", "Metz", "57070", FRANCE, "03.00.88.10.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/09/2006", null);
+		Employee valentineGagne = createEmployee(employmentFactory, "Valentine", "Gagné", Gender.FEMALE, createBirthDate(23, 07, 1973), "11 rue St Ferréol", "Metz", "57070", FRANCE, "03.00.88.10.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/09/2006", null);
 		valentineGagne.setManager(henriMenard);
 		return valentineGagne;
 	}
@@ -369,7 +347,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createCorinneParizeau(EmploymentFactory employmentFactory, Employee henriMenard) throws ParseException {
-		Employee corrineParizeau = createEmployee(employmentFactory, "Corinne", CORINNE_PARIZEAU_LASTNAME, "42 place Stanislas", "Nantes", "44100", FRANCE, "02.72.74.22.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/11/2007", null);
+		Employee corrineParizeau = createEmployee(employmentFactory, "Corinne", CORINNE_PARIZEAU_LASTNAME, Gender.FEMALE, createBirthDate(18, 9, 1981), "42 place Stanislas", "Nantes", "44100", FRANCE, "02.72.74.22.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/11/2007", null);
 		corrineParizeau.setManager(henriMenard);
 		return corrineParizeau;
 	}
@@ -380,7 +358,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createHenriMenard(EmploymentFactory employmentFactory) throws ParseException {
-		Employee henriMenard = createEmployee(employmentFactory, HENRI_MENARD_FIRSTNAME, HENRI_MENARD_LASTNAME, "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, HENRI_MENARD_START_DATE, null);
+		Employee henriMenard = createEmployee(employmentFactory, HENRI_MENARD_FIRSTNAME, HENRI_MENARD_LASTNAME, Gender.MALE, createBirthDate(26, 9, 1961), "11 rue Sebastopol", "Saintes", "17100", FRANCE, "05.39.37.63.09", PHONE_TYPE_PRO, FRANCE_AREA_CODE, HENRI_MENARD_START_DATE, null);
 		return henriMenard;
 	}
 
@@ -395,4 +373,9 @@ public class Sampler {
 		employeeDAO.create(dataConnection, employee);
 	}
 
+	private static Calendar createBirthDate(int date, int month, int year) {
+		Calendar birthDate = Calendar.getInstance();
+		birthDate.set(year, month, date);
+		return birthDate;
+	}
 }

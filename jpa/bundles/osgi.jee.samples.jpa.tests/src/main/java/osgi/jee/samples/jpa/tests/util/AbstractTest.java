@@ -76,14 +76,14 @@ public abstract class AbstractTest {
 	 * @return whether the data schema should be displayed at the end of the test or not.
 	 */
 	private static boolean displaySchema() {
-		return false;
+		return true;
 	}
 
 	/**
 	 * @return whether the data set should be displayed at the end of the test or not.
 	 */
 	private static boolean displayDataSet() {
-		return true;
+		return false;
 	}
 
 	@BeforeClass

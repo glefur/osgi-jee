@@ -17,19 +17,25 @@ package osgi.jee.samples.jpa.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
@@ -45,8 +51,17 @@ public class Employee {
 	@Version
 	private long version;
 	
+	@Column(name="F_NAME", length=100)
 	private String firstName;
+	@Column(name="L_NAME", length=200)
 	private String lastName;
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	
+	@Temporal(TemporalType.DATE)
+	private Calendar birthDate;
+	
+	@Column(name="SALARY", scale=10)
 	private BigDecimal salary;
 	@OneToMany
 	private List<Phone> phones;
@@ -103,6 +118,34 @@ public class Employee {
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public Gender getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the birthDate
+	 */
+	public Calendar getBirthDate() {
+		return birthDate;
+	}
+
+	/**
+	 * @param birthDate the birthDate to set
+	 */
+	public void setBirthDate(Calendar birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	/**
