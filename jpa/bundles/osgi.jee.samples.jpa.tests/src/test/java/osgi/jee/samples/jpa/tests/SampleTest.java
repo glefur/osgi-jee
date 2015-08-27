@@ -19,14 +19,20 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collection;
+
+import javax.persistence.OptimisticLockException;
+import javax.persistence.RollbackException;
 
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
+import osgi.jee.samples.jpa.model.Company;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
+import osgi.jee.samples.model.dao.CompanyDAO;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -35,8 +41,11 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
  */
 public class SampleTest extends AbstractTest {
 
+	/**
+	 * Here we simulate a conflict on a versionned entity. A optimistic lock exception is thrown.
+	 */
 	@Test
-	public void test() throws SQLException, ParseException {
+	public void testConflictHandling() throws SQLException, ParseException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
 		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
 		dataConnection.beginTransaction();
@@ -45,38 +54,65 @@ public class SampleTest extends AbstractTest {
 		
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		DataConnection dataConnection2 = createDataConnection();
+		Employee hmenard2 = employeeDAO.findByName(dataConnection2, Sampler.HENRI_MENARD_LASTNAME);
 		
 		dataConnection.beginTransaction();
-		hmenard.setFirstName(Sampler.HENRI_MENARD_FIRSTNAME);
-		DataConnection dataConnection2 = createDataConnection();
 		dataConnection2.beginTransaction();
-		hmenard.setFirstName("Michel");
-		dataConnection2.commit();
-		dataConnection.commit();
-		Employee hmenard2 = employeeDAO.findByName(dataConnection2, Sampler.HENRI_MENARD_LASTNAME);
-		assertNotEquals("Locking seems to be naturally handle by the JPA provider", hmenard2.getFirstName(), Sampler.HENRI_MENARD_FIRSTNAME);
+		
+		hmenard.setFirstName("Joel");
+		hmenard2.setFirstName("Michel");
+		employeeDAO.update(dataConnection2, hmenard2);
+		employeeDAO.update(dataConnection, hmenard);
+		
+		boolean conflictHandle = false;
+		
+		try {
+			dataConnection.commit();
+			dataConnection2.commit();
+		} catch (RollbackException e) {
+			conflictHandle = e.getCause() instanceof OptimisticLockException;
+		}
+		
+		assertTrue("A transaction conflict haven't been properly handle", conflictHandle);
 	}
-
+	
+	/**
+	 * Here we simulate a conflict on a non-versionned entity. We reach an inconsistent state : the two data connections have a different 
+	 * version of the same entity.  
+	 */
 	@Test
-	public void test2() throws SQLException, ParseException {
+	public void testConflictNonVersionned() {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
+		Company company = employmentFactory.createCompany();
+		company.setName("CompanyName");
+		CompanyDAO companyDAO = TestsActivator.getInstance().getService(CompanyDAO.class);
+		
 		dataConnection.beginTransaction();
-		Sampler.persistEmployee(dataConnection, henriMenard);
+		companyDAO.create(dataConnection, company);
 		dataConnection.commit();
-		
-		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+
+		Collection<Company> allCompanies = companyDAO.findAll(dataConnection);
+		Company foundCompany = allCompanies.iterator().next();
+		DataConnection dataConnection2 = createDataConnection();
+		Collection<Company> allCompanies2 = companyDAO.findAll(dataConnection2);
+		Company foundCompany2 = allCompanies2.iterator().next();
 		
 		dataConnection.beginTransaction();
-		hmenard.setFirstName(Sampler.HENRI_MENARD_FIRSTNAME);
-		DataConnection dataConnection2 = createDataConnection();
 		dataConnection2.beginTransaction();
-		hmenard.setFirstName("Michel");
+		foundCompany.setName("Name1");
+		foundCompany2.setName("Name2");
+		companyDAO.update(dataConnection, foundCompany);
+		companyDAO.update(dataConnection2, foundCompany2);
+		
 		dataConnection.commit();
 		dataConnection2.commit();
-		Employee hmenard2 = employeeDAO.findByName(dataConnection2, Sampler.HENRI_MENARD_LASTNAME);
-		assertNotEquals("Locking seems to be naturally handle by the JPA provider", hmenard2.getFirstName(), Sampler.HENRI_MENARD_FIRSTNAME);
+		
+		allCompanies = companyDAO.findAll(dataConnection);
+		allCompanies2 = companyDAO.findAll(dataConnection2);
+		
+		assertNotEquals("An excepted unstable state hasn't been reached", allCompanies.iterator().next().getName(), allCompanies2.iterator().next().getName());
+		
 	}
 
 }

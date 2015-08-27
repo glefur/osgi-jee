@@ -16,8 +16,10 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.SequenceGenerator;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -27,9 +29,9 @@ import javax.persistence.Version;
 public class Company {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CMP_SEQ")
+	@SequenceGenerator(name="CMP_SEQ", sequenceName="CMP_SEQ", allocationSize=100)
 	private long companyId;
-	@Version
-	private long version;
 	
 	private String name;
 
