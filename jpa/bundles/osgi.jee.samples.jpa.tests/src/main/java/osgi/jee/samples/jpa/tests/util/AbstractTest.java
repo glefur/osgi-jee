@@ -15,6 +15,7 @@
  */
 package osgi.jee.samples.jpa.tests.util;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -41,6 +42,7 @@ import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.dao.connection.DataConnectionFactoryRegistry;
 import osgi.jee.samples.jpa.dao.db.DataBaseHandler;
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
+import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.jpa.util.db.DbService;
 import osgi.jee.samples.jpa.util.db.meta.ForeignKey;
@@ -52,7 +54,9 @@ import osgi.jee.samples.jpa.util.db.meta.Table;
  *
  */
 public abstract class AbstractTest {
-	
+
+	private static Object lock = new Object();
+
 	private static DatabaseConnection dbunitConnection;
 	private static FlatXmlDataSet dataset;
 
@@ -71,7 +75,7 @@ public abstract class AbstractTest {
 	private static boolean initDataSet() {
 		return false;
 	}
-	
+
 	/**
 	 * @return whether the data schema should be displayed at the end of the test or not.
 	 */
@@ -137,8 +141,8 @@ public abstract class AbstractTest {
 			datasetResource.close();
 		}
 	}
-	
-	
+
+
 	private static void clearDataBase(DataConnection dataConnection) throws SQLException {
 		DbService dbService = TestsActivator.getInstance().getService(DbService.class);
 		Connection sqlConnection = dataConnection.getSQLConnection();
@@ -152,10 +156,10 @@ public abstract class AbstractTest {
 					PreparedStatement stmt = sqlConnection.prepareStatement("DELETE FROM " + table.getName());
 					stmt.execute();
 				}
-				
+
 			}
 		}
-		
+
 	}
 
 	/**
@@ -206,6 +210,32 @@ public abstract class AbstractTest {
 	 */
 	private void performDataSetInitialization() throws DatabaseUnitException, SQLException {
 		DatabaseOperation.INSERT.execute(dbunitConnection, dataset);
+	}
+
+	/**
+	 * @param employee
+	 * @throws IOException 
+	 * @throws HeadlessException 
+	 */
+	protected void drawPicture(final Employee employee) throws HeadlessException, IOException {
+		final ImageViewer viewer = new ImageViewer(employee.getPicture());
+		viewer.setVisible(true);
+
+		Thread t = new Thread() {
+			public void run() {
+				synchronized(lock) {
+					while (viewer.isVisible()) {
+						try {
+							lock.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		};
+		t.start();
+
 	}
 
 }

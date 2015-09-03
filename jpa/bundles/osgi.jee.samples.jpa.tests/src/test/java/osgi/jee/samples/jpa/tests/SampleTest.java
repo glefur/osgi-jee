@@ -15,11 +15,18 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+
+import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
@@ -36,9 +43,15 @@ import osgi.jee.samples.jpa.util.db.meta.Table;
 public class SampleTest extends AbstractTest {
 
 	@Test
-	public void testConflictHandling() throws SQLException, ParseException {
+	public void test() throws SQLException, ParseException, IOException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
 		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
+
+		InputStream testResource = TestsActivator.getInstance().getTestResource("HenriMenard.jpg");
+		BufferedImage image = ImageIO.read(testResource);
+		henriMenard.setPicture(image);
+		drawPicture(henriMenard);
+
 		Employee corinneParizeau = Sampler.createCorinneParizeau(employmentFactory, henriMenard);
 		dataConnection.beginTransaction();
 		Sampler.persistEmployee(dataConnection, henriMenard);
@@ -56,10 +69,9 @@ public class SampleTest extends AbstractTest {
 		assertEquals("Column directive for Gender hasn't be applied", "MALE", result.getString(1));
 		assertTrue("Bad Gender request", result.next());
 		assertEquals("Column directive for Gender hasn't be applied", "FEMALE", result.getString(1));
-		
+
 		assertEquals("Column directive for Birthdate hasn't be applied", "DATE", table.getColumn("BIRTHDATE").getType());
 		
-		
 	}
-	
+
 }

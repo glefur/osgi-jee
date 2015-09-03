@@ -15,6 +15,12 @@
  */
 package osgi.jee.samples.jpa.model;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,14 +29,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -50,17 +60,21 @@ public class Employee {
 	private long employeeId;
 	@Version
 	private long version;
-	
+
 	@Column(name="F_NAME", length=100)
 	private String firstName;
 	@Column(name="L_NAME", length=200)
 	private String lastName;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Calendar birthDate;
-	
+
+	@Lob
+	@Basic(fetch=FetchType.LAZY)
+	private byte[] picture;
+
 	@Column(name="SALARY", scale=10)
 	private BigDecimal salary;
 	@OneToMany
@@ -75,7 +89,7 @@ public class Employee {
 	private Set<Project> projects;
 	@Embedded
 	private Period employmentPeriod;
-	
+
 	/**
 	 * @return the employeeId
 	 */
@@ -149,6 +163,27 @@ public class Employee {
 	}
 
 	/**
+	 * @return the picture
+	 * @throws IOException 
+	 */
+	public Image getPicture() throws IOException {
+		InputStream in = new ByteArrayInputStream(picture);
+		return ImageIO.read(in);
+	}
+
+	/**
+	 * @param picture the picture to set
+	 * @throws IOException 
+	 */
+	public void setPicture(Image picture) throws IOException {
+		if (picture instanceof BufferedImage) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			ImageIO.write((BufferedImage)picture, "JPG", out);
+			this.picture = out.toByteArray();	
+		}
+	}
+
+	/**
 	 * @return the salary
 	 */
 	public BigDecimal getSalary() {
@@ -177,7 +212,7 @@ public class Employee {
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
-	
+
 	/**
 	 * Adds a new phone to the phones list.
 	 * @param phone the phone to add.
@@ -188,7 +223,7 @@ public class Employee {
 		}
 		phones.add(phone);
 	}
-	
+
 	/**
 	 * Removes a phone from the phones list.
 	 * @param phone the phone to remove.
@@ -246,7 +281,7 @@ public class Employee {
 	public void setManagedEmployees(Set<Employee> managedEmployees) {
 		this.managedEmployees = managedEmployees;
 	}
-	
+
 	/**
 	 * Adds a new employee in the list of managed employees.
 	 * @param employee the {@link Employee} to add.
@@ -271,7 +306,7 @@ public class Employee {
 			employee.manager = null;
 		}
 	}
-	
+
 	/**
 	 * @return the projects
 	 */
@@ -297,7 +332,7 @@ public class Employee {
 		}
 		projects.add(project);
 	}
-	
+
 	/**
 	 * Removes a project from the employee's list of projects.
 	 * @param project the project to remove.
