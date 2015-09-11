@@ -31,6 +31,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -40,13 +41,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.sound.midi.Track;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -77,9 +81,13 @@ public class Employee {
 
 	@Column(name="SALARY", scale=10)
 	private BigDecimal salary;
-	@OneToMany
+	
+	@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
+	@OrderBy("areaCode")
 	private List<Phone> phones;
-	@OneToOne
+	
+	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
+	@JoinColumn(name="ADDR_ID")
 	private Address address;
 	@OneToOne
 	private Employee manager;

@@ -68,27 +68,27 @@ public class Sampler {
 			persistEmployee(dataConnection, henriMenard);
 			
 			// Employee 2
-			Employee corrineParizeau = createCorinneParizeau(employmentFactory, henriMenard);
-			persistEmployee(dataConnection, corrineParizeau);
+			Employee corinneParizeau = createCorinneParizeau(employmentFactory, henriMenard);
+			persistEmployee(dataConnection, corinneParizeau);
 
 			// Employee 3
 			Employee valentineGagne = createValentineGagne(employmentFactory, henriMenard);
 			persistEmployee(dataConnection, valentineGagne);
 						
 			// Employee 4
-			Employee didierCourcelle = createDidierCourcelle(employmentFactory, corrineParizeau);
+			Employee didierCourcelle = createDidierCourcelle(employmentFactory, corinneParizeau);
 			persistEmployee(dataConnection, didierCourcelle);
 
 			// Employee 5
-			Employee josetteDuval = createJosetteDuval(employmentFactory, corrineParizeau);
+			Employee josetteDuval = createJosetteDuval(employmentFactory, corinneParizeau);
 			persistEmployee(dataConnection, josetteDuval);
 						
 			// Employee 6
-			Employee honoreDubeau = createHonoreDubeau(employmentFactory, corrineParizeau);
+			Employee honoreDubeau = createHonoreDubeau(employmentFactory, corinneParizeau);
 			persistEmployee(dataConnection, honoreDubeau);
 			
 			// Employee 7
-			Employee tillyLapointe = createTillyLapointe(employmentFactory, corrineParizeau);
+			Employee tillyLapointe = createTillyLapointe(employmentFactory, corinneParizeau);
 			persistEmployee(dataConnection, tillyLapointe);
 						
 			// Employee 8
@@ -125,7 +125,7 @@ public class Sampler {
 			BigProject helios = employmentFactory.createBigProject();
 			helios.setName("Helios");
 			helios.setBudget(new BigDecimal(1500000));
-			helios.setTeamLeader(corrineParizeau);
+			helios.setTeamLeader(corinneParizeau);
 			didierCourcelle.addProject(helios);
 			josetteDuval.addProject(helios);
 			honoreDubeau.addProject(helios);
@@ -282,49 +282,49 @@ public class Sampler {
 
 	/**
 	 * @param employmentFactory
-	 * @param corrineParizeau
+	 * @param corinneParizeau
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Employee createTillyLapointe(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
+	public static Employee createTillyLapointe(EmploymentFactory employmentFactory, Employee corinneParizeau) throws ParseException {
 		Employee tillyLapointe = createEmployee(employmentFactory, "Tilly", "Lapointe", Gender.MALE, createBirthDate(18, 10, 1966), "5 avenue de Provence", "Vannes", "56000", FRANCE, "02.46.59.15.46", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/02/2007", null);
-		tillyLapointe.setManager(corrineParizeau);
+		tillyLapointe.setManager(corinneParizeau);
 		return tillyLapointe;
 	}
 
 	/**
 	 * @param employmentFactory
-	 * @param corrineParizeau
+	 * @param corinneParizeau
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Employee createHonoreDubeau(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
+	public static Employee createHonoreDubeau(EmploymentFactory employmentFactory, Employee corinneParizeau) throws ParseException {
 		Employee honoreDubeau = createEmployee(employmentFactory, "Honore", "Dubeau", Gender.MALE, createBirthDate(12, 12, 1978), "79 rue Banaudon", "Lyon", "69009", FRANCE, "04.42.93.38.71", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "23/07/2010", null);
-		honoreDubeau.setManager(corrineParizeau);
+		honoreDubeau.setManager(corinneParizeau);
 		return honoreDubeau;
 	}
 
 	/**
 	 * @param employmentFactory
-	 * @param corrineParizeau
+	 * @param corinneParizeau
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Employee createJosetteDuval(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
+	public static Employee createJosetteDuval(EmploymentFactory employmentFactory, Employee corinneParizeau) throws ParseException {
 		Employee josetteDuval = createEmployee(employmentFactory, "Josette", "Duval", Gender.FEMALE, createBirthDate(14, 10, 1965), "40 rue Saint Germain", "Gap", "05000", FRANCE, "04.53.53.82.77", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "17/04/2006", null);
-		josetteDuval.setManager(corrineParizeau);
+		josetteDuval.setManager(corinneParizeau);
 		return josetteDuval;
 	}
 
 	/**
 	 * @param employmentFactory
-	 * @param corrineParizeau
+	 * @param corinneParizea
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Employee createDidierCourcelle(EmploymentFactory employmentFactory, Employee corrineParizeau) throws ParseException {
+	public static Employee createDidierCourcelle(EmploymentFactory employmentFactory, Employee corinneParizea) throws ParseException {
 		Employee didierCourcelle = createEmployee(employmentFactory, "Didier", "Courcelle", Gender.MALE, createBirthDate(22, 9, 1965), "30 boulevard de la Liberation", "Marseille", "13011", FRANCE, "04.40.74.81.90", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "1/03/2009", null);
-		didierCourcelle.setManager(corrineParizeau);
+		didierCourcelle.setManager(corinneParizea);
 		return didierCourcelle;
 	}
 
@@ -347,9 +347,9 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createCorinneParizeau(EmploymentFactory employmentFactory, Employee henriMenard) throws ParseException {
-		Employee corrineParizeau = createEmployee(employmentFactory, "Corinne", CORINNE_PARIZEAU_LASTNAME, Gender.FEMALE, createBirthDate(18, 9, 1981), "42 place Stanislas", "Nantes", "44100", FRANCE, "02.72.74.22.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/11/2007", null);
-		corrineParizeau.setManager(henriMenard);
-		return corrineParizeau;
+		Employee corinneParizeau = createEmployee(employmentFactory, "Corinne", CORINNE_PARIZEAU_LASTNAME, Gender.FEMALE, createBirthDate(18, 9, 1981), "42 place Stanislas", "Nantes", "44100", FRANCE, "02.72.74.22.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "25/11/2007", null);
+		corinneParizeau.setManager(henriMenard);
+		return corinneParizeau;
 	}
 
 	/**

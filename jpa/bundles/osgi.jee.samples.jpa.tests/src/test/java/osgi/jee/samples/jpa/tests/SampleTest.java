@@ -15,26 +15,22 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import javax.imageio.ImageIO;
-
 import org.junit.Test;
 
+import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
+import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.jpa.util.db.meta.Table;
+import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -43,35 +39,64 @@ import osgi.jee.samples.jpa.util.db.meta.Table;
 public class SampleTest extends AbstractTest {
 
 	@Test
-	public void test() throws SQLException, ParseException, IOException {
+	public void testLaziness() throws ParseException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		Employee henriMenard = Sampler.createHenriMenard(employmentFactory);
-
-		InputStream testResource = TestsActivator.getInstance().getTestResource("HenriMenard.jpg");
-		BufferedImage image = ImageIO.read(testResource);
-		henriMenard.setPicture(image);
-		drawPicture(henriMenard);
-
-		Employee corinneParizeau = Sampler.createCorinneParizeau(employmentFactory, henriMenard);
 		dataConnection.beginTransaction();
-		Sampler.persistEmployee(dataConnection, henriMenard);
-		Sampler.persistEmployee(dataConnection, corinneParizeau);
+		Sampler.persistEmployee(dataConnection, Sampler.createHenriMenard(employmentFactory));
 		dataConnection.commit();
-		Table table = dataConnection.getSchema().getTable("EMPLOYEE");
-		assertNotNull("Unable to retrieve Employee table", table);
-		assertNotNull("Column directive for Firstname hasn't be applied", table.getColumn("F_NAME"));
-		assertEquals("Column directive for Firstname hasn't be applied", 100, table.getColumn("F_NAME").getLength());
-		assertNotNull("Column directive for Lastname hasn't be applied", table.getColumn("L_NAME"));
-		assertEquals("Column directive for Lastname hasn't be applied", 200, table.getColumn("L_NAME").getLength());
-		assertEquals("Column directive for Gender hasn't be applied", "VARCHAR", table.getColumn("GENDER").getType());
-		ResultSet result = dataConnection.getSQLConnection().prepareStatement("SELECT GENDER FROM EMPLOYEE").executeQuery();
-		assertTrue("Bad Gender request", result.next());
-		assertEquals("Column directive for Gender hasn't be applied", "MALE", result.getString(1));
-		assertTrue("Bad Gender request", result.next());
-		assertEquals("Column directive for Gender hasn't be applied", "FEMALE", result.getString(1));
+		((JPADataConnection)dataConnection).getEntityManager().clear();
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+		Employee hmenard = employeeDAO.find(dataConnection, 1l);
+		((JPADataConnection)dataConnection).getEntityManager().close();
+		boolean lazinessExceptionEncountered = false;
+		try {
+			hmenard.getAddress().getCity();
+		} catch (Exception e) {
+			if (e.getClass().getName().contains("Lazy")) {
+				lazinessExceptionEncountered = true;
+			}
+		}
+		assertTrue("The Employee -> Address relationship is Eager",lazinessExceptionEncountered);
 
-		assertEquals("Column directive for Birthdate hasn't be applied", "DATE", table.getColumn("BIRTHDATE").getType());
-		
+		lazinessExceptionEncountered = false;
+		try {
+			hmenard.getPhones().size();
+		} catch (Exception e) {
+			if (e.getClass().getName().contains("Lazy")) {
+				lazinessExceptionEncountered = true;
+			}
+		}
+		assertTrue("The Employee -> Address relationship is Eager",lazinessExceptionEncountered);
+
+		dataConnection = createDataConnection();
 	}
 
+
+	@Test
+	public void testCascading() throws SQLException {
+		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
+		Employee doe = employmentFactory.createEmployee();
+		doe.setFirstName("John");
+		doe.setLastName("Doe");
+		Address address = employmentFactory.createAddress();
+		address.setCity("X");
+		doe.setAddress(address );
+		dataConnection.beginTransaction();
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+		employeeDAO.create(dataConnection, doe);
+		dataConnection.commit();
+		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("Select City from ADDRESS");
+		ResultSet executeQuery = stmt.executeQuery();
+		assertTrue("ADDRESS entities not seem to be persisted", executeQuery.getFetchSize() == 1);
+		executeQuery.next();
+		assertEquals("ADDRESS entities not seem to be correctly persisted", "X", executeQuery.getString(1));
+		
+		dataConnection.beginTransaction();
+		employeeDAO.delete(dataConnection, doe);
+		dataConnection.commit();
+		stmt = dataConnection.getSQLConnection().prepareStatement("Select City from ADDRESS");
+		executeQuery = stmt.executeQuery();
+		assertTrue("ADDRESS entities not seem to be persisted", executeQuery.getFetchSize() == 0);
+		
+	}
 }

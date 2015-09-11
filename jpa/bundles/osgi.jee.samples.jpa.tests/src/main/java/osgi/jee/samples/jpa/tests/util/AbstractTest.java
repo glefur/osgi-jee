@@ -80,7 +80,7 @@ public abstract class AbstractTest {
 	 * @return whether the data schema should be displayed at the end of the test or not.
 	 */
 	private static boolean displaySchema() {
-		return true;
+		return false;
 	}
 
 	/**
