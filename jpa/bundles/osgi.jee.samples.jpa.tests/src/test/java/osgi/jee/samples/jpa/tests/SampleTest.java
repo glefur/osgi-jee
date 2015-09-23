@@ -38,6 +38,11 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
  */
 public class SampleTest extends AbstractTest {
 
+	/**
+	 * Here we test lazyness of the "Employee -> Address" and "Employee -> Phone relations". After creating an employee,
+	 * we get via the entity manager and then we close the entity manager to ensure it can't do any additional db query. When we
+	 * try to get data from the address of the employee or one of his phone, a lazyness exception is throw.
+	 */
 	@Test
 	public void testLaziness() throws ParseException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
@@ -66,12 +71,17 @@ public class SampleTest extends AbstractTest {
 				lazinessExceptionEncountered = true;
 			}
 		}
-		assertTrue("The Employee -> Address relationship is Eager",lazinessExceptionEncountered);
+		assertTrue("The Employee -> Phones relationship is Eager",lazinessExceptionEncountered);
 
 		dataConnection = createDataConnection();
 	}
 
 
+	/**
+	 * Here we test cascading of a relation. When creates an employee with an Address, persisting the employee
+	 * will automatically persist his address (without any usage of Address DAO). The same behavior is expected 
+	 * for the delete operation. 
+	 */
 	@Test
 	public void testCascading() throws SQLException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
@@ -87,16 +97,37 @@ public class SampleTest extends AbstractTest {
 		dataConnection.commit();
 		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement("Select City from ADDRESS");
 		ResultSet executeQuery = stmt.executeQuery();
-		assertTrue("ADDRESS entities not seem to be persisted", executeQuery.getFetchSize() == 1);
 		executeQuery.next();
 		assertEquals("ADDRESS entities not seem to be correctly persisted", "X", executeQuery.getString(1));
 		
 		dataConnection.beginTransaction();
 		employeeDAO.delete(dataConnection, doe);
 		dataConnection.commit();
-		stmt = dataConnection.getSQLConnection().prepareStatement("Select City from ADDRESS");
+		stmt = createDataConnection().getSQLConnection().prepareStatement("Select City from ADDRESS");
 		executeQuery = stmt.executeQuery();
-		assertTrue("ADDRESS entities not seem to be persisted", executeQuery.getFetchSize() == 0);
+		assertFalse("ADDRESS entities not seem to be persisted", executeQuery.next());
 		
 	}
+	
+	/**
+	 * Here we test the orphan entities removing. We create an employee with a phone and then, remove the phone from
+	 * his owner list. When updating the employee, the phone is removed from the database.
+	 */
+	@Test
+	public void testOrphanRemoval() throws SQLException, ParseException {
+		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
+		dataConnection.beginTransaction();
+		Sampler.persistEmployee(dataConnection, Sampler.createHenriMenard(employmentFactory));
+		dataConnection.commit();
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		hmenard.getPhones().clear();
+		dataConnection.beginTransaction();
+		employeeDAO.update(dataConnection, hmenard);
+		dataConnection.commit();
+		PreparedStatement stmt = createDataConnection().getSQLConnection().prepareStatement("Select * from PHONE");
+		ResultSet executeQuery = stmt.executeQuery();
+		assertFalse("ADDRESS entities not seem to be persisted", executeQuery.next());		
+	}
+	
 }
