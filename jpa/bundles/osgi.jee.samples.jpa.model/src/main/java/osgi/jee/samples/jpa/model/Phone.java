@@ -18,6 +18,7 @@ package osgi.jee.samples.jpa.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 /**
@@ -33,6 +34,9 @@ public class Phone {
 	@Version
 	private long version;
 
+	@ManyToOne
+	private Employee owner;
+	
 	private String type;
 	private String number;
 	private String areaCode;
@@ -43,6 +47,20 @@ public class Phone {
 	 */
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public Employee getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Employee owner) {
+		this.owner = owner;
 	}
 
 	/**

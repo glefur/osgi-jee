@@ -22,11 +22,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -44,9 +45,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -81,9 +82,9 @@ public class Employee {
 	@Column(name="SALARY", scale=10)
 	private BigDecimal salary;
 	
-	@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
-	@OrderBy("areaCode")
-	private List<Phone> phones;
+	@OneToMany(mappedBy="owner", orphanRemoval=true, cascade={CascadeType.ALL})
+	@MapKeyJoinColumn(name="PHONE_TYPE")
+	private Map<String, Phone> phones;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name="ADDR_ID")
@@ -208,27 +209,21 @@ public class Employee {
 	/**
 	 * @return the phones
 	 */
-	public List<Phone> getPhones() {
-		return phones;
-	}
-
-	/**
-	 * @param phones
-	 *            the phones to set
-	 */
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
+	public Collection<Phone> getPhones() {
+		return phones.values();
 	}
 
 	/**
 	 * Adds a new phone to the phones list.
+	 * @param type type of the added phone.
 	 * @param phone the phone to add.
 	 */
-	public void addPhone(Phone phone) {
+	public void addPhone(String type, Phone phone) {
 		if (this.phones == null) {
-			phones = new ArrayList<Phone>();
+			phones = new HashMap<String, Phone>();
 		}
-		phones.add(phone);
+		phone.setOwner(this);
+		phones.put(type, phone);
 	}
 
 	/**
@@ -237,7 +232,11 @@ public class Employee {
 	 */
 	public void deletePhone(Phone phone) {
 		if (phones != null) {
-			phones.remove(phone);
+			for (Entry<String, Phone> entry : phones.entrySet()) {
+				if (phone.equals(entry.getValue())) {
+					phones.remove(entry.getKey());					
+				}
+			}
 		}
 	}
 

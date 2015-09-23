@@ -189,7 +189,7 @@ public class Sampler {
 		phone.setNumber(phoneNumber);
 		phone.setType(type);
 		phone.setAreaCode(areaCode);
-		employee.addPhone(phone);
+		employee.addPhone(type, phone);
 		
 		Period employmentPeriod = employmentFactory.createPeriod();
 		employmentPeriod.setStartDate(dateFormat.parse(startDate));
