@@ -22,10 +22,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -33,7 +35,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -85,6 +89,13 @@ public class Employee {
 	@OneToMany(mappedBy="owner", orphanRemoval=true, cascade={CascadeType.ALL})
 	@MapKeyJoinColumn(name="PHONE_TYPE")
 	private Map<String, Phone> phones;
+	
+	@ElementCollection
+	@CollectionTable(
+			name="FAXES",
+			joinColumns=@JoinColumn(name="OWNER_ID")
+	)
+	private List<FAX> faxes;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name="ADDR_ID")
@@ -240,6 +251,34 @@ public class Employee {
 		}
 	}
 
+	/**
+	 * @return the faxes
+	 */
+	public List<FAX> getFaxes() {
+		return faxes;
+	}
+
+	/**
+	 * Adds a new fax
+	 * @param fax the fax to add.
+	 */
+	public void addFax(FAX fax) {
+		if (faxes == null) {
+			faxes = new ArrayList<FAX>(); 
+		}
+		faxes.add(fax);
+	}
+	
+	/**
+	 * Removes a fax.
+	 * @param fax the fax to remove.
+	 */
+	public void removeFax(FAX fax) {
+		if (faxes != null) {
+			faxes.remove(fax);
+		}
+	}
+	
 	/**
 	 * @return the address
 	 */

@@ -15,19 +15,19 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 import org.junit.Test;
 
-import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
+import osgi.jee.samples.jpa.model.FAX;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.model.dao.AddressDAO;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -37,22 +37,30 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
 public class SampleTest extends AbstractTest {
 
 	/**
-	 * Here we test a bidirectional OneToOne relationship
+	 * We test an ElementCollection for Embeddable elements.
 	 */
 	@Test
 	public void test() throws ParseException, SQLException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		AddressDAO addressDAO = TestsActivator.getInstance().getService(AddressDAO.class);
+		
 		dataConnection.beginTransaction();
 		Employee hmenard = Sampler.createHenriMenard(employmentFactory);
+		FAX fax = employmentFactory.createFAX();
+		fax.setAreaCode("+33");
+		fax.setNumber("2-51-13-68-66");
+		fax.setType("PRO");
+		hmenard.addFax(fax);
 		Sampler.persistEmployee(dataConnection, hmenard);
 		dataConnection.commit();
 
+		assertNotNull("Schema not correctly defined", dataConnection.getSchema().getTable("FAXES"));
+		
 		Employee henrimenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
-		Address add = addressDAO.findAll(dataConnection).iterator().next();
-		Employee addOwner = add.getOwner();
-		assertEquals("Error",  henrimenard, addOwner);
+		List<FAX> faxes = henrimenard.getFaxes();
+		assertEquals("Bad fax serialization", 1, faxes.size());
+		assertEquals("Bad fax serialization", "+33", faxes.get(0).getAreaCode());
+		
 		
 	}
 	

@@ -77,6 +77,14 @@ public class EmploymentFactory {
 	public Phone createPhone() {
 		return new Phone();
 	}
+	
+	/**
+	 * Creates a new fax.
+	 * @return the created {@link FAX}
+	 */
+	public FAX createFAX() {
+		return new FAX();
+	}
 
 	/**
 	 * Creates a new small project.
