@@ -15,20 +15,19 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 import org.junit.Test;
 
+import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.jpa.util.db.meta.Table;
+import osgi.jee.samples.model.dao.AddressDAO;
 import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
@@ -38,29 +37,22 @@ import osgi.jee.samples.model.dao.EmployeeDAO;
 public class SampleTest extends AbstractTest {
 
 	/**
-	 * Here we only check the db schema and the good id serialization for a map attribute.
+	 * Here we test a bidirectional OneToOne relationship
 	 */
 	@Test
 	public void test() throws ParseException, SQLException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		dataConnection.beginTransaction();
-		Employee menard = Sampler.createHenriMenard(employmentFactory);
-		Sampler.persistEmployee(dataConnection, menard);
-		Sampler.persistEmployee(dataConnection, Sampler.createCorinneParizeau(employmentFactory, menard));
-		dataConnection.commit();
-		
-		Table table = dataConnection.getSchema().getTable("PHONE");
-		assertNotNull("Bad schema generation", table.getColumn("OWNER_EMPLOYEEID"));
-		
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
-		String sql = "SELECT * FROM PHONE"
-				+ " WHERE OWNER_EMPLOYEEID=" + hmenard.getEmployeeId();
-		System.out.println(sql);
-		PreparedStatement stmt = dataConnection.getSQLConnection().prepareStatement(sql);
-		ResultSet result = stmt.executeQuery();
-		assertTrue("Bad phone's owner registration", result.next());
-		
+		AddressDAO addressDAO = TestsActivator.getInstance().getService(AddressDAO.class);
+		dataConnection.beginTransaction();
+		Employee hmenard = Sampler.createHenriMenard(employmentFactory);
+		Sampler.persistEmployee(dataConnection, hmenard);
+		dataConnection.commit();
+
+		Employee henrimenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		Address add = addressDAO.findAll(dataConnection).iterator().next();
+		Employee addOwner = add.getOwner();
+		assertEquals("Error",  henrimenard, addOwner);
 		
 	}
 	

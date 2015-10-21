@@ -16,9 +16,11 @@
 package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 /**
@@ -33,11 +35,15 @@ public class Address {
 	private long id;
 	@Version
 	private long version;
+	
 	private String street;
 	private String city;
 	private String province;
 	private String country;
 	private String postalCode;
+	
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="address")
+	private Employee owner;
 
 	/**
 	 * {@inheritDoc}
@@ -133,6 +139,20 @@ public class Address {
 	 */
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	/**
+	 * @return the owner
+	 */
+	public Employee getOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(Employee owner) {
+		this.owner = owner;
 	}
 
 }
