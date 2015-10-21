@@ -28,6 +28,7 @@ import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.model.Gender;
 import osgi.jee.samples.jpa.model.Period;
 import osgi.jee.samples.jpa.model.Phone;
+import osgi.jee.samples.jpa.model.Project;
 import osgi.jee.samples.jpa.model.SmallProject;
 import osgi.jee.samples.jpa.tests.TestsActivator;
 import osgi.jee.samples.model.dao.AddressDAO;
@@ -119,19 +120,16 @@ public class Sampler {
 			Employee mathildeJette = createMathildeJette(employmentFactory, valentineGagne);
 			persistEmployee(dataConnection, mathildeJette);
 			
-			ProjectDAO projectDAO = TestsActivator.getInstance().getService(ProjectDAO.class);
 			
 			// Helios project
-			BigProject helios = employmentFactory.createBigProject();
-			helios.setName("Helios");
-			helios.setBudget(new BigDecimal(1500000));
+			BigProject helios = createHeliosProject(employmentFactory);
 			helios.setTeamLeader(corinneParizeau);
 			didierCourcelle.addProject(helios);
 			josetteDuval.addProject(helios);
 			honoreDubeau.addProject(helios);
 			tillyLapointe.addProject(helios);
 			jacquesAllard.addProject(helios);
-			projectDAO.create(dataConnection, helios);
+			ProjectDAO projectDAO = persistProject(dataConnection, helios);
 
 			// Selene project
 			SmallProject selene = employmentFactory.createSmallProject();
@@ -371,6 +369,28 @@ public class Sampler {
 			phoneDAO.create(dataConnection, phone);
 		}
 		employeeDAO.create(dataConnection, employee);
+	}
+
+	/**
+	 * @param employmentFactory
+	 * @return
+	 */
+	public static BigProject createHeliosProject(EmploymentFactory employmentFactory) {
+		BigProject helios = employmentFactory.createBigProject();
+		helios.setName("Helios");
+		helios.setBudget(new BigDecimal(1500000));
+		return helios;
+	}
+
+	/**
+	 * @param dataConnection
+	 * @param project
+	 * @return
+	 */
+	public static ProjectDAO persistProject(DataConnection dataConnection, Project project) {
+		ProjectDAO projectDAO = TestsActivator.getInstance().getService(ProjectDAO.class);
+		projectDAO.create(dataConnection, project);
+		return projectDAO;
 	}
 
 	private static Calendar createBirthDate(int date, int month, int year) {

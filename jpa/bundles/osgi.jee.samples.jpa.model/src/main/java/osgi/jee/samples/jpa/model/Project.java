@@ -15,9 +15,16 @@
  */
 package osgi.jee.samples.jpa.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
@@ -36,6 +43,14 @@ public abstract class Project {
 	private String name;
 	@OneToOne
 	private Employee teamLeader;
+	
+	@ElementCollection
+	@CollectionTable(
+			name="TOPICS",
+			joinColumns=@JoinColumn(name="OWNER_ID")
+			)
+	@Column(name="TOPICS")
+	private List<String> topics;
 
 	/**
 	 * {@inheritDoc}
@@ -84,4 +99,31 @@ public abstract class Project {
 		teamLeader.addProject(this);
 	}
 
+	/**
+	 * @return the topics
+	 */
+	public List<String> getTopics() {
+		return topics;
+	}
+	
+	/**
+	 * Adds a topic.
+	 * @param topic the topic to add. 
+	 */
+	public void addTopic(String topic) {
+		if (topics == null) {
+			topics = new ArrayList<String>();
+		}
+		topics.add(topic);
+	}
+	
+	/**
+	 * Removes a topic.
+	 * @param topic the topic to remove.
+	 */
+	public void removeTopic(String topic) {
+		if (topics != null) {
+			topics.remove(topic);
+		}
+	}
 }

@@ -15,20 +15,21 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.List;
+import java.util.Collection;
 
 import org.junit.Test;
 
-import osgi.jee.samples.jpa.model.Employee;
+import osgi.jee.samples.jpa.model.BigProject;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
-import osgi.jee.samples.jpa.model.FAX;
+import osgi.jee.samples.jpa.model.Project;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.model.dao.EmployeeDAO;
+import osgi.jee.samples.model.dao.ProjectDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -42,24 +43,22 @@ public class SampleTest extends AbstractTest {
 	@Test
 	public void test() throws ParseException, SQLException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 		
 		dataConnection.beginTransaction();
-		Employee hmenard = Sampler.createHenriMenard(employmentFactory);
-		FAX fax = employmentFactory.createFAX();
-		fax.setAreaCode("+33");
-		fax.setNumber("2-51-13-68-66");
-		fax.setType("PRO");
-		hmenard.addFax(fax);
-		Sampler.persistEmployee(dataConnection, hmenard);
+		BigProject helios = Sampler.createHeliosProject(employmentFactory);
+		helios.addTopic("Software");
+		helios.addTopic("Finance");
+		Sampler.persistProject(dataConnection, helios);
 		dataConnection.commit();
 
-		assertNotNull("Schema not correctly defined", dataConnection.getSchema().getTable("FAXES"));
+		assertNotNull("Schema not correctly defined", dataConnection.getSchema().getTable("TOPICS"));
 		
-		Employee henrimenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
-		List<FAX> faxes = henrimenard.getFaxes();
-		assertEquals("Bad fax serialization", 1, faxes.size());
-		assertEquals("Bad fax serialization", "+33", faxes.get(0).getAreaCode());
+		ProjectDAO projectDAO = TestsActivator.getInstance().getService(ProjectDAO.class);
+		Collection<Project> allProjects = projectDAO.findAll(dataConnection);
+		Project persistedHelios = allProjects.iterator().next();
+		
+		assertEquals("Bad fax serialization", 2, persistedHelios.getTopics().size());
+		assertEquals("Bad fax serialization", "Software", persistedHelios.getTopics().get(0));
 		
 		
 	}
