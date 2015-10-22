@@ -16,8 +16,12 @@
 package osgi.jee.samples.jpa.dao.impl.connection;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.util.db.DbService;
@@ -84,5 +88,20 @@ public abstract class JPADataConnection implements DataConnection {
 	public void close() {
 		entityManager.close();
 	}
+	
+	public <T> T executeQuery(String name, Map<String, Object> parameters) {
+		Query query = entityManager.createNamedQuery(name);
+		for (Entry<String, Object> parameter : parameters.entrySet()) {
+			query.setParameter(parameter.getKey(), parameter.getValue());
+		}
+		return (T)query.getSingleResult();
+	}
 
+	public <T> List<T> executeQueryForList(String name, Map<String, Object> parameters) {
+		Query query = entityManager.createNamedQuery(name);
+		for (Entry<String, Object> parameter : parameters.entrySet()) {
+			query.setParameter(parameter.getKey(), parameter.getValue());
+		}
+		return (List<T>)query.getResultList();
+	}
 }

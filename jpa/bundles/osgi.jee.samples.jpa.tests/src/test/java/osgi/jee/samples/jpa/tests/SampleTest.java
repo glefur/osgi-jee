@@ -19,12 +19,11 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Calendar;
+import java.util.Collection;
 
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.model.Employee;
-import osgi.jee.samples.jpa.model.EmploymentFactory;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
 import osgi.jee.samples.model.dao.EmployeeDAO;
@@ -40,28 +39,12 @@ public class SampleTest extends AbstractTest {
 	 */
 	@Test
 	public void test() throws ParseException, SQLException {
-		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
 		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
-		dataConnection.beginTransaction();
-		Calendar current = Calendar.getInstance();
-		Sampler.persistEmployee(dataConnection, Sampler.createHenriMenard(employmentFactory));
-		dataConnection.commit();
+		Sampler.generateEmploymentSample(dataConnection);
 
-		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		Collection<Employee> employeeInNantes = employeeDAO.findByCity(dataConnection, "Nantes");
 		
-		Calendar lastUpdated = hmenard.getLastUpdated();
-		assertNotNull("Last updated time not setted", lastUpdated);
-		
-		assert lastUpdated.getTimeInMillis() - current.getTimeInMillis() < 5000:"Last updated time not correctly setted";
-		
-		dataConnection.beginTransaction();
-		hmenard.setFirstName("Henri-Bernard");
-		employeeDAO.update(dataConnection, hmenard);
-		dataConnection.commit();
-		
-		Employee hmenard2 = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
-		
-		assertNotEquals("Last updated time not correctly updated",  lastUpdated, hmenard2.getLastUpdated());
+		assertNotEquals("Bad query execution", 0, employeeInNantes.size());
 		
 	}
 	

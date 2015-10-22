@@ -50,6 +50,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -63,6 +64,10 @@ import javax.persistence.Version;
  * 
  */
 @Entity
+@NamedQuery(
+		name="findAllEmployeesInCity",
+		query="Select emp from Employee emp where emp.address.city = :city"
+		)
 public class Employee {
 
 	@Id

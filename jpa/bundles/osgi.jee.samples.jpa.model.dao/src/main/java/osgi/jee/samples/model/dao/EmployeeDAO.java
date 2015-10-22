@@ -15,6 +15,8 @@
  */
 package osgi.jee.samples.model.dao;
 
+import java.util.Collection;
+
 import osgi.jee.samples.jpa.dao.GenericDAO;
 import osgi.jee.samples.jpa.dao.connection.DataConnection;
 import osgi.jee.samples.jpa.model.Employee;
@@ -32,5 +34,8 @@ public interface EmployeeDAO extends GenericDAO<Employee> {
 	 * @return the {@link Employee} with the corresponding last name <code>null</code> otherwise.
 	 */
 	Employee findByName(DataConnection dataConnection, String lastname);
+
+
+	Collection<Employee> findByCity(DataConnection dataConnection, String city);
 
 }

@@ -15,7 +15,10 @@
  */
 package osgi.jee.samples.model.dao.internal.impl;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -56,6 +59,18 @@ public class EmployeeDAOImpl extends JPADAOImpl<Employee> implements EmployeeDAO
 			return (Employee) resultList.get(0);
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.model.dao.EmployeeDAO#findByCity(osgi.jee.samples.jpa.dao.connection.DataConnection, java.lang.String)
+	 */
+	@Override
+	public Collection<Employee> findByCity(DataConnection dataConnection, String city) {
+		assert dataConnection instanceof JPADataConnection:"Unable to perform this operation with this data connection";
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("city", city);
+		return ((JPADataConnection)dataConnection).executeQueryForList("findAllEmployeesInCity", parameters);
 	}
 	
 	
