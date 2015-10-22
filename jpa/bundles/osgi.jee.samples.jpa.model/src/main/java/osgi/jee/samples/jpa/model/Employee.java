@@ -52,6 +52,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -68,6 +70,8 @@ public class Employee {
 	private long employeeId;
 	@Version
 	private long version;
+	@Basic
+	private Calendar lastUpdated;
 
 	@Column(name="F_NAME", length=100)
 	private String firstName;
@@ -121,6 +125,13 @@ public class Employee {
 	 */
 	public long getVersion() {
 		return version;
+	}
+
+	/**
+	 * @return the lastUpdated
+	 */
+	public Calendar getLastUpdated() {
+		return lastUpdated;
 	}
 
 	/**
@@ -402,6 +413,16 @@ public class Employee {
 	 */
 	public void setEmploymentPeriod(Period employmentPeriod) {
 		this.employmentPeriod = employmentPeriod;
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		this.lastUpdated = Calendar.getInstance();
+	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		this.lastUpdated = Calendar.getInstance();
 	}
 
 }

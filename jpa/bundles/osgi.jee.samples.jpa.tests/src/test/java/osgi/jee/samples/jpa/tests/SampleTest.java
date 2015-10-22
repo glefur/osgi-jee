@@ -15,21 +15,19 @@
  */
 package osgi.jee.samples.jpa.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Collection;
+import java.util.Calendar;
 
 import org.junit.Test;
 
-import osgi.jee.samples.jpa.model.BigProject;
+import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
-import osgi.jee.samples.jpa.model.Project;
 import osgi.jee.samples.jpa.tests.util.AbstractTest;
 import osgi.jee.samples.jpa.tests.util.Sampler;
-import osgi.jee.samples.model.dao.ProjectDAO;
+import osgi.jee.samples.model.dao.EmployeeDAO;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -43,23 +41,27 @@ public class SampleTest extends AbstractTest {
 	@Test
 	public void test() throws ParseException, SQLException {
 		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
-		
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
 		dataConnection.beginTransaction();
-		BigProject helios = Sampler.createHeliosProject(employmentFactory);
-		helios.addTopic("Software");
-		helios.addTopic("Finance");
-		Sampler.persistProject(dataConnection, helios);
+		Calendar current = Calendar.getInstance();
+		Sampler.persistEmployee(dataConnection, Sampler.createHenriMenard(employmentFactory));
 		dataConnection.commit();
 
-		assertNotNull("Schema not correctly defined", dataConnection.getSchema().getTable("TOPICS"));
+		Employee hmenard = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
 		
-		ProjectDAO projectDAO = TestsActivator.getInstance().getService(ProjectDAO.class);
-		Collection<Project> allProjects = projectDAO.findAll(dataConnection);
-		Project persistedHelios = allProjects.iterator().next();
+		Calendar lastUpdated = hmenard.getLastUpdated();
+		assertNotNull("Last updated time not setted", lastUpdated);
 		
-		assertEquals("Bad fax serialization", 2, persistedHelios.getTopics().size());
-		assertEquals("Bad fax serialization", "Software", persistedHelios.getTopics().get(0));
+		assert lastUpdated.getTimeInMillis() - current.getTimeInMillis() < 5000:"Last updated time not correctly setted";
 		
+		dataConnection.beginTransaction();
+		hmenard.setFirstName("Henri-Bernard");
+		employeeDAO.update(dataConnection, hmenard);
+		dataConnection.commit();
+		
+		Employee hmenard2 = employeeDAO.findByName(dataConnection, Sampler.HENRI_MENARD_LASTNAME);
+		
+		assertNotEquals("Last updated time not correctly updated",  lastUpdated, hmenard2.getLastUpdated());
 		
 	}
 	
