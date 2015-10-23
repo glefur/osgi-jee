@@ -100,11 +100,9 @@ public abstract class AbstractTest {
 
 	@Before
 	public void initTest() throws DatabaseUnitException, SQLException, UnsupportedEncodingException {
+		clearDataBase(dataConnection);
 		if (initDataSet()) {
 			performDataSetInitialization();
-		}
-		else {
-			clearDataBase(dataConnection);
 		}
 	}
 

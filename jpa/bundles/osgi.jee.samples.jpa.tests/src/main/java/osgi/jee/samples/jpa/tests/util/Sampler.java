@@ -46,6 +46,8 @@ public class Sampler {
 	public static final String HENRI_MENARD_LASTNAME = "Ménard";
 	public static final String HENRI_MENARD_START_DATE = "17/04/2004";
 	public static final String CORINNE_PARIZEAU_LASTNAME = "Parizeau";
+	public static final String VALENTINE_GAGNE_LASTNAME = "Gagné";
+	public static final String MATHILDE_JETTE_LASTNAME = "Jetté";
 	public static final String FRANCE = "France";
 	public static final String PHONE_TYPE_PRO = "Pro";
 
@@ -134,6 +136,7 @@ public class Sampler {
 			// Selene project
 			SmallProject selene = employmentFactory.createSmallProject();
 			selene.setName("Selene");
+			selene.setStatus("OK");
 			selene.setTeamLeader(brigitteBoisclair);
 			nicolasDionne.addProject(selene);
 			francoisePetit.addProject(selene);
@@ -142,6 +145,7 @@ public class Sampler {
 			// Ge project
 			SmallProject ge = employmentFactory.createSmallProject();
 			ge.setName("Ge");
+			ge.setStatus("In trouble");
 			ge.setTeamLeader(valentineGagne);
 			mathildeJette.addProject(ge);
 			projectDAO.create(dataConnection, ge);
@@ -205,7 +209,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createMathildeJette(EmploymentFactory employmentFactory, Employee valentineGagne) throws ParseException {
-		Employee mathildeJette = createEmployee(employmentFactory, "Mathilde", "Jetté", Gender.FEMALE,createBirthDate(22, 11, 1966), "42 rue Michel Ange", "Le Havre", "76610", FRANCE, "02.70.91.02.97", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "24/08/2012", null);
+		Employee mathildeJette = createEmployee(employmentFactory, "Mathilde", MATHILDE_JETTE_LASTNAME, Gender.FEMALE,createBirthDate(22, 11, 1966), "42 rue Michel Ange", "Le Havre", "76610", FRANCE, "02.70.91.02.97", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "24/08/2012", null);
 		mathildeJette.setManager(valentineGagne);
 		return mathildeJette;
 	}
@@ -333,7 +337,7 @@ public class Sampler {
 	 * @throws ParseException
 	 */
 	public static Employee createValentineGagne(EmploymentFactory employmentFactory, Employee henriMenard) throws ParseException {
-		Employee valentineGagne = createEmployee(employmentFactory, "Valentine", "Gagné", Gender.FEMALE, createBirthDate(23, 07, 1973), "11 rue St Ferréol", "Metz", "57070", FRANCE, "03.00.88.10.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/09/2006", null);
+		Employee valentineGagne = createEmployee(employmentFactory, "Valentine", VALENTINE_GAGNE_LASTNAME, Gender.FEMALE, createBirthDate(23, 07, 1973), "11 rue St Ferréol", "Metz", "57070", FRANCE, "03.00.88.10.59", PHONE_TYPE_PRO, FRANCE_AREA_CODE, "30/09/2006", null);
 		valentineGagne.setManager(henriMenard);
 		return valentineGagne;
 	}
@@ -379,6 +383,7 @@ public class Sampler {
 		BigProject helios = employmentFactory.createBigProject();
 		helios.setName("Helios");
 		helios.setBudget(new BigDecimal(1500000));
+		helios.setStatus("OK");
 		return helios;
 	}
 

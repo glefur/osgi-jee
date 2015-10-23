@@ -16,7 +16,6 @@ Import-Package: javassist.util.proxy;version="3.18.1.GA",
  org.hibernate.engine.spi;version="4.2.7",
  org.hibernate.jdbc;version="4.2.7",
  org.hibernate.proxy;version="4.2.7",
- org.hibernate.service.jdbc.connections.spi;version="4.2.7",
  org.osgi.framework;version="1.7.0",
  org.osgi.service.jdbc;version="1.0.0",
  org.osgi.util.tracker;version="1.5.1"
