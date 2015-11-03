@@ -1,18 +1,26 @@
 target "Target Platform for JPA sample using Aries, OpenJPA and Derby project"
 
-include "https://raw.githubusercontent.com/glefur/osgi-jee/master/jpa/env/osgi.jee.samples.jpa.environment/targetPlatforms/osgi-jpa-default.tpd"
-
 with requirements, source
 
 location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
+ org.eclipse.osgi
+ org.apache.felix.gogo.runtime
+ org.apache.felix.gogo.shell
  org.eclipse.equinox.cm
+ org.eclipse.equinox.console
+ org.eclipse.equinox.ds
+ org.eclipse.equinox.util
+ org.eclipse.osgi.services
+ org.eclipse.core.runtime
+ org.eclipse.pde.junit.runtime
 }
 
 location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/" {
+ osgi.enterprise
  org.apache.derby
 }
 
-location p2CoJaL "https://glefur.github.io/p2/p2CoJaL" {
+location p2CoJaL "https://glefur.github.io/p2/p2CoJaL/0.9.1/repository" {
  org.apache.commons.collections
  org.apache.commons.lang
  org.apache.commons.pool
@@ -24,8 +32,9 @@ location p2CoJaL "https://glefur.github.io/p2/p2CoJaL" {
  org.apache.aries.jpa.container
  org.apache.aries.transaction.manager
  org.apache.aries.util
+ org.apache.servicemix.bundles.dbunit
  org.hibernate.osgi
- org.hibernate.eclipse
+ org.hibernate.core.eclipse
  org.hibernate.common.hibernate-commons-annotations
  org.hibernate.entitymanager
 }
