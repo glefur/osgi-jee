@@ -13,6 +13,7 @@ location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
  org.eclipse.osgi.services
  org.eclipse.core.runtime
  org.eclipse.pde.junit.runtime
+ org.junit
 }
 
 location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/" {
@@ -22,15 +23,15 @@ location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R2014052
 
 location p2CoJaL "https://glefur.github.io/p2/p2CoJaL/0.9.1/repository" {
  org.apache.commons.collections
- org.apache.commons.lang
- org.apache.commons.pool
- org.apache.servicemix.bundles.serp
- org.ops4j.pax.logging.pax-logging-api
- org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec
+// org.apache.commons.lang
+// org.apache.commons.pool
+// org.apache.servicemix.bundles.serp
+// org.ops4j.pax.logging.pax-logging-api
+// org.apache.geronimo.specs.geronimo-j2ee-connector_1.5_spec
  org.apache.geronimo.specs.geronimo-jpa_2.0_spec
  org.apache.aries.jpa.api
  org.apache.aries.jpa.container
- org.apache.aries.transaction.manager
+// org.apache.aries.transaction.manager
  org.apache.aries.util
  org.apache.servicemix.bundles.dbunit
  org.hibernate.osgi
