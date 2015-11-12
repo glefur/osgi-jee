@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for JPA sample using Aries, OpenJPA and Derby project" sequenceNumber="1447237620">
+<target name="Target Platform for JPA sample using Aries, OpenJPA and Derby project" sequenceNumber="1447341941">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.osgi" version="3.9.1.v20140110-1610"/>
@@ -24,16 +24,10 @@
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.commons.collections" version="3.2.1"/>
-      <unit id="org.apache.geronimo.specs.geronimo-jpa_2.0_spec" version="1.1.0"/>
-      <unit id="org.apache.aries.jpa.api" version="1.0.0"/>
       <unit id="org.apache.aries.jpa.container" version="1.0.0"/>
-      <unit id="org.apache.aries.util" version="1.0.0"/>
       <unit id="org.apache.servicemix.bundles.dbunit" version="2.5.1.1"/>
       <unit id="org.hibernate.osgi" version="4.2.7.Final"/>
-      <unit id="org.hibernate.core.eclipse" version="4.2.7.Final"/>
-      <unit id="org.hibernate.common.hibernate-commons-annotations" version="4.0.4.Final"/>
-      <unit id="org.hibernate.entitymanager" version="4.2.7.Final"/>
-      <repository id="p2CoJaL" location="https://glefur.github.io/p2/p2CoJaL/0.9.1/repository"/>
+      <repository id="p2CoJaL" location="file:/home/glefur/Perso/repositories/glefur.github.io/p2/p2CoJaL/0.9.1/repository"/>
     </location>
   </locations>
 </target>
