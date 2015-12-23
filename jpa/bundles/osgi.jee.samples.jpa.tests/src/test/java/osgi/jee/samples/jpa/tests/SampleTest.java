@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -37,10 +36,8 @@ import javax.persistence.criteria.Join;
 import org.junit.Test;
 
 import osgi.jee.samples.jpa.dao.impl.connection.JPADataConnection;
-import osgi.jee.samples.jpa.model.Address;
 import osgi.jee.samples.jpa.model.Employee;
 import osgi.jee.samples.jpa.model.EmploymentFactory;
-import osgi.jee.samples.jpa.model.Gender;
 import osgi.jee.samples.jpa.model.Phone;
 import osgi.jee.samples.jpa.model.Project;
 import osgi.jee.samples.jpa.model.SmallProject;
@@ -53,6 +50,7 @@ import osgi.jee.samples.model.dao.ProjectDAO;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
+@SuppressWarnings("unchecked")
 public class SampleTest extends AbstractTest {
 
 	/**
@@ -186,8 +184,8 @@ public class SampleTest extends AbstractTest {
 	 * Here we test several queries to find the first element in a collection
 	 * @throws ParseException 
 	 */
-//	@Test
-	public void testFirstElementInACollectionQuery() throws SQLException, ParseException {
+	@Test
+	public void testFirstElementInACollectionQuery() throws SQLException {
 
 		EntityManager entityManager = ((JPADataConnection)dataConnection).getEntityManager();
 
@@ -197,41 +195,179 @@ public class SampleTest extends AbstractTest {
 		
 		Employee testEmployee = employmentFactory.createEmployee();
 		testEmployee.setFirstName("Test");
-		Address testAdress = employmentFactory.createAddress();
-		testAdress.setCity("Test");
-		testEmployee.setAddress(testAdress);
-//		SmallProject project1 = employmentFactory.createSmallProject();
-//		project1.setName("Project 1");
-//		testEmployee.addProject(project1);
-//		SmallProject project2 = employmentFactory.createSmallProject();
-//		project2.setName("Project 2");
-//		testEmployee.addProject(project2);
-//		SmallProject project3 = employmentFactory.createSmallProject();
-//		project3.setName("Project 3");
-//		testEmployee.addProject(project3);
-//		SmallProject project4 = employmentFactory.createSmallProject();
-//		project4.setName("Project 4");
-//		testEmployee.addProject(project4);
+		SmallProject project1 = employmentFactory.createSmallProject();
+		project1.setName("Project 1");
+		testEmployee.addProject(project1);
+		SmallProject project2 = employmentFactory.createSmallProject();
+		project2.setName("Project 2");
+		testEmployee.addProject(project2);
+		SmallProject project3 = employmentFactory.createSmallProject();
+		project3.setName("Project 3");
+		testEmployee.addProject(project3);
+		SmallProject project4 = employmentFactory.createSmallProject();
+		project4.setName("Project 4");
+		testEmployee.addProject(project4);
 	
 		dataConnection.beginTransaction();
-//		employeeDAO.create(dataConnection, testEmployee);
-		Employee emp = Sampler.createEmployee(employmentFactory, "Test", "Test", Gender.MALE, Calendar.getInstance(), "Test", "Test", "Test", "Test", "Test", "Test", "Test", "22/09/1982", "22/09/1982");
-		Sampler.persistEmployee(dataConnection, emp);
-//		projectDAO.create(dataConnection, project1);
-//		projectDAO.create(dataConnection, project2);
-//		projectDAO.create(dataConnection, project3);
-//		projectDAO.create(dataConnection, project4);
+		employeeDAO.create(dataConnection, testEmployee);
+		projectDAO.create(dataConnection, project1);
+		projectDAO.create(dataConnection, project2);
+		projectDAO.create(dataConnection, project3);
+		projectDAO.create(dataConnection, project4);
 		dataConnection.commit();
 		
-		Query jpqlQuery1 = entityManager.createQuery("Select e.projects from Employee e where e.firstName = 'Test'");
-		jpqlQuery1.setMaxResults(1);
-		List<Object> jpqlResultList1 = jpqlQuery1.getResultList();
-		Project project = (Project) jpqlResultList1.get(0);
-		System.out.println(project.getName());
+		// setMaxResult
+		Query smrQuery1 = entityManager.createQuery("Select e.projects from Employee e where e.firstName = 'Test'");
+		smrQuery1.setMaxResults(1);
+		List<Object> smrResultList1 = smrQuery1.getResultList();
+		Project resultProject1 = (Project) smrResultList1.get(0);
+		String result1 = resultProject1.getName();
+		
+		Query smrQuery2 = entityManager.createQuery("Select p from Employee e join e.projects p where e.firstName = 'Test'");
+		smrQuery2.setMaxResults(1);
+		List<Object> smrResultList2 = smrQuery2.getResultList();
+		Project resultProject2 = (Project) smrResultList2.get(0);
+		String result2 = resultProject2.getName();
+		
+		// JPQL
+		Query jpqlQuery = entityManager.createQuery("Select p from Project p where p.id = (Select MIN(p2.id) from Employee e join e.projects p2 where e.firstName = 'Test')");
+		List<Object> jpqlResultList = jpqlQuery.getResultList();
+		Project resultProject3 = (Project) jpqlResultList.get(0);
+		String result3 = resultProject3.getName();
 
-//		Query jpqlQuery2 = entityManager.createQuery("Select p from Employee e join e.projects p where INDEX(p) = 1");
-//		List<Object> jpqlResultList2 = jpqlQuery2.getResultList();
+		// JPA2
+//		Query jpa2Query = entityManager.createQuery("Select p from Employee e join e.projects p where e.firstName = 'Test' and INDEX(p) = 1");
+//		List<Object> jpa2ResultList = jpa2Query.getResultList();
+//		Project resultProject4 = (Project) jpa2ResultList.get(0);
+//		String result4 = resultProject4.getName();
+		
+		assertEquals("Queries don't return the same results", result1, result2);
+		assertEquals("Queries don't return the same results", result2, result3);
+//		assertEquals("Queries don't return the same results", result3, result4);
+		
 	}
 	
+	@Test
+	public void testOrderCollectionBySizeQuery() throws SQLException {
 
+		EntityManager entityManager = ((JPADataConnection)dataConnection).getEntityManager();
+
+		EmploymentFactory employmentFactory = TestsActivator.getInstance().getService(EmploymentFactory.class);
+		EmployeeDAO employeeDAO = TestsActivator.getInstance().getService(EmployeeDAO.class);
+		ProjectDAO projectDAO = TestsActivator.getInstance().getService(ProjectDAO.class);
+		
+		Employee employee1 = employmentFactory.createEmployee();
+		employee1.setFirstName("Employee 1");
+		Employee employee2 = employmentFactory.createEmployee();
+		employee2.setFirstName("Employee 2");
+		Employee employee3 = employmentFactory.createEmployee();
+		employee3.setFirstName("Employee 3");
+		Employee employee4 = employmentFactory.createEmployee();
+		employee4.setFirstName("Employee 4");
+		Employee employee5 = employmentFactory.createEmployee();
+		employee5.setFirstName("Employee 5");
+		Employee employee6 = employmentFactory.createEmployee();
+		employee6.setFirstName("Employee 6");
+		Employee employee7 = employmentFactory.createEmployee();
+		employee7.setFirstName("Employee 7");
+		
+		SmallProject project1 = employmentFactory.createSmallProject();
+		project1.setName("Project 1");
+		SmallProject project2 = employmentFactory.createSmallProject();
+		project2.setName("Project 2");
+		SmallProject project3 = employmentFactory.createSmallProject();
+		project3.setName("Project 3");
+		SmallProject project4 = employmentFactory.createSmallProject();
+		project4.setName("Project 4");
+		SmallProject project5 = employmentFactory.createSmallProject();
+		project5.setName("Project 5");
+		SmallProject project6 = employmentFactory.createSmallProject();
+		project6.setName("Project 6");
+		SmallProject project7 = employmentFactory.createSmallProject();
+		project7.setName("Project 7");
+	
+		// 3
+		employee3.addProject(project5);
+		
+		// 7
+		employee7.addProject(project7);
+		employee7.addProject(project4);
+
+		// 2
+		employee2.addProject(project1);
+		employee2.addProject(project2);
+		employee2.addProject(project7);
+		
+		// 5
+		employee5.addProject(project6);
+		employee5.addProject(project1);
+		employee5.addProject(project2);
+		employee5.addProject(project4);
+		
+		// 1
+		employee1.addProject(project5);
+		employee1.addProject(project4);
+		employee1.addProject(project1);
+		employee1.addProject(project2);
+		employee1.addProject(project3);
+		
+		// 4
+		employee4.addProject(project7);
+		employee4.addProject(project2);
+		employee4.addProject(project1);
+		employee4.addProject(project6);
+		employee4.addProject(project4);
+		employee4.addProject(project5);
+		
+		// 6
+		employee6.addProject(project1);
+		employee6.addProject(project2);
+		employee6.addProject(project3);
+		employee6.addProject(project4);
+		employee6.addProject(project5);
+		employee6.addProject(project6);
+		employee6.addProject(project7);
+		
+		
+		dataConnection.beginTransaction();
+		employeeDAO.create(dataConnection, employee1);
+		employeeDAO.create(dataConnection, employee2);
+		employeeDAO.create(dataConnection, employee3);
+		employeeDAO.create(dataConnection, employee4);
+		employeeDAO.create(dataConnection, employee5);
+		employeeDAO.create(dataConnection, employee6);
+		employeeDAO.create(dataConnection, employee7);
+		projectDAO.create(dataConnection, project1);
+		projectDAO.create(dataConnection, project2);
+		projectDAO.create(dataConnection, project3);
+		projectDAO.create(dataConnection, project4);
+		projectDAO.create(dataConnection, project5);
+		projectDAO.create(dataConnection, project6);
+		projectDAO.create(dataConnection, project7);
+		dataConnection.commit();
+		
+		//Size
+		Query sizeQuery = entityManager.createQuery("Select e from Employee e order by SIZE(e.projects) DESC");
+		List<Object> sizeResultList = sizeQuery.getResultList();
+
+//		Query sizeOrderByQuery = entityManager.createQuery("Select e from Employee e, Project p order by SIZE(e.projects) DESC");
+//		List<Object> sizeOrderByQueryList = sizeOrderByQuery.getResultList();
+		
+//		Query groupByQuery = entityManager.createQuery("Select e, COUNT(p) from Employee e join e.projects p order by COUNT(p) DESC");
+//		List<Object> groupByQueryList = groupByQuery.getResultList();
+
+//		Query groupByAliasQuery = entityManager.createQuery("Select e, COUNT(p) as pcount from Employee e join e.projects p order by pcount DESC");
+//		List<Object> groupByAliasQueryList = groupByAliasQuery.getResultList();
+		
+		Employee predecing = (Employee) sizeResultList.get(0);
+		Employee current = null;
+		
+		for (int i = 1; i < sizeResultList.size(); i++) {
+			current = (Employee) sizeResultList.get(i);
+			assertTrue("Order issue", current.getProjects().size() <= predecing.getProjects().size());
+			predecing = current;
+		}
+	
+	}
+	
 }

@@ -55,6 +55,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -71,7 +72,8 @@ import javax.persistence.Version;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EMP_SEQ")
+	@SequenceGenerator(name="EMP_SEQ", sequenceName="EMP_SEQ", allocationSize=10)
 	private long employeeId;
 	@Version
 	private long version;

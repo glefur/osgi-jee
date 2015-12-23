@@ -23,9 +23,11 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 /**
@@ -36,7 +38,8 @@ import javax.persistence.Version;
 public abstract class Project {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRJ_SEQ")
+	@SequenceGenerator(name="PRJ_SEQ", sequenceName="PRJ_SEQ", allocationSize=10)
 	private long id;
 	@Version
 	private long version;

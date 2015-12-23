@@ -21,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 /**
@@ -31,7 +32,8 @@ import javax.persistence.Version;
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADDR_SEQ")
+	@SequenceGenerator(name="ADDR_SEQ", sequenceName="ADDR_SEQ", allocationSize=10)
 	private long id;
 	@Version
 	private long version;

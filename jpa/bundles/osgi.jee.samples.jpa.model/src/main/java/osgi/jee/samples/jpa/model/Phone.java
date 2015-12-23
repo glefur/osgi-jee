@@ -17,8 +17,10 @@ package osgi.jee.samples.jpa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 
 /**
@@ -29,7 +31,8 @@ import javax.persistence.Version;
 public class Phone {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PHN_SEQ")
+	@SequenceGenerator(name="PHN_SEQ", sequenceName="PHN_SEQ", allocationSize=10)
 	private long id;
 	@Version
 	private long version;
