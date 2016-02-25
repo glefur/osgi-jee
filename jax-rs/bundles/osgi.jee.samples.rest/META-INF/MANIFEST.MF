@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rest sample
+Bundle-SymbolicName: osgi.jee.samples.rest
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: javax.ws.rs;version="2.0.0",
+ org.osgi.framework;version="1.7.0"
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/ExampleResource.xml

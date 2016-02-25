@@ -1,0 +1,13 @@
+target "Target Platform for OSGi/JAX-RS sample"
+
+with requirements, source
+
+location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
+	org.eclipse.equinox.http.jetty
+	org.eclipse.equinox.ds
+}
+
+location "http://hstaudacher.github.io/osgi-jax-rs-connector" {
+	com.eclipsesource.jaxrs.jersey-min
+	com.eclipsesource.jaxrs.publisher
+}
