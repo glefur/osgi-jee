@@ -13,24 +13,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.resources;
+package osgi.jee.samples.rest.tests.unit;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-@Path("/hello")
-public class ExampleResource {
+@RunWith(Suite.class)
+@SuiteClasses({ ExampleResourceTest.class })
+public class AllUnitTests {
 
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String helloWorld() {
-		return "Hello World";
-	}
-	
 }

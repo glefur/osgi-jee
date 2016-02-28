@@ -13,24 +13,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.resources;
+package osgi.jee.samples.rest.tests.unit;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import osgi.jee.samples.rest.resources.ExampleResource;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-@Path("/hello")
-public class ExampleResource {
+public class ExampleResourceTest {
 
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String helloWorld() {
-		return "Hello World";
+	@Test
+	public void testGetMessage() {
+		ExampleResource service = new ExampleResource();
+
+		String message = service.helloWorld();
+
+		assertEquals("Hello World", message);
 	}
-	
 }
