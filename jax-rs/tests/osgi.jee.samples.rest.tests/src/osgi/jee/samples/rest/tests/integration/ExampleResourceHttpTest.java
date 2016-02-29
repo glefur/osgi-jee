@@ -18,11 +18,6 @@ package osgi.jee.samples.rest.tests.integration;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
-import java.net.DatagramSocket;
-import java.net.ServerSocket;
-
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -34,29 +29,21 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 
+import osgi.jee.samples.rest.tests.AbstractIntegrationTest;
+
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
 @RunWith(HttpJUnitRunner.class)
-public class ExampleResourceHttpTest {
-	
-	private static final long PORT_SLEEP_MILLIS = 100;
+public class ExampleResourceHttpTest extends AbstractIntegrationTest {
 	
 	@Rule
-	public Destination destination = new Destination(this, "http://localhost:9092");
+	public Destination destination = new Destination(this, BASE_URL);
 	
-	 @Context
+	@Context
 	private Response response;
 	
-	@BeforeClass
-	public static void setUp() throws Exception {
-	    waitForPort(9092);
-
-	    // Make sure the ports are clear
-	    Thread.sleep(500);
-	}
-
 	@HttpTest(method = Method.GET, path = "/services/hello")
 	public void checkMessage() {
 		String body = response.getBody();
@@ -65,42 +52,4 @@ public class ExampleResourceHttpTest {
 		assertEquals("Hello World", body);
 	}
 	
-	public static void waitForPort(int port) {
-	    while( available(port) ) {
-	        try { Thread.sleep(PORT_SLEEP_MILLIS); } 
-	        catch (InterruptedException e) {}
-	    }
-	}
-	
-	/**
-	 * Checks to see if a specific port is available.
-	 *
-	 * @param port the port to check for availability
-	 */
-	public static boolean available(int port) {
-	    ServerSocket ss = null;
-	    DatagramSocket ds = null;
-	    try {
-	        ss = new ServerSocket(port);
-	        ss.setReuseAddress(true);
-	        ds = new DatagramSocket(port);
-	        ds.setReuseAddress(true);
-	        return true;
-	    } catch (IOException e) {
-	    } finally {
-	        if (ds != null) {
-	            ds.close();
-	        }
-
-	        if (ss != null) {
-	            try {
-	                ss.close();
-	            } catch (IOException e) {
-	                /* should not be thrown */
-	            }
-	        }
-	    }
-
-	    return false;
-	}
 }
