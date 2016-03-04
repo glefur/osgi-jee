@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for OSGi/JAX-RS sample" sequenceNumber="1456653089">
+<target name="Target Platform for OSGi/JAX-RS sample" sequenceNumber="1456755278">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.felix.gogo.shell" version="0.10.0.v201212101605"/>
@@ -14,8 +14,12 @@
       <repository id="eclipse" location="http://download.eclipse.org/eclipse/updates/4.3"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="com.eclipsesource.jaxrs.jersey-min" version="2.22.1"/>
-      <unit id="com.eclipsesource.jaxrs.publisher" version="5.3.0.201512270850"/>
+      <unit id="com.google.guava" version="15.0.0.v201403281430"/>
+      <repository id="orbit" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="com.eclipsesource.jaxrs.jersey-min" version="2.22.2"/>
+      <unit id="com.eclipsesource.jaxrs.publisher" version="5.3.1.201602281253"/>
       <repository location="http://hstaudacher.github.io/osgi-jax-rs-connector"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
