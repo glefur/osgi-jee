@@ -19,7 +19,16 @@ package osgi.jee.samples.rest.restbucks.tests.unit;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import osgi.jee.samples.rest.restbucks.model.CookieKind;
 import osgi.jee.samples.rest.restbucks.model.Location;
@@ -57,6 +66,12 @@ public class OrderTests {
 		System.out.println(new XMLUtil().toXML(order));
 		
 		assertTrue(true);
+	}
+	
+	public void testParseFromXML() throws ParserConfigurationException, SAXException {
+		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream("bonjour".getBytes()));
+		parser.parse(is, dh);
 	}
 
 }

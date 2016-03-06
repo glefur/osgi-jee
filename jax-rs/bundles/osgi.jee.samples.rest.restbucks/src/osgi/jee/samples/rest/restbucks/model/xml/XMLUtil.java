@@ -15,6 +15,13 @@
  */
 package osgi.jee.samples.rest.restbucks.model.xml;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import osgi.jee.samples.rest.restbucks.model.Beverage;
 import osgi.jee.samples.rest.restbucks.model.Coffee;
 import osgi.jee.samples.rest.restbucks.model.Cookie;
@@ -68,5 +75,12 @@ public class XMLUtil {
 		return builder.append("</order>").toString();
 	}
 	
-
+	public Order fromXML(String input) throws Exception {
+		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(input.getBytes()));
+		
+		return null;
+	}
+	
+	
 }
