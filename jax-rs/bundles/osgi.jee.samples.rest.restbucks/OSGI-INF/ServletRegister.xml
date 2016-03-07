@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="osgi.jee.samples.rest.restbucks.crud.ServletRegister">
+   <implementation class="osgi.jee.samples.rest.restbucks.internal.crud.ServletRegister"/>
+   <service>
+      <provide interface="osgi.jee.samples.rest.restbucks.internal.crud.ServletRegister"/>
+   </service>
+   <reference bind="setHttpService" cardinality="1..1" interface="org.osgi.service.http.HttpService" name="HttpService" policy="static"/>
+   <reference bind="addServlet" cardinality="0..n" interface="osgi.jee.samples.rest.restbucks.crud.RestbuckServlet" name="RestbuckServlet" policy="dynamic"/>
+</scr:component>

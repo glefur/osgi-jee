@@ -13,42 +13,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.restbucks.model;
+package osgi.jee.samples.rest.restbucks.crud;
+
+import javax.servlet.http.HttpServlet;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class HotChocolate extends Beverage {
-
-	public static final String HOT_CHOCOLATE = "Hot chocolate";
+@SuppressWarnings("serial")
+public abstract class RestbuckServlet extends HttpServlet {
 	
-	private boolean whippedCream;
+	public abstract String getPath();
 
-	/**
-	 * @param milk
-	 * @param size
-	 * @param whippedCream
-	 */
-	public HotChocolate(Milk milk, Size size, boolean whippedCream) {
-		super(milk, size);
-		this.whippedCream = whippedCream;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.rest.restbucks.model.Product#getName()
-	 */
-	@Override
-	public String getName() {
-		return HOT_CHOCOLATE;
-	}
-
-	/**
-	 * @return the whippedCream
-	 */
-	public boolean isWhippedCream() {
-		return whippedCream;
-	}
-	
 }

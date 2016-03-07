@@ -12,8 +12,10 @@ location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
 	org.junit
 }
 
-location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/" {
+location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/" {
 	com.google.guava
+	org.apache.httpcomponents.httpclient
+	osgi.enterprise
 }
 
 location "http://hstaudacher.github.io/osgi-jax-rs-connector" {

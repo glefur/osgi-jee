@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Target Platform for OSGi/JAX-RS sample" sequenceNumber="1456755278">
+<target name="Target Platform for OSGi/JAX-RS sample" sequenceNumber="1457354345">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.apache.felix.gogo.shell" version="0.10.0.v201212101605"/>
@@ -15,7 +15,9 @@
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="com.google.guava" version="15.0.0.v201403281430"/>
-      <repository id="orbit" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+      <unit id="org.apache.httpcomponents.httpclient" version="4.3.6.v201411290715B"/>
+      <unit id="osgi.enterprise" version="4.2.0.v201108120515"/>
+      <repository id="orbit" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="com.eclipsesource.jaxrs.jersey-min" version="2.22.2"/>

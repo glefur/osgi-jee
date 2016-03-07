@@ -1,0 +1,94 @@
+/**
+ * OSGi/JEE Sample.
+ * 
+ * Copyright (C) 2016 Goulwen Le Fur
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package osgi.jee.samples.rest.restbucks.crud;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.ComponentContext;
+
+import osgi.jee.samples.rest.restbucks.model.Location;
+import osgi.jee.samples.rest.restbucks.model.Milk;
+import osgi.jee.samples.rest.restbucks.model.Order;
+import osgi.jee.samples.rest.restbucks.model.Shots;
+import osgi.jee.samples.rest.restbucks.model.Size;
+import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
+import osgi.jee.samples.rest.restbucks.services.OrderService;
+
+/**
+ * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
+ *
+ */
+public class CreateOrderServlet extends RestbuckServlet {
+
+	private OrderService service;
+	private String path;
+	
+	public void activate(ComponentContext context) {
+		path = (String) context.getProperties().get("servlet.path");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.crud.RestbuckServlet#getPath()
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param service the service to set
+	 */
+	public void setOrderService(OrderService service) {
+		this.service = service;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Order order = Order.Builder.newInstance().setLocation(Location.TakeAway).addCappuccino().milk(Milk.Semi).size(Size.Small).shots(Shots.Single).build();
+		BufferedReader reader = req.getReader();
+		StringBuilder builder = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			builder.append(line);
+		}
+		try {
+			order = new XMLUtil().fromXML(builder.toString());
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
+		if (order == null) {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		} else {
+			if (service != null) {
+				String id = service.createOrder(order);
+				resp.setHeader("Location", "localhost:9092/order/" + id);
+				resp.setStatus(HttpServletResponse.SC_CREATED);
+			} else {
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);				
+			}
+		}
+	}
+
+}

@@ -13,42 +13,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.restbucks.model;
+package osgi.jee.samples.rest.restbucks.services;
+
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
+import osgi.jee.samples.rest.restbucks.model.Order;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class HotChocolate extends Beverage {
-
-	public static final String HOT_CHOCOLATE = "Hot chocolate";
+public class OrderService {
 	
-	private boolean whippedCream;
+	private int index = 0;
+	
+	private Map<Integer, Order> orders;
 
 	/**
-	 * @param milk
-	 * @param size
-	 * @param whippedCream
+	 * 
 	 */
-	public HotChocolate(Milk milk, Size size, boolean whippedCream) {
-		super(milk, size);
-		this.whippedCream = whippedCream;
+	public OrderService() {
+		orders = Maps.newHashMap();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.rest.restbucks.model.Product#getName()
-	 */
-	@Override
-	public String getName() {
-		return HOT_CHOCOLATE;
-	}
-
-	/**
-	 * @return the whippedCream
-	 */
-	public boolean isWhippedCream() {
-		return whippedCream;
+	public String createOrder(Order order) {
+		index++;
+		orders.put(index, order);
+		return String.valueOf(index);
 	}
 	
 }

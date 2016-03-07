@@ -22,6 +22,7 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import osgi.jee.samples.rest.restbucks.internal.model.xml.OrderSaxHandler;
 import osgi.jee.samples.rest.restbucks.model.Beverage;
 import osgi.jee.samples.rest.restbucks.model.Coffee;
 import osgi.jee.samples.rest.restbucks.model.Cookie;
@@ -78,8 +79,9 @@ public class XMLUtil {
 	public Order fromXML(String input) throws Exception {
 		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(input.getBytes()));
-		
-		return null;
+		OrderSaxHandler handler = new OrderSaxHandler();
+		parser.parse(inputStream, handler);
+		return handler.getOrder();
 	}
 	
 	

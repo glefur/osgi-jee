@@ -19,16 +19,17 @@ package osgi.jee.samples.rest.restbucks.tests.unit;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import osgi.jee.samples.rest.restbucks.model.CookieKind;
 import osgi.jee.samples.rest.restbucks.model.Location;
@@ -37,16 +38,16 @@ import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
+import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
 
 /**
  * @author <a href="mailto:goulwen.lefur@smartcontext.fr">Goulwen Le Fur</a>.
  *
  */
-public class OrderTests {
+@SuppressWarnings("restriction")
+public class HttpCommandTest extends AbstractIntegrationTest {
 
-	@Test
-	public void testBuildAndXML() {
-		Order order = Order.Builder.newInstance()
+	private Order order = Order.Builder.newInstance()
 			.addCappuccino()
 				.milk(Milk.Semi)
 				.size(Size.Large)
@@ -62,16 +63,17 @@ public class OrderTests {
 				.size(Size.Large)
 				.whippedCream()
 					.build();
-		
-		System.out.println(new XMLUtil().toXML(order));
-		
-		assertTrue(true);
-	}
+
 	
-	public void testParseFromXML() throws ParserConfigurationException, SAXException {
-		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream("bonjour".getBytes()));
-		parser.parse(is, dh);
+	@Test
+	public void testPostOrder() throws ClientProtocolException, IOException {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpPost post = new HttpPost(BASE_URL + "/order");
+		HttpEntity entity = new StringEntity(new XMLUtil().toXML(order));
+		post.setEntity(entity);
+		HttpResponse execute = client.execute(post);
+		Header[] headers = execute.getHeaders("Location");
+		assertNotNull(headers);
 	}
 
 }
