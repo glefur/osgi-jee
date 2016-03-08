@@ -29,14 +29,8 @@ public class Coffee extends Beverage {
 	private String name;
 	private Shots shots;
 	
-	/**
-	 * @param milk
-	 * @param size
-	 * @param name
-	 * @param shots
-	 */
-	public Coffee(String name, Milk milk, Size size, Shots shots) {
-		super(milk, size);
+	public Coffee(String name, int quantity, Milk milk, Size size, Shots shots) {
+		super(quantity, milk, size);
 		this.name = name;
 		this.shots = shots;
 	}

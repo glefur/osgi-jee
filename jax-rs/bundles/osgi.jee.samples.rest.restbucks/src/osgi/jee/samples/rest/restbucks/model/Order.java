@@ -77,7 +77,7 @@ public class Order {
 	public interface GlobalBuilder {
 		
 		Builder setLocation(Location location);
-		Builder addCookie(CookieKind kind);
+		CookieBuilder addCookie(CookieKind kind);
 		CoffeeBuilder addLatte();
 		CoffeeBuilder addCappuccino();
 		CoffeeBuilder addEspresso();
@@ -112,13 +112,8 @@ public class Order {
 			return this;
 		}
 		
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addCookie(osgi.jee.samples.rest.restbucks.model.CookieKind)
-		 */
-		public Builder addCookie(CookieKind kind) {
-			products.add(new Cookie(kind));
-			return this;
+		public CookieBuilder addCookie(CookieKind kind) {
+			return new CookieBuilder(this, kind);
 		}
 		
 		/**
@@ -171,39 +166,18 @@ public class Order {
 		
 	}
 	
-	public static final class CoffeeBuilder implements GlobalBuilder {
+	public static abstract class ProductBuilder implements GlobalBuilder {
+
+		protected Builder builder;
+		protected int quantity;
 		
-		private Builder builder;
-
-		private String name;
-		private Milk milk;
-		private Size size;
-		private Shots shots;
-
-
 		/**
-		 * @param name
+		 * @param builder
 		 */
-		private CoffeeBuilder(Builder builder, String name) {
+		public ProductBuilder(Builder builder) {
 			this.builder = builder;
-			this.name = name;
 		}
 		
-		public CoffeeBuilder milk(Milk milk) {
-			this.milk = milk;
-			return this;
-		}
-		
-		public CoffeeBuilder size(Size size) {
-			this.size = size;
-			return this;
-		}
-		
-		public CoffeeBuilder shots(Shots shots) {
-			this.shots = shots;
-			return this;
-		}
-
 		/**
 		 * {@inheritDoc}
 		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#setLocation(osgi.jee.samples.rest.restbucks.model.Location)
@@ -219,7 +193,7 @@ public class Order {
 		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addCookie(osgi.jee.samples.rest.restbucks.model.CookieKind)
 		 */
 		@Override
-		public Builder addCookie(CookieKind kind) {
+		public CookieBuilder addCookie(CookieKind kind) {
 			finish();
 			return builder.addCookie(kind);
 		}
@@ -274,19 +248,61 @@ public class Order {
 			return builder.addHotChocolate();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#build()
+		 */
 		public Order build() {
 			finish();
 			return builder.build();
 		}
+
+		public abstract void finish();
+	}
+	
+	public static final class CoffeeBuilder extends ProductBuilder {
+
+		private String name;
+		private Milk milk;
+		private Size size;
+		private Shots shots;
+
+		/**
+		 * @param name
+		 */
+		private CoffeeBuilder(Builder builder, String name) {
+			super(builder);
+			this.name = name;
+		}
 		
-		private void finish() {
-			builder.addProduct(new Coffee(name, milk, size, shots));
+		public CoffeeBuilder quantity(int quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+
+		public CoffeeBuilder milk(Milk milk) {
+			this.milk = milk;
+			return this;
+		}
+		
+		public CoffeeBuilder size(Size size) {
+			this.size = size;
+			return this;
+		}
+		
+		public CoffeeBuilder shots(Shots shots) {
+			this.shots = shots;
+			return this;
+		}
+
+		
+		public void finish() {
+			builder.addProduct(new Coffee(name, quantity, milk, size, shots));
 		}
 	}
 	
-	public static final class HotChocolateBuilder implements GlobalBuilder {
+	public static final class HotChocolateBuilder extends ProductBuilder {
 		
-		private Builder builder;
 		private Milk milk;
 		private Size size;
 		private boolean whippedCream;
@@ -295,10 +311,15 @@ public class Order {
 		 * @param builder
 		 */
 		private HotChocolateBuilder(Builder builder) {
-			this.builder = builder;
+			super(builder);
 			this.whippedCream = false;
 		}
 		
+		public HotChocolateBuilder quantity(int quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+
 		public HotChocolateBuilder milk(Milk milk) {
 			this.milk = milk;
 			return this;
@@ -314,85 +335,40 @@ public class Order {
 			return this;
 		}
 		
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#setLocation(osgi.jee.samples.rest.restbucks.model.Location)
-		 */
-		@Override
-		public Builder setLocation(Location location) {
-			finish();
-			return builder.setLocation(location);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addCookie(osgi.jee.samples.rest.restbucks.model.CookieKind)
-		 */
-		@Override
-		public Builder addCookie(CookieKind kind) {
-			finish();
-			return builder.addCookie(kind);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addLatte()
-		 */
-		@Override
-		public CoffeeBuilder addLatte() {
-			finish();
-			return builder.addLatte();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addCappuccino()
-		 */
-		@Override
-		public CoffeeBuilder addCappuccino() {
-			finish();
-			return builder.addCappuccino();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addEspresso()
-		 */
-		@Override
-		public CoffeeBuilder addEspresso() {
-			finish();
-			return builder.addEspresso();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addTea()
-		 */
-		@Override
-		public CoffeeBuilder addTea() {
-			finish();
-			return builder.addTea();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @see osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder#addHotChocolate()
-		 */
-		@Override
-		public HotChocolateBuilder addHotChocolate() {
-			finish();
-			return null;
-		}
-
-		public Order build() {
-			finish();
-			return builder.build();
-		}
-		
-		private void finish() {
-			builder.addProduct(new HotChocolate(milk, size, whippedCream));
+		public void finish() {
+			builder.addProduct(new HotChocolate(quantity, milk, size, whippedCream));
 		}
 		
 	}
 
+	public static final class CookieBuilder extends ProductBuilder {
+
+		private CookieKind kind;
+
+		/**
+		 * @param builder
+		 */
+		public CookieBuilder(Builder builder, CookieKind kind) {
+			super(builder);
+			this.kind = kind;
+		}
+
+		public CookieBuilder quantity(int quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * @see osgi.jee.samples.rest.restbucks.model.Order.ProductBuilder#finish()
+		 */
+		@Override
+		public void finish() {
+			builder.addProduct(new Cookie(quantity, kind));
+		}
+		
+		
+
+	
+	}
 }

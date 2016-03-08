@@ -21,12 +21,11 @@ package osgi.jee.samples.rest.restbucks.model;
  */
 public class Cookie implements Product {
 	
+	private int quantity;
 	private CookieKind kind;
 
-	/**
-	 * @param kind
-	 */
-	public Cookie(CookieKind kind) {
+	public Cookie(int quantity, CookieKind kind) {
+		this.quantity = quantity;
 		this.kind = kind;
 	}
 
@@ -37,6 +36,14 @@ public class Cookie implements Product {
 	@Override
 	public String getName() {
 		return "Cookie";
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.model.Product#getQuantity()
+	 */
+	public int getQuantity() {
+		return quantity;
 	}
 
 	/**

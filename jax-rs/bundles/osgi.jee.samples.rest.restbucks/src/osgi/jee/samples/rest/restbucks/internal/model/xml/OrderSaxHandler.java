@@ -28,6 +28,7 @@ import osgi.jee.samples.rest.restbucks.model.Location;
 import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Order.CoffeeBuilder;
+import osgi.jee.samples.rest.restbucks.model.Order.CookieBuilder;
 import osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder;
 import osgi.jee.samples.rest.restbucks.model.Order.HotChocolateBuilder;
 import osgi.jee.samples.rest.restbucks.model.Shots;
@@ -127,6 +128,14 @@ public class OrderSaxHandler extends DefaultHandler {
 				if (currentBuilder instanceof GlobalBuilder) {
 					currentlyProcessingCookie = true;
 				}
+			}
+		} else if ("quantity".equalsIgnoreCase(currentElement())) {
+			if (currentBuilder instanceof CoffeeBuilder) {
+				currentBuilder = ((CoffeeBuilder) currentBuilder).quantity(Integer.valueOf(value));
+			} else 	if (currentBuilder instanceof HotChocolateBuilder) {
+				currentBuilder = ((HotChocolateBuilder) currentBuilder).quantity(Integer.valueOf(value));
+			} else if (currentBuilder instanceof CookieBuilder) {
+				currentBuilder = ((CookieBuilder) currentBuilder).quantity(Integer.valueOf(value));
 			}
 		} else if ("milk".equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof CoffeeBuilder) {

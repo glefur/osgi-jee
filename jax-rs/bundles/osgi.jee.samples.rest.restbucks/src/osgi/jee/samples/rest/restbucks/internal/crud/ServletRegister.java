@@ -15,18 +15,11 @@
  */
 package osgi.jee.samples.rest.restbucks.internal.crud;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 
-import com.google.common.collect.Maps;
-
-import osgi.jee.samples.rest.restbucks.crud.CreateOrderServlet;
 import osgi.jee.samples.rest.restbucks.crud.RestbuckServlet;
 
 /**

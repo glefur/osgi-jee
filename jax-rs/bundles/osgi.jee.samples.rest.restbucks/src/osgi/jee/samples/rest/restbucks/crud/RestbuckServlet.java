@@ -15,7 +15,13 @@
  */
 package osgi.jee.samples.rest.restbucks.crud;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.ComponentContext;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -24,6 +30,34 @@ import javax.servlet.http.HttpServlet;
 @SuppressWarnings("serial")
 public abstract class RestbuckServlet extends HttpServlet {
 	
-	public abstract String getPath();
+	private String path;
+	
+	public void activate(ComponentContext context) {
+		path = (String) context.getProperties().get("servlet.path");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.crud.RestbuckServlet#getPath()
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param req
+	 * @return
+	 * @throws IOException
+	 */
+	protected String getContentsAsString(HttpServletRequest req) throws IOException {
+		BufferedReader reader = req.getReader();
+		StringBuilder builder = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			builder.append(line);
+		}
+		String string = builder.toString();
+		return string;
+	}
 
 }

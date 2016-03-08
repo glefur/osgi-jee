@@ -49,7 +49,7 @@ public class XMLUtil {
 			for (Product product : order.getProducts()) {
 				builder.append("\t\t<item>\n");
 				builder.append("\t\t\t<name>").append(product.getName()).append("</name>\n");
-				builder.append("\t\t\t<quantity>1</quantity>\n");
+				builder.append("\t\t\t<quantity>").append(product.getQuantity()).append("</quantity>\n");
 				if (product instanceof Beverage) {
 					builder.append("\t\t\t<milk>").append(((Beverage) product).getMilk().toString()).append("</milk>\n");
 					builder.append("\t\t\t<size>").append(((Beverage) product).getSize().toString()).append("</size>\n");

@@ -22,5 +22,7 @@ package osgi.jee.samples.rest.restbucks.model;
 public interface Product {
 	
 	String getName();
+	
+	int getQuantity();
 
 }

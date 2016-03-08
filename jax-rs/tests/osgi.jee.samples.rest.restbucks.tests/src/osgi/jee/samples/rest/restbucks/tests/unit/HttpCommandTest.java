@@ -52,16 +52,20 @@ public class HttpCommandTest extends AbstractIntegrationTest {
 				.milk(Milk.Semi)
 				.size(Size.Large)
 				.shots(Shots.Single)
+				.quantity(3)
 			.addLatte()
+				.quantity(1)
 				.milk(Milk.Whole)
 				.size(Size.Medium)
 				.shots(Shots.Double)
 			.setLocation(Location.TakeAway)
 			.addCookie(CookieKind.Ginger)
+				.quantity(4)
 			.addHotChocolate()
 				.milk(Milk.Skim)
 				.size(Size.Large)
 				.whippedCream()
+				.quantity(2)
 					.build();
 
 	
@@ -69,6 +73,7 @@ public class HttpCommandTest extends AbstractIntegrationTest {
 	public void testPostOrder() throws ClientProtocolException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(BASE_URL + "/order");
+		System.out.println(new XMLUtil().toXML(order));
 		HttpEntity entity = new StringEntity(new XMLUtil().toXML(order));
 		post.setEntity(entity);
 		HttpResponse execute = client.execute(post);

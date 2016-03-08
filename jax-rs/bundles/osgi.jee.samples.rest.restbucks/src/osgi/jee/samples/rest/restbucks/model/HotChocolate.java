@@ -25,13 +25,8 @@ public class HotChocolate extends Beverage {
 	
 	private boolean whippedCream;
 
-	/**
-	 * @param milk
-	 * @param size
-	 * @param whippedCream
-	 */
-	public HotChocolate(Milk milk, Size size, boolean whippedCream) {
-		super(milk, size);
+	public HotChocolate(int quantity, Milk milk, Size size, boolean whippedCream) {
+		super(quantity, milk, size);
 		this.whippedCream = whippedCream;
 	}
 

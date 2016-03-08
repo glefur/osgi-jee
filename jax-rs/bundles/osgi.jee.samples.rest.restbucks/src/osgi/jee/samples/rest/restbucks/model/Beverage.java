@@ -21,16 +21,26 @@ package osgi.jee.samples.rest.restbucks.model;
  */
 public abstract class Beverage implements Product {
 	
+	private int quantity;
 	private Milk milk;
 	private Size size;
 
 	/**
+	 * @param quantity
 	 * @param milk
 	 * @param size
 	 */
-	public Beverage(Milk milk, Size size) {
+	public Beverage(int quantity, Milk milk, Size size) {
+		this.quantity = quantity;
 		this.milk = milk;
 		this.size = size;
+	}
+
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
 	}
 
 	/**
