@@ -16,6 +16,10 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Abstract implementation of {@link Product} representing a Beverage.
+ * 
+ * It's possible to define the quantity of beverage in the order, the kind of milk and its size.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

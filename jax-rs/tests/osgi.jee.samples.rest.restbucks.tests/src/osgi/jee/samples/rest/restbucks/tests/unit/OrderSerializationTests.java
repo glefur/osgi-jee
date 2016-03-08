@@ -55,7 +55,7 @@ public class OrderSerializationTests {
 				.size(Size.Large)
 				.whippedCream()
 					.build();
-		
+		System.out.println(xmlUtil.toXML(order));
 		assertTrue(true);
 	}
 	

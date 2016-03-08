@@ -21,6 +21,8 @@ package osgi.jee.samples.rest.restbucks.model;
  */
 public class Cookie implements Product {
 	
+	public static final String COOKIE = "Cookie";
+	
 	private int quantity;
 	private CookieKind kind;
 
@@ -35,7 +37,7 @@ public class Cookie implements Product {
 	 */
 	@Override
 	public String getName() {
-		return "Cookie";
+		return COOKIE;
 	}
 
 	/**

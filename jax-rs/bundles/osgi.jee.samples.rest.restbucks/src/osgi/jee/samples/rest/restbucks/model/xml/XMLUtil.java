@@ -38,42 +38,35 @@ import osgi.jee.samples.rest.restbucks.model.Product;
 public class XMLUtil {
 	
 	public String toXML(Order order) {
-		StringBuilder builder = new StringBuilder("<order>\n");
+		RestbuckXMLBuilder xmlBuilder = new RestbuckXMLBuilder();
+		xmlBuilder.startTag(RestbuckXMLBuilder.ORDER);
 		if (order.getLocation() != Location.Unknown) {
-			builder.append("\t<location>")
-				.append(order.getLocation().toString())
-				.append("</location>\n");
+			xmlBuilder.tag(RestbuckXMLBuilder.LOCATION, order.getLocation().toString());
 		}
 		if (order.getProducts().size() > 0) {
-			builder.append("\t<items>\n");
+			xmlBuilder.startTag(RestbuckXMLBuilder.ITEMS);
 			for (Product product : order.getProducts()) {
-				builder.append("\t\t<item>\n");
-				builder.append("\t\t\t<name>").append(product.getName()).append("</name>\n");
-				builder.append("\t\t\t<quantity>").append(product.getQuantity()).append("</quantity>\n");
+				xmlBuilder.startTag(RestbuckXMLBuilder.ITEM);
+				xmlBuilder.tag(RestbuckXMLBuilder.NAME, product.getName());
+				xmlBuilder.tag(RestbuckXMLBuilder.QUANTITY, String.valueOf(product.getQuantity()));
 				if (product instanceof Beverage) {
-					builder.append("\t\t\t<milk>").append(((Beverage) product).getMilk().toString()).append("</milk>\n");
-					builder.append("\t\t\t<size>").append(((Beverage) product).getSize().toString()).append("</size>\n");
+					xmlBuilder.tag(RestbuckXMLBuilder.MILK, ((Beverage) product).getMilk().toString());
+					xmlBuilder.tag(RestbuckXMLBuilder.SIZE, ((Beverage) product).getSize().toString());
 					if (product instanceof Coffee) {
-						builder.append("\t\t\t<shots>").append(((Coffee) product).getShots().toString()).append("</shots>\n");
+						xmlBuilder.tag(RestbuckXMLBuilder.SHOTS, ((Coffee) product).getShots().toString());
 					} else if (product instanceof HotChocolate) {
-						builder.append("\t\t\t<whippedCream>");
-						if (((HotChocolate) product).isWhippedCream()) {
-							builder.append("yes");
-						} else {
-							builder.append("no");
-						}
-						builder.append("</whippedCream>\n");
+						xmlBuilder.tag(RestbuckXMLBuilder.WHIPPEDCREAM, ((HotChocolate) product).isWhippedCream()?RestbuckXMLBuilder.YES:RestbuckXMLBuilder.NO);
 					}
 					
 				} else if (product instanceof Cookie) {
-					builder.append("\t\t\t<kind>").append(((Cookie) product).getKind().toString()).append("</kind>\n");					
+					xmlBuilder.tag(RestbuckXMLBuilder.KIND, ((Cookie) product).getKind().toString());
 				}
-				builder.append("\t\t</item>\n");				
+				xmlBuilder.endTag(RestbuckXMLBuilder.ITEM);
 			}
-			builder.append("\t</items>\n");
+			xmlBuilder.endTag(RestbuckXMLBuilder.ITEMS);
 		}
-		
-		return builder.append("</order>").toString();
+		xmlBuilder.endTag(RestbuckXMLBuilder.ORDER);
+		return xmlBuilder.toString();
 	}
 	
 	public Order fromXML(String input) throws Exception {

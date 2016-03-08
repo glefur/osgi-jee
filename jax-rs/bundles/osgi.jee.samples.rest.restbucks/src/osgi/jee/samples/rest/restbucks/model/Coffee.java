@@ -16,6 +16,18 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Represents a coffee.
+ * 
+ * A coffee is a {@link Beverage} of four kinds:
+ * <ul>
+ * 	<li>Latte</li>
+ * 	<li>Cappucino</li>
+ * 	<li>Espresso</li>
+ * 	<li>Tea</li>
+ * </ul>
+ * 
+ * It's possible to define the shot of a coffe.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

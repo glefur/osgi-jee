@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import osgi.jee.samples.rest.restbucks.model.Coffee;
+import osgi.jee.samples.rest.restbucks.model.Cookie;
 import osgi.jee.samples.rest.restbucks.model.CookieKind;
 import osgi.jee.samples.rest.restbucks.model.HotChocolate;
 import osgi.jee.samples.rest.restbucks.model.Location;
@@ -31,6 +32,7 @@ import osgi.jee.samples.rest.restbucks.model.Order.CoffeeBuilder;
 import osgi.jee.samples.rest.restbucks.model.Order.CookieBuilder;
 import osgi.jee.samples.rest.restbucks.model.Order.GlobalBuilder;
 import osgi.jee.samples.rest.restbucks.model.Order.HotChocolateBuilder;
+import osgi.jee.samples.rest.restbucks.model.xml.RestbuckXMLBuilder;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
 
@@ -99,13 +101,13 @@ public class OrderSaxHandler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		String value = extract(ch, start, length);
-		if ("location".equalsIgnoreCase(currentElement())) {
+		if (RestbuckXMLBuilder.LOCATION.equalsIgnoreCase(currentElement())) {
 			try {
 				if (currentBuilder instanceof GlobalBuilder) {
 					currentBuilder = ((GlobalBuilder) currentBuilder).setLocation(Location.valueOf(value));
 				}
 			} catch (Exception ex) {}
-		} else if ("name".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.NAME.equalsIgnoreCase(currentElement())) {
 			if (Coffee.CAPPUCCINO.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
 					currentBuilder = ((GlobalBuilder) currentBuilder).addCappuccino();
@@ -126,12 +128,12 @@ public class OrderSaxHandler extends DefaultHandler {
 				if (currentBuilder instanceof GlobalBuilder) {
 					currentBuilder = ((GlobalBuilder) currentBuilder).addHotChocolate();
 				}
-			} else if ("cookie".equalsIgnoreCase(value)) {
+			} else if (Cookie.COOKIE.equalsIgnoreCase(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
 					currentlyProcessingCookie = true;
 				}
 			}
-		} else if ("quantity".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.QUANTITY.equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof CoffeeBuilder) {
 				currentBuilder = ((CoffeeBuilder) currentBuilder).quantity(Integer.valueOf(value));
 			} else 	if (currentBuilder instanceof HotChocolateBuilder) {
@@ -139,7 +141,7 @@ public class OrderSaxHandler extends DefaultHandler {
 			} else if (currentBuilder instanceof CookieBuilder) {
 				currentBuilder = ((CookieBuilder) currentBuilder).quantity(Integer.valueOf(value));
 			}
-		} else if ("milk".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.MILK.equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof CoffeeBuilder) {
 				try {
 					currentBuilder = ((CoffeeBuilder)currentBuilder).milk(Milk.valueOf(value));
@@ -149,7 +151,7 @@ public class OrderSaxHandler extends DefaultHandler {
 					currentBuilder = ((HotChocolateBuilder)currentBuilder).milk(Milk.valueOf(value));
 				} catch (Exception ex) {}
 			}
-		} else if ("size".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.SIZE.equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof CoffeeBuilder) {
 				try {
 					currentBuilder = ((CoffeeBuilder)currentBuilder).size(Size.valueOf(value));
@@ -159,19 +161,19 @@ public class OrderSaxHandler extends DefaultHandler {
 					currentBuilder = ((HotChocolateBuilder)currentBuilder).size(Size.valueOf(value));
 				} catch (Exception ex) {}
 			}
-		} else if ("shots".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.SHOTS.equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof CoffeeBuilder) {
 				try {
 					currentBuilder = ((CoffeeBuilder)currentBuilder).shots(Shots.valueOf(value));
 				} catch (Exception ex) {}
 			}
-		} else if ("whippedCream".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.WHIPPEDCREAM.equalsIgnoreCase(currentElement())) {
 			if (currentBuilder instanceof HotChocolateBuilder) {
-				if ("yes".equalsIgnoreCase(value)) {
+				if (RestbuckXMLBuilder.YES.equalsIgnoreCase(value)) {
 					currentBuilder = ((HotChocolateBuilder) currentBuilder).whippedCream();
 				}
 			}
-		} else if ("kind".equalsIgnoreCase(currentElement())) {
+		} else if (RestbuckXMLBuilder.KIND.equalsIgnoreCase(currentElement())) {
 			if (currentlyProcessingCookie && currentBuilder instanceof GlobalBuilder) {
 				try {
 					currentBuilder = ((GlobalBuilder)currentBuilder).addCookie(CookieKind.valueOf(value));
