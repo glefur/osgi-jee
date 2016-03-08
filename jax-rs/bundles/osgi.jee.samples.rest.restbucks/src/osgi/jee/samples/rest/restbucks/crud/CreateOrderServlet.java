@@ -26,11 +26,20 @@ import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
 import osgi.jee.samples.rest.restbucks.services.OrderService;
 
 /**
+ * This servlet process order creation.
+ * 
+ * It parses the POX in the post request and creates the order described in this one.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
 public class CreateOrderServlet extends RestbuckServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2515153789916645819L;
+	
 	private OrderService service;
 
 	/**

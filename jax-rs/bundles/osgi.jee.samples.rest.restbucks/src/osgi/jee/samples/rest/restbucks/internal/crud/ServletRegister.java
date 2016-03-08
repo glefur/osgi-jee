@@ -23,6 +23,8 @@ import org.osgi.service.http.NamespaceException;
 import osgi.jee.samples.rest.restbucks.crud.RestbuckServlet;
 
 /**
+ * Service automatically registering Restbucks servlet into the current servlet engine.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
@@ -38,6 +40,12 @@ public class ServletRegister {
 		this.httpService = httpService;
 	}
 	
+	/**
+	 * Registers a new servlet into the current servlet engine.
+	 * @param servlet the servlet to register.
+	 * @throws ServletException an error occurred during registration.
+	 * @throws NamespaceException an error occurred during registration.
+	 */
 	public void addServlet(RestbuckServlet servlet) throws ServletException, NamespaceException {
 		httpService.registerServlet("/" + servlet.getPath(), servlet, null, null);
 	}

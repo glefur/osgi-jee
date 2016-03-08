@@ -35,6 +35,8 @@ import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
 
 /**
+ * SaxHandler dedicated to parse {@link Order} described in XML.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

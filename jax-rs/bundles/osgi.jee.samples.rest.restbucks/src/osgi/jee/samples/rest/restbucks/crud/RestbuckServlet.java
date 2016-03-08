@@ -24,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.ComponentContext;
 
 /**
+ * Abstract infrastructure for Restbucks servlets. 
+ * 
+ * It manages the path of the servlet and provides to general services to underlying servlets.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
