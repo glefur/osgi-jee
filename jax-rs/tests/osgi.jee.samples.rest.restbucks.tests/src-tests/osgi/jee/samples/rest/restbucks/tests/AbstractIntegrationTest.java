@@ -19,17 +19,29 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
+
+import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractIntegrationTest {
 
 	public static String BASE_URL = "http://localhost:" + System.getProperty( "org.osgi.service.http.port" );
 	
 	private static final long PORT_SLEEP_MILLIS = 100;
+
+	private HttpClient client;
+
+	private XMLUtil xmlUtil;
 
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -39,7 +51,30 @@ public abstract class AbstractIntegrationTest {
 	    Thread.sleep(500);
 	}
 
-	public static void waitForPort(int port) {
+	/**
+	 * @return
+	 */
+	protected HttpClient getClient() {
+		if (client == null) {
+			client = HttpClientBuilder.create().build();
+		}
+		return client;
+	}
+	
+	/**
+	 * Send an object in a XML format via a post method.
+	 * @param path the destination path
+	 * @param contents the object to pass to the server.
+	 * @return the response of this operation.
+	 * @throws Exception an error occurred.
+	 */
+	protected HttpResponse postPOX(String path, Object contents) throws Exception {
+		HttpPost post = new HttpPost(BASE_URL + path);
+		post.setEntity(new StringEntity(getXMLUtil().toXML(contents)));
+		return getClient().execute(post);
+	}
+
+	private static void waitForPort(int port) {
 	    while( available(port) ) {
 	        try { Thread.sleep(PORT_SLEEP_MILLIS); } 
 	        catch (InterruptedException e) {}
@@ -51,7 +86,7 @@ public abstract class AbstractIntegrationTest {
 	 *
 	 * @param port the port to check for availability
 	 */
-	public static boolean available(int port) {
+	private static boolean available(int port) {
 	    ServerSocket ss = null;
 	    DatagramSocket ds = null;
 	    try {
@@ -74,8 +109,14 @@ public abstract class AbstractIntegrationTest {
 	            }
 	        }
 	    }
-
 	    return false;
 	}
-	
+
+	private XMLUtil getXMLUtil() {
+		if (xmlUtil == null) {
+			xmlUtil = new XMLUtil();
+		}
+		return xmlUtil;
+	}
+
 }

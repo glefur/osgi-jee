@@ -38,44 +38,48 @@ import osgi.jee.samples.rest.restbucks.model.Product;
  *
  */
 public class XMLUtil {
-	
+
 	/**
 	 * Converts an {@link Order} to an XML string.
 	 * @param order the {@link Order} to convert.
 	 * @return an XML string describing the input order.
 	 */
-	public String toXML(Order order) {
-		RestbuckXMLBuilder xmlBuilder = new RestbuckXMLBuilder();
-		xmlBuilder.startTag(RestbuckXMLBuilder.ORDER);
-		if (order.getLocation() != Location.Unknown) {
-			xmlBuilder.tag(RestbuckXMLBuilder.LOCATION, order.getLocation().toString());
-		}
-		if (order.getProducts().size() > 0) {
-			xmlBuilder.startTag(RestbuckXMLBuilder.ITEMS);
-			for (Product product : order.getProducts()) {
-				xmlBuilder.startTag(RestbuckXMLBuilder.ITEM);
-				xmlBuilder.tag(RestbuckXMLBuilder.NAME, product.getName());
-				xmlBuilder.tag(RestbuckXMLBuilder.QUANTITY, String.valueOf(product.getQuantity()));
-				if (product instanceof Beverage) {
-					xmlBuilder.tag(RestbuckXMLBuilder.MILK, ((Beverage) product).getMilk().toString());
-					xmlBuilder.tag(RestbuckXMLBuilder.SIZE, ((Beverage) product).getSize().toString());
-					if (product instanceof Coffee) {
-						xmlBuilder.tag(RestbuckXMLBuilder.SHOTS, ((Coffee) product).getShots().toString());
-					} else if (product instanceof HotChocolate) {
-						xmlBuilder.tag(RestbuckXMLBuilder.WHIPPEDCREAM, ((HotChocolate) product).isWhippedCream()?RestbuckXMLBuilder.YES:RestbuckXMLBuilder.NO);
-					}
-					
-				} else if (product instanceof Cookie) {
-					xmlBuilder.tag(RestbuckXMLBuilder.KIND, ((Cookie) product).getKind().toString());
-				}
-				xmlBuilder.endTag(RestbuckXMLBuilder.ITEM);
+	public String toXML(Object object) {
+		if (object instanceof Order) {
+			Order order = (Order) object;
+			RestbuckXMLBuilder xmlBuilder = new RestbuckXMLBuilder();
+			xmlBuilder.startTag(RestbuckXMLBuilder.ORDER);
+			if (order.getLocation() != Location.Unknown) {
+				xmlBuilder.tag(RestbuckXMLBuilder.LOCATION, order.getLocation().toString());
 			}
-			xmlBuilder.endTag(RestbuckXMLBuilder.ITEMS);
+			if (order.getProducts().size() > 0) {
+				xmlBuilder.startTag(RestbuckXMLBuilder.ITEMS);
+				for (Product product : order.getProducts()) {
+					xmlBuilder.startTag(RestbuckXMLBuilder.ITEM);
+					xmlBuilder.tag(RestbuckXMLBuilder.NAME, product.getName());
+					xmlBuilder.tag(RestbuckXMLBuilder.QUANTITY, String.valueOf(product.getQuantity()));
+					if (product instanceof Beverage) {
+						xmlBuilder.tag(RestbuckXMLBuilder.MILK, ((Beverage) product).getMilk().toString());
+						xmlBuilder.tag(RestbuckXMLBuilder.SIZE, ((Beverage) product).getSize().toString());
+						if (product instanceof Coffee) {
+							xmlBuilder.tag(RestbuckXMLBuilder.SHOTS, ((Coffee) product).getShots().toString());
+						} else if (product instanceof HotChocolate) {
+							xmlBuilder.tag(RestbuckXMLBuilder.WHIPPEDCREAM, ((HotChocolate) product).isWhippedCream()?RestbuckXMLBuilder.YES:RestbuckXMLBuilder.NO);
+						}
+
+					} else if (product instanceof Cookie) {
+						xmlBuilder.tag(RestbuckXMLBuilder.KIND, ((Cookie) product).getKind().toString());
+					}
+					xmlBuilder.endTag(RestbuckXMLBuilder.ITEM);
+				}
+				xmlBuilder.endTag(RestbuckXMLBuilder.ITEMS);
+			}
+			xmlBuilder.endTag(RestbuckXMLBuilder.ORDER);
+			return xmlBuilder.toString();
 		}
-		xmlBuilder.endTag(RestbuckXMLBuilder.ORDER);
-		return xmlBuilder.toString();
+		return null;
 	}
-	
+
 	/**
 	 * Parses an XML string and convert it in {@link Order}.
 	 * @param input the input string.
@@ -89,6 +93,6 @@ public class XMLUtil {
 		parser.parse(inputStream, handler);
 		return handler.getOrder();
 	}
-	
-	
+
+
 }
