@@ -26,7 +26,7 @@ package osgi.jee.samples.rest.restbucks.model;
  * 	<li>Tea</li>
  * </ul>
  * 
- * It's possible to define the shot of a coffe.
+ * It's possible to define the shot of a coffee.
  * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *

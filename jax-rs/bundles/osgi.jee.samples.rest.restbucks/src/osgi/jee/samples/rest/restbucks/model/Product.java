@@ -16,6 +16,9 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * A product is a thing that can be ordered. It has (at least) a name and a 
+ * quantity.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

@@ -16,6 +16,11 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Represents a hot chocolate. 
+ * 
+ * A hot chocolate is a kind of Beverage. A hot chocolate can have whipped cream on top of it
+ * or not.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

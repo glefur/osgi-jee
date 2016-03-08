@@ -32,11 +32,18 @@ import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Product;
 
 /**
+ * This class provides "xml oriented" services for order.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
 public class XMLUtil {
 	
+	/**
+	 * Converts an {@link Order} to an XML string.
+	 * @param order the {@link Order} to convert.
+	 * @return an XML string describing the input order.
+	 */
 	public String toXML(Order order) {
 		RestbuckXMLBuilder xmlBuilder = new RestbuckXMLBuilder();
 		xmlBuilder.startTag(RestbuckXMLBuilder.ORDER);
@@ -69,6 +76,12 @@ public class XMLUtil {
 		return xmlBuilder.toString();
 	}
 	
+	/**
+	 * Parses an XML string and convert it in {@link Order}.
+	 * @param input the input string.
+	 * @return the resulting {@link Order}.
+	 * @throws Exception an error occurred during parsing.
+	 */
 	public Order fromXML(String input) throws Exception {
 		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(input.getBytes()));

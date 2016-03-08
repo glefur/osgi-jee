@@ -16,6 +16,8 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Available kinds of milk.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

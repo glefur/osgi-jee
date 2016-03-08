@@ -20,6 +20,8 @@ import java.util.Collection;
 import com.google.common.collect.Lists;
 
 /**
+ * An order has a location and a list of products.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

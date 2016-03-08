@@ -16,6 +16,8 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Available locations for orders.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

@@ -22,8 +22,9 @@ import com.google.common.collect.Maps;
 import osgi.jee.samples.rest.restbucks.model.Order;
 
 /**
+ * This class emulates service for {@link Order}.
+ *  
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
- *
  */
 public class OrderService {
 	
@@ -38,6 +39,11 @@ public class OrderService {
 		orders = Maps.newHashMap();
 	}
 
+	/**
+	 * Simulates the serialization of an {@link Order}.
+	 * @param order the {@link Order} to serialize.
+	 * @return id associated to the order.
+	 */
 	public String createOrder(Order order) {
 		index++;
 		orders.put(index, order);

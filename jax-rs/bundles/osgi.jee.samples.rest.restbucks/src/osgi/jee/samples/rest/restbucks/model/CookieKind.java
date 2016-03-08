@@ -16,6 +16,8 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Available kinds of cookies.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */

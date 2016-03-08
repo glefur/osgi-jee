@@ -16,6 +16,10 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 /**
+ * Represents a cookie.
+ * 
+ * It's possible to define the quatity of cookies and their kind.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
