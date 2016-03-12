@@ -15,7 +15,7 @@
  * Should you not agree with these terms, you must stop to use this software and give it back to its legitimate owner.
  *
  *******************************************************************************/
-package osgi.jee.samples.rest.restbucks.tests.integration;
+package osgi.jee.samples.rest.restbucks.tests.integration.crud;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +35,7 @@ import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
  * @author <a href="mailto:goulwen.lefur@smartcontext.fr">Goulwen Le Fur</a>.
  *
  */
-public class HttpCommandTest extends AbstractIntegrationTest {
+public class OrderServiceAsCRUDTest extends AbstractIntegrationTest {
 
 	@Test
 	public void testPostOrder() throws Exception {
