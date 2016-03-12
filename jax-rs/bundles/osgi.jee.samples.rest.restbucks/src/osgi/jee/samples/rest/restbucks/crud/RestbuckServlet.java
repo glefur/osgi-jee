@@ -36,7 +36,7 @@ public abstract class RestbuckServlet extends HttpServlet {
 	
 	private String path;
 	
-	public void activate(ComponentContext context) {
+	public final void activate(ComponentContext context) {
 		path = (String) context.getProperties().get("servlet.path");
 	}
 
@@ -44,7 +44,7 @@ public abstract class RestbuckServlet extends HttpServlet {
 	 * {@inheritDoc}
 	 * @see osgi.jee.samples.rest.restbucks.crud.RestbuckServlet#getPath()
 	 */
-	public String getPath() {
+	public final String getPath() {
 		return path;
 	}
 
@@ -53,7 +53,7 @@ public abstract class RestbuckServlet extends HttpServlet {
 	 * @return
 	 * @throws IOException
 	 */
-	protected String getContentsAsString(HttpServletRequest req) throws IOException {
+	protected final String getContentsAsString(HttpServletRequest req) throws IOException {
 		BufferedReader reader = req.getReader();
 		StringBuilder builder = new StringBuilder();
 		String line;

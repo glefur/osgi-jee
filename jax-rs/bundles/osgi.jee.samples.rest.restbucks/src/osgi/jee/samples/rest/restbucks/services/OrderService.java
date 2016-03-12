@@ -19,7 +19,11 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import osgi.jee.samples.rest.restbucks.model.CookieKind;
+import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
+import osgi.jee.samples.rest.restbucks.model.Shots;
+import osgi.jee.samples.rest.restbucks.model.Size;
 
 /**
  * This class emulates service for {@link Order}.
@@ -37,6 +41,7 @@ public class OrderService {
 	 */
 	public OrderService() {
 		orders = Maps.newHashMap();
+		initOrders();
 	}
 
 	/**
@@ -50,4 +55,39 @@ public class OrderService {
 		return String.valueOf(index);
 	}
 	
+	/**
+	 * Returns an {@link Order} with the given id.
+	 * @param id Id of the expected order. 
+	 * @return the expected {@link Order} if found <code>null</code> otherwise.
+	 */
+	public Order getOrder(String id) {
+		return orders.get(Integer.valueOf(id));
+	}
+	
+	/**
+	 * 
+	 */
+	private void initOrders() {
+		orders.put(1, Order.Builder.newInstance()
+				.addCappuccino()
+					.quantity(2)
+					.milk(Milk.Semi)
+					.shots(Shots.Single)
+					.size(Size.Small)
+				.build());
+		orders.put(2, Order.Builder.newInstance()
+				.addCappuccino()
+					.quantity(1)
+					.milk(Milk.Semi)
+					.shots(Shots.Double)
+					.size(Size.Large)
+				.addHotChocolate()
+					.milk(Milk.Skim)
+					.size(Size.Large)
+				.addCookie(CookieKind.ChocolateChip)
+					.quantity(2)
+				.build());
+		index = 2;
+	}
+
 }
