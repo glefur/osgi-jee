@@ -15,13 +15,17 @@
  */
 package osgi.jee.samples.rest.restbucks.crud.resources;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
@@ -36,6 +40,8 @@ public class OrderingService {
 
 	private OrderService orderService;
 	
+	private @Context UriInfo uriInfo;
+	
 	/**
 	 * @param orderService the orderService to set
 	 */
@@ -43,11 +49,9 @@ public class OrderingService {
 		this.orderService = orderService;
 	}
 
-
-
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
 	@Path("/{orderId}")
+	@Produces(MediaType.APPLICATION_XML)
 	public String getOrder(@PathParam("orderId") String orderId) {
 		Order order = orderService.getOrder(orderId);
 		if (order != null) {
@@ -57,6 +61,23 @@ public class OrderingService {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
 		
+	}
+	
+	@PUT
+	@Path("/{orderId}")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_XML)
+	public Response updateOrder(@PathParam("orderId") String orderId, String orderRepresentation) {
+		if (orderService.orderExists(orderId)) {
+			try {
+				orderService.updateOrder(orderId, new XMLUtil().fromXML(orderRepresentation));
+				return Response.ok().entity(orderRepresentation).build();
+			} catch (Exception e) {
+				throw new WebApplicationException(Response.Status.BAD_REQUEST);
+			}
+		} else {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
 	}
 	
 }

@@ -22,6 +22,7 @@ import java.net.ServerSocket;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
@@ -72,6 +73,21 @@ public abstract class AbstractIntegrationTest {
 		HttpPost post = new HttpPost(BASE_URL + path);
 		post.setEntity(new StringEntity(getXMLUtil().toXML(contents)));
 		return getClient().execute(post);
+	}
+
+	/**
+	 * Send an object in a XML format via a put method.
+	 * @param path the destination path
+	 * @param contents the object to pass to the server.
+	 * @return the response of this operation.
+	 * @throws Exception an error occurred.
+	 */
+	protected HttpResponse putPOX(String path, Object contents) throws Exception {
+		HttpPut put = new HttpPut(BASE_URL + path);
+		StringEntity entity = new StringEntity(getXMLUtil().toXML(contents));
+		entity.setContentType("application/xml");
+		put.setEntity(entity);
+		return getClient().execute(put);
 	}
 
 	private static void waitForPort(int port) {

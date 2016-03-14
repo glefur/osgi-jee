@@ -45,6 +45,15 @@ public class OrderService {
 	}
 
 	/**
+	 * Returns an {@link Order} with the given id.
+	 * @param id Id of the expected order. 
+	 * @return the expected {@link Order} if found <code>null</code> otherwise.
+	 */
+	public Order getOrder(String id) {
+		return orders.get(Integer.valueOf(id));
+	}
+	
+	/**
 	 * Simulates the serialization of an {@link Order}.
 	 * @param order the {@link Order} to serialize.
 	 * @return id associated to the order.
@@ -56,14 +65,39 @@ public class OrderService {
 	}
 	
 	/**
-	 * Returns an {@link Order} with the given id.
-	 * @param id Id of the expected order. 
-	 * @return the expected {@link Order} if found <code>null</code> otherwise.
+	 * Simulates the update of an {@link Order}.
+	 * 
+	 * It checks if the order exists and if it can be updated before performing a replace of the order value.
+	 * @param id ID of the order to update.
+	 * @param order new value of the order.
+	 * @return <code>true</code> if everything if ok, <code>false</code> if something went wrong.
 	 */
-	public Order getOrder(String id) {
-		return orders.get(Integer.valueOf(id));
+	public boolean updateOrder(String id, Order order) {
+		if (orderExists(id) && canUpdate(id)) {
+			orders.put(Integer.valueOf(id), order);
+			return true;
+		}
+		return false;
 	}
 	
+	/**
+	 * Returns whether the order with the specified id exists or not.
+	 * @param id Id of the order to check.
+	 * @return <code>true</code> if the order exists, <code>false</code> otherwise.
+	 */
+	public boolean orderExists(String id) {
+		return orders.get(Integer.valueOf(id)) != null;
+	}
+	
+	/**
+	 * Returns whether an order can be updated or not.
+	 * @param id ID of the order to check.
+	 * @return <code>true</code> if the order can be updated.
+	 */
+	private boolean canUpdate(String id) {
+		return true;
+	}
+
 	/**
 	 * 
 	 */

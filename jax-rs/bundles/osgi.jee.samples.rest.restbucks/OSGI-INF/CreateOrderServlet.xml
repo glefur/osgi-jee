@@ -5,5 +5,5 @@
    <service>
       <provide interface="osgi.jee.samples.rest.restbucks.crud.RestbuckServlet"/>
    </service>
-   <property name="servlet.path" type="String" value="order"/>
+   <property name="servlet.path" type="String" value="crud/order"/>
 </scr:component>
