@@ -51,7 +51,7 @@ public final class RestbuckXMLBuilder {
 	/**
 	 * Tag name for the quantity of an item. 
 	 */
-	public static String QUANTITY = "quality";
+	public static String QUANTITY = "quantity";
 	
 	/**
 	 * Tag name for the milk settings of a beverage. 

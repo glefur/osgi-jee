@@ -48,7 +48,10 @@ public class OrderSaxHandler extends DefaultHandler {
 
 	private Stack<String> elements;
 	private Object currentBuilder;
+
 	private boolean currentlyProcessingCookie;
+	private int cookieQuantity = -1;
+
 
 	/**
 	 * 
@@ -110,22 +113,27 @@ public class OrderSaxHandler extends DefaultHandler {
 		} else if (RestbuckXMLBuilder.NAME.equalsIgnoreCase(currentElement())) {
 			if (Coffee.CAPPUCCINO.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
+					currentlyProcessingCookie = false;
 					currentBuilder = ((GlobalBuilder) currentBuilder).addCappuccino();
 				}
 			} else if (Coffee.ESPRESSO.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
+					currentlyProcessingCookie = false;
 					currentBuilder = ((GlobalBuilder) currentBuilder).addEspresso();
 				}
 			} else if (Coffee.LATTE.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
+					currentlyProcessingCookie = false;
 					currentBuilder = ((GlobalBuilder) currentBuilder).addLatte();
 				}
 			} else if (Coffee.TEA.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
+					currentlyProcessingCookie = false;
 					currentBuilder = ((GlobalBuilder) currentBuilder).addTea();
 				}
 			} else if (HotChocolate.HOT_CHOCOLATE.equals(value)) {
 				if (currentBuilder instanceof GlobalBuilder) {
+					currentlyProcessingCookie = false;
 					currentBuilder = ((GlobalBuilder) currentBuilder).addHotChocolate();
 				}
 			} else if (Cookie.COOKIE.equalsIgnoreCase(value)) {
@@ -134,7 +142,9 @@ public class OrderSaxHandler extends DefaultHandler {
 				}
 			}
 		} else if (RestbuckXMLBuilder.QUANTITY.equalsIgnoreCase(currentElement())) {
-			if (currentBuilder instanceof CoffeeBuilder) {
+			if (currentlyProcessingCookie && !(currentBuilder instanceof CookieBuilder)) {
+				cookieQuantity = Integer.valueOf(value);
+			} else if (currentBuilder instanceof CoffeeBuilder) {
 				currentBuilder = ((CoffeeBuilder) currentBuilder).quantity(Integer.valueOf(value));
 			} else 	if (currentBuilder instanceof HotChocolateBuilder) {
 				currentBuilder = ((HotChocolateBuilder) currentBuilder).quantity(Integer.valueOf(value));
@@ -177,6 +187,10 @@ public class OrderSaxHandler extends DefaultHandler {
 			if (currentlyProcessingCookie && currentBuilder instanceof GlobalBuilder) {
 				try {
 					currentBuilder = ((GlobalBuilder)currentBuilder).addCookie(CookieKind.valueOf(value));
+					if (cookieQuantity != -1) {
+						((CookieBuilder)currentBuilder).quantity(cookieQuantity);
+						cookieQuantity = -1;
+					}
 				} catch (Exception ex) {}
 			}
 		}

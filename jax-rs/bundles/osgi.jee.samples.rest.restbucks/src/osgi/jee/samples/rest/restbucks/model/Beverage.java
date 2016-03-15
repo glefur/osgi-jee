@@ -24,7 +24,7 @@ package osgi.jee.samples.rest.restbucks.model;
  *
  */
 public abstract class Beverage implements Product {
-	
+
 	private int quantity;
 	private Milk milk;
 	private Size size;
@@ -59,6 +59,28 @@ public abstract class Beverage implements Product {
 	 */
 	public Size getSize() {
 		return size;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Beverage) {
+			Beverage other = (Beverage) obj;
+			return other.getMilk() == milk && other.getSize() == size && other.getQuantity() == quantity;
+		}
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return milk.hashCode() * size.hashCode() * quantity;
 	}
 
 }

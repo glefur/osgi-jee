@@ -16,6 +16,7 @@
 package osgi.jee.samples.rest.restbucks.model;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import com.google.common.collect.Lists;
 
@@ -74,6 +75,34 @@ public class Order {
 	 */
 	public void removeProduct(Product product) {
 		products.remove(product);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Order) {
+			Order other = (Order) obj;
+			if (other.getLocation() == location && other.getProducts().size() == products.size()) {
+				for (Product product : products) {
+					boolean matched = false;
+					Iterator<Product> iterator = other.getProducts().iterator();
+					while (!matched && iterator.hasNext()) {
+						Product next = iterator.next();
+						if (product.equals(next)) {
+							matched = true;
+						}
+					}
+					if (!matched) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public interface GlobalBuilder {
@@ -373,4 +402,5 @@ public class Order {
 
 	
 	}
+
 }

@@ -62,4 +62,26 @@ public class Coffee extends Beverage {
 		return shots;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.model.Beverage#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (super.equals(obj)) {
+			if (obj instanceof Coffee) {
+				return ((Coffee) obj).getShots() == shots;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.model.Beverage#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode() * shots.hashCode();
+	}
 }

@@ -134,5 +134,10 @@ public abstract class AbstractIntegrationTest {
 		}
 		return xmlUtil;
 	}
+	
+	protected String extractId(String location) {
+		String[] split = location.split("/");
+		return split[split.length - 1];
+	}
 
 }

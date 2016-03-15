@@ -51,4 +51,29 @@ public class HotChocolate extends Beverage {
 		return whippedCream;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (super.equals(obj)) {
+			if (obj instanceof HotChocolate)  {
+				HotChocolate other = (HotChocolate) obj;
+				return other.isWhippedCream() == whippedCream;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.model.Beverage#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int factor = whippedCream?1:2;
+		return super.hashCode() * factor;
+	}
+	
 }
