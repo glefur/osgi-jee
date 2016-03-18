@@ -128,7 +128,7 @@ public abstract class AbstractIntegrationTest {
 	    return false;
 	}
 
-	private XMLUtil getXMLUtil() {
+	protected XMLUtil getXMLUtil() {
 		if (xmlUtil == null) {
 			xmlUtil = new XMLUtil();
 		}
