@@ -18,8 +18,9 @@ package osgi.jee.samples.rest.restbucks.tests.integration.crud;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static org.junit.Assert.*;
 
+import java.util.Collection;
+
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.eclipsesource.restfuse.Destination;
@@ -29,21 +30,42 @@ import com.eclipsesource.restfuse.Method;
 import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
+import com.google.common.collect.Lists;
 
 import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
 import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
+import osgi.jee.samples.rest.restbucks.tests.ContentFileDescription;
+import osgi.jee.samples.rest.restbucks.tests.TestRequestingContentFile;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
 @RunWith(HttpJUnitRunner.class)
-public class OrderServiceAsCRUDTest extends AbstractIntegrationTest {
+public class OrderServiceAsCRUDTest extends AbstractIntegrationTest implements TestRequestingContentFile {
 	
-	private static final String order = "";
+	public static final String TEST_PUT_ORDER_CONTENT_FILE_PATH = "/osgi/jee/samples/rest/restbucks/tests/integration/crud/testPutOrderContentFile.xml";
+
+	/**
+	 * {@inheritDoc}
+	 * @see osgi.jee.samples.rest.restbucks.tests.TestRequestingContentFile#getContentFileDescriptions()
+	 */
+	@Override
+	public Collection<ContentFileDescription> getContentFileDescriptions() {
+		return Lists.newArrayList(
+					new ContentFileDescription(TEST_PUT_ORDER_CONTENT_FILE_PATH, getXMLUtil().toXML(
+							Order.Builder.newInstance()
+								.addCappuccino()
+								.milk(Milk.Semi)
+								.size(Size.Small)
+								.shots(Shots.Double)
+								.quantity(2)
+							.build()))
+				);
+	}
 
 	@Rule
 	public Destination destination = new Destination(this, BASE_URL);
@@ -51,12 +73,14 @@ public class OrderServiceAsCRUDTest extends AbstractIntegrationTest {
 	@Context
 	private Response response;
 	
-	@HttpTest(method = Method.PUT, content=order, path = "/services/crud/order/2")
-	public void checkMessage() {
+	@HttpTest(method = Method.PUT, file=TEST_PUT_ORDER_CONTENT_FILE_PATH, path = "/services/crud/order/2")
+	public void testPutOrder() throws Exception {
 		String body = response.getBody();
 		assertOk(response);
-		assertEquals(MediaType.TEXT_PLAIN, response.getType());
-		assertEquals("Hello World", body);
+		assertEquals(MediaType.APPLICATION_XML, response.getType());
+		Order responseOrder = getXMLUtil().fromXML(body);
+		assertNotNull("Bad response", responseOrder);
+		assertEquals("Bad product count in the updated order", 1, responseOrder.getProducts().size());
 	}
 
 }

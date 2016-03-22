@@ -1,0 +1,11 @@
+<order>
+	<items>
+		<item>
+			<name>Cappuccino</name>
+			<quantity>2</quantity>
+			<milk>Semi</milk>
+			<size>Small</size>
+			<shots>Double</shots>
+		</item>
+	</items>
+</order>

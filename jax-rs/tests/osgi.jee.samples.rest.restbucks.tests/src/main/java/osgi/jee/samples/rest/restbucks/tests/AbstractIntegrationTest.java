@@ -36,13 +36,13 @@ import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
 @SuppressWarnings("restriction")
 public abstract class AbstractIntegrationTest {
 
-	public static String BASE_URL = "http://localhost:" + System.getProperty( "org.osgi.service.http.port" );
+	public static String BASE_URL = "http://localhost:" + (System.getProperty("org.osgi.service.http.port")!=null?System.getProperty("org.osgi.service.http.port"):"9092");
 	
 	private static final long PORT_SLEEP_MILLIS = 100;
 
 	private HttpClient client;
 
-	private XMLUtil xmlUtil;
+	private static XMLUtil xmlUtil;
 
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -128,7 +128,7 @@ public abstract class AbstractIntegrationTest {
 	    return false;
 	}
 
-	protected XMLUtil getXMLUtil() {
+	protected static XMLUtil getXMLUtil() {
 		if (xmlUtil == null) {
 			xmlUtil = new XMLUtil();
 		}

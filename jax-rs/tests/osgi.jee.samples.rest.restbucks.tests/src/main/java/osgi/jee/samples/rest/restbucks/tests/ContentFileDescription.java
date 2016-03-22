@@ -15,19 +15,22 @@
  */
 package osgi.jee.samples.rest.restbucks.tests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-import osgi.jee.samples.rest.restbucks.tests.integration.crud.PostOrderServiceAsCRUDTest;
-import osgi.jee.samples.rest.restbucks.tests.unit.OrderSerializationTests;
-
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-@RunWith(Suite.class)
-@SuiteClasses({ PostOrderServiceAsCRUDTest.class, OrderSerializationTests.class, OrderSerializationTests.class })
-public class AllTests {
+public class ContentFileDescription {
 
+	public final String path;
+	public final String content;
+	
+	/**
+	 * @param path
+	 * @param content
+	 */
+	public ContentFileDescription(String path, String content) {
+		this.path = path;
+		this.content = content;
+	}
+	
 }

@@ -90,31 +90,4 @@ public class PostOrderServiceAsCRUDTest extends AbstractIntegrationTest {
 		
 	}
 
-	@Test
-	public void testUpdatedOrder() throws Exception {
-		String basePath = "/services/crud/order";
-		Order order = Order.Builder.newInstance()
-				.addCappuccino()
-					.milk(Milk.Semi)
-					.size(Size.Large)
-					.shots(Shots.Single)
-					.quantity(3)
-				.addLatte()
-					.quantity(1)
-					.milk(Milk.Whole)
-					.size(Size.Medium)
-					.shots(Shots.Double)
-				.setLocation(Location.TakeAway)
-				.addCookie(CookieKind.Ginger)
-					.quantity(4)
-				.addHotChocolate()
-					.milk(Milk.Skim)
-					.size(Size.Large)
-					.whippedCream()
-					.quantity(2)
-						.build();
-
-		HttpResponse response = putPOX(basePath + "/1", order);
-		assertEquals("Invalid response status", 200, response.getStatusLine().getStatusCode());
-	}
 }
