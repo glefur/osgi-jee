@@ -24,6 +24,7 @@ import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
+import osgi.jee.samples.rest.restbucks.model.Status;
 
 /**
  * This class emulates service for {@link Order}.
@@ -99,9 +100,17 @@ public class OrderService {
 	}
 
 	/**
+	 * Archives the order with the given ID
+	 * @param orderId ID of the order to archive.
+	 */
+	public void archive(String orderId) {
+		orders.remove(orderId);
+	}
+
+	/**
 	 * 
 	 */
-	private void initOrders() {
+	public void initOrders() {
 		orders.put(1, Order.Builder.newInstance()
 				.addCappuccino()
 					.quantity(2)
@@ -118,10 +127,20 @@ public class OrderService {
 				.addHotChocolate()
 					.milk(Milk.Skim)
 					.size(Size.Large)
+					.quantity(1)
 				.addCookie(CookieKind.ChocolateChip)
 					.quantity(2)
 				.build());
-		index = 2;
+		Order order3 = Order.Builder.newInstance()
+				.addHotChocolate()
+					.milk(Milk.Skim)
+					.size(Size.Large)
+					.whippedCream()
+					.quantity(2)
+				.build();
+		order3.setStatus(Status.SERVED);
+		orders.put(3, order3);
+		index = 3;
 	}
 
 }

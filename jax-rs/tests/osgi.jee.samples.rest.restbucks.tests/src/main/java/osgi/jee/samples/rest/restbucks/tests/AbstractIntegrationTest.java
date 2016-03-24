@@ -26,8 +26,13 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
+import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
+import osgi.jee.samples.rest.restbucks.services.OrderService;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -45,7 +50,7 @@ public abstract class AbstractIntegrationTest {
 	private static XMLUtil xmlUtil;
 
 	@BeforeClass
-	public static void setUp() throws Exception {
+	public static void classSetUp() throws Exception {
 	    waitForPort(9092);
 
 	    // Make sure the ports are clear
@@ -138,6 +143,13 @@ public abstract class AbstractIntegrationTest {
 	protected String extractId(String location) {
 		String[] split = location.split("/");
 		return split[split.length - 1];
+	}
+
+	protected OrderService getOrderService() {
+		BundleContext context = FrameworkUtil.getBundle(Order.class).getBundleContext();
+		ServiceReference<OrderService> ref = context.getServiceReference(OrderService.class);
+		OrderService service = context.getService(ref);
+		return service;
 	}
 
 }

@@ -15,11 +15,13 @@
  */
 package osgi.jee.samples.rest.restbucks.tests.integration.crud;
 
-import static com.eclipsesource.restfuse.Assert.assertOk;
-import static org.junit.Assert.*;
+import static com.eclipsesource.restfuse.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -36,6 +38,7 @@ import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
+import osgi.jee.samples.rest.restbucks.services.OrderService;
 import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
 import osgi.jee.samples.rest.restbucks.tests.ContentFileDescription;
 import osgi.jee.samples.rest.restbucks.tests.TestRequestingContentFile;
@@ -73,6 +76,23 @@ public class OrderServiceAsCRUDTest extends AbstractIntegrationTest implements T
 	@Context
 	private Response response;
 	
+	
+	@Before
+	public void setUp() {
+		getOrderService().initOrders();
+	}
+
+	@HttpTest(method = Method.GET, path="/services/crud/order/1")
+	public void testGetOrder() throws Exception {
+		assertOk(response);
+		assertEquals(MediaType.APPLICATION_XML, response.getType());
+		Order order = getXMLUtil().fromXML(response.getBody());
+		assertNotNull("Bad returned order", order);
+		OrderService orderService = getOrderService();
+		assertEquals("Bad returned order", orderService.getOrder("1"), order);
+		
+	}
+	
 	@HttpTest(method = Method.PUT, file=TEST_PUT_ORDER_CONTENT_FILE_PATH, path = "/services/crud/order/2")
 	public void testPutOrder() throws Exception {
 		String body = response.getBody();
@@ -81,6 +101,16 @@ public class OrderServiceAsCRUDTest extends AbstractIntegrationTest implements T
 		Order responseOrder = getXMLUtil().fromXML(body);
 		assertNotNull("Bad response", responseOrder);
 		assertEquals("Bad product count in the updated order", 1, responseOrder.getProducts().size());
+	}
+	
+	@HttpTest(method = Method.DELETE, path = "/services/crud/order/3")
+	public void testDeleteUndeletableOrder() {
+		assertMethodNotAllowed(response);
+	}
+
+	@HttpTest(method = Method.DELETE, path = "/services/crud/order/2")
+	public void testDeleteOrder() {
+		assertNoContent(response);
 	}
 
 }

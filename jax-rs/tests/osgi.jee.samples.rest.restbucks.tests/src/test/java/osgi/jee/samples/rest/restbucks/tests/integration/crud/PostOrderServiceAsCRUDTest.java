@@ -78,9 +78,7 @@ public class PostOrderServiceAsCRUDTest extends AbstractIntegrationTest {
 		Header locationHeader = headers[0];
 		String location = locationHeader.getValue();
 		String orderId = extractId(location);
-		BundleContext context = FrameworkUtil.getBundle(Order.class).getBundleContext();
-		ServiceReference<OrderService> ref = context.getServiceReference(OrderService.class);
-		OrderService service = context.getService(ref);
+		OrderService service = getOrderService();
 		if (service != null) {
 			Order storedOrder = service.getOrder(orderId);
 			assertEquals("Order badly stored.", order, storedOrder);

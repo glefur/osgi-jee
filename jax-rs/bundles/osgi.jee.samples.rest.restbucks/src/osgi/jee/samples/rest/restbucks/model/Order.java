@@ -29,6 +29,7 @@ import com.google.common.collect.Lists;
 public class Order {
 
 	private Location location;
+	private Status status;
 	private Collection<Product> products;
 
 	/**
@@ -36,6 +37,7 @@ public class Order {
 	 */
 	public Order() {
 		location = Location.Unknown;
+		status = Status.PLACED;
 		products = Lists.newArrayList();
 	}
 
@@ -52,6 +54,20 @@ public class Order {
 	 */
 	public Location getLocation() {
 		return location;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	/**
@@ -103,6 +119,13 @@ public class Order {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean canDelete() {
+		return status == Status.PLACED || status == Status.PAID;
 	}
 
 	public interface GlobalBuilder {
@@ -398,9 +421,6 @@ public class Order {
 			builder.addProduct(new Cookie(quantity, kind));
 		}
 		
-		
-
-	
 	}
 
 }

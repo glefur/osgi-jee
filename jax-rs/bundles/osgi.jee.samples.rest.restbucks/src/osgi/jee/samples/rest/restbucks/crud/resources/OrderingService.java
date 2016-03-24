@@ -16,6 +16,7 @@
 package osgi.jee.samples.rest.restbucks.crud.resources;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -43,12 +44,19 @@ public class OrderingService {
 	private @Context UriInfo uriInfo;
 	
 	/**
+	 * 
+	 */
+	public OrderingService() {
+		super();
+	}
+
+	/**
 	 * @param orderService the orderService to set
 	 */
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
 	}
-
+	
 	@GET
 	@Path("/{orderId}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -74,6 +82,22 @@ public class OrderingService {
 				return Response.ok().entity(orderRepresentation).build();
 			} catch (Exception e) {
 				throw new WebApplicationException(Response.Status.BAD_REQUEST);
+			}
+		} else {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+	}
+	
+	@DELETE
+	@Path("/{orderId}")
+	public Response deleteOrder(@PathParam("orderId") String orderId) {
+		if (orderService.orderExists(orderId)) {
+			Order order = orderService.getOrder(orderId);
+			if (order.canDelete()) {
+				orderService.archive(orderId);
+				return Response.noContent().build();
+			} else {
+				throw new WebApplicationException(Response.Status.METHOD_NOT_ALLOWED);				
 			}
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);

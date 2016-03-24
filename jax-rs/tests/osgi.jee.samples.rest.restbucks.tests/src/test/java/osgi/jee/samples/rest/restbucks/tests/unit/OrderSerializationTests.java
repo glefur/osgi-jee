@@ -66,7 +66,6 @@ public class OrderSerializationTests {
 				.whippedCream()
 					.build();
 		String serialization = xmlUtil.toXML(originalOrder);
-		System.out.println(xmlUtil.toXML(Order.Builder.newInstance().addCappuccino().milk(Milk.Semi).size(Size.Small).shots(Shots.Double).quantity(2).build()));
 		assertNotNull(serialization);
 		assertNotEquals("Serialiation service returned empty string.", "", serialization);
 		Order order = xmlUtil.fromXML(serialization);
