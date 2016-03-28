@@ -38,7 +38,7 @@ import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
-import osgi.jee.samples.rest.restbucks.services.OrderService;
+import osgi.jee.samples.rest.restbucks.services.OrderManager;
 import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
 import osgi.jee.samples.rest.restbucks.tests.ContentFileDescription;
 import osgi.jee.samples.rest.restbucks.tests.TestRequestingContentFile;
@@ -79,7 +79,7 @@ public class OrderServiceAsCRUDTest extends AbstractIntegrationTest implements T
 	
 	@Before
 	public void setUp() {
-		getOrderService().initOrders();
+		getOrderManager().initOrders();
 	}
 
 	@HttpTest(method = Method.GET, path="/services/crud/order/1")
@@ -88,7 +88,7 @@ public class OrderServiceAsCRUDTest extends AbstractIntegrationTest implements T
 		assertEquals(MediaType.APPLICATION_XML, response.getType());
 		Order order = getXMLUtil().fromXML(response.getBody());
 		assertNotNull("Bad returned order", order);
-		OrderService orderService = getOrderService();
+		OrderManager orderService = getOrderManager();
 		assertEquals("Bad returned order", orderService.getOrder("1"), order);
 		
 	}

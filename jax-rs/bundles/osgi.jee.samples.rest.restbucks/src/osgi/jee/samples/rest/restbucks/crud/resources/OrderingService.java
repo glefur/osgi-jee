@@ -23,45 +23,41 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
-import osgi.jee.samples.rest.restbucks.services.OrderService;
+import osgi.jee.samples.rest.restbucks.services.OrderManager;
 
 /**
+ * Webservice for managing orders registered as JAX-RS Resource.
+ * 
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
 @Path("/crud/order")
 public class OrderingService {
 
-	private OrderService orderService;
-	
-	private @Context UriInfo uriInfo;
+	private OrderManager orderManager;
 	
 	/**
-	 * 
+	 * @param orderManager the orderManager to set
 	 */
-	public OrderingService() {
-		super();
-	}
-
-	/**
-	 * @param orderService the orderService to set
-	 */
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
+	public void setOrderService(OrderManager orderManager) {
+		this.orderManager = orderManager;
 	}
 	
+	/**
+	 * Get method for returning a given order.
+	 * @param orderId ID of the expected order.
+	 * @return the {@link Order} with the given id.
+	 */
 	@GET
 	@Path("/{orderId}")
 	@Produces(MediaType.APPLICATION_XML)
 	public String getOrder(@PathParam("orderId") String orderId) {
-		Order order = orderService.getOrder(orderId);
+		Order order = orderManager.getOrder(orderId);
 		if (order != null) {
 			XMLUtil xmlUtil = new XMLUtil();
 			return xmlUtil.toXML(order);
@@ -71,14 +67,20 @@ public class OrderingService {
 		
 	}
 	
+	/**
+	 * Put method for updating an existing order.
+	 * @param orderId ID of the order to updated.
+	 * @param orderRepresentation XML representation of the updated order.
+	 * @return a {@link Response} describing the result of the operation.
+	 */
 	@PUT
 	@Path("/{orderId}")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.APPLICATION_XML)
 	public Response updateOrder(@PathParam("orderId") String orderId, String orderRepresentation) {
-		if (orderService.orderExists(orderId)) {
+		if (orderManager.orderExists(orderId)) {
 			try {
-				orderService.updateOrder(orderId, new XMLUtil().fromXML(orderRepresentation));
+				orderManager.updateOrder(orderId, new XMLUtil().fromXML(orderRepresentation));
 				return Response.ok().entity(orderRepresentation).build();
 			} catch (Exception e) {
 				throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -88,13 +90,18 @@ public class OrderingService {
 		}
 	}
 	
+	/**
+	 * Delete method for deleting an order.
+	 * @param orderId ID of the order to delete.
+	 * @return a {@link Response} describing the result of the operation.
+	 */
 	@DELETE
 	@Path("/{orderId}")
 	public Response deleteOrder(@PathParam("orderId") String orderId) {
-		if (orderService.orderExists(orderId)) {
-			Order order = orderService.getOrder(orderId);
+		if (orderManager.orderExists(orderId)) {
+			Order order = orderManager.getOrder(orderId);
 			if (order.canDelete()) {
-				orderService.archive(orderId);
+				orderManager.archive(orderId);
 				return Response.noContent().build();
 			} else {
 				throw new WebApplicationException(Response.Status.METHOD_NOT_ALLOWED);				

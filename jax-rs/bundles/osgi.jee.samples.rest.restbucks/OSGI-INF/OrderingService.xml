@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="osgi.jee.samples.rest.restbucks.crud.resources.OrderingService">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="osgi.jee.samples.rest.restbucks.crud.servlet.resources.OrderingService">
    <implementation class="osgi.jee.samples.rest.restbucks.crud.resources.OrderingService"/>
    <service>
       <provide interface="osgi.jee.samples.rest.restbucks.crud.resources.OrderingService"/>
    </service>
-   <reference bind="setOrderService" cardinality="1..1" interface="osgi.jee.samples.rest.restbucks.services.OrderService" name="OrderService" policy="static"/>
+   <reference bind="setOrderService" cardinality="1..1" interface="osgi.jee.samples.rest.restbucks.services.OrderManager" name="OrderService" policy="static"/>
 </scr:component>

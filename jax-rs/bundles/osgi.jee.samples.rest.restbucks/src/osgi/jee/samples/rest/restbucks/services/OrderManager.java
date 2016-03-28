@@ -27,11 +27,11 @@ import osgi.jee.samples.rest.restbucks.model.Size;
 import osgi.jee.samples.rest.restbucks.model.Status;
 
 /**
- * This class emulates service for {@link Order}.
+ * This class emulates core manager for {@link Order}.
  *  
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  */
-public class OrderService {
+public class OrderManager {
 	
 	private int index = 0;
 	
@@ -40,7 +40,7 @@ public class OrderService {
 	/**
 	 * 
 	 */
-	public OrderService() {
+	public OrderManager() {
 		orders = Maps.newHashMap();
 		initOrders();
 	}

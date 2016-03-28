@@ -15,16 +15,15 @@
  */
 package osgi.jee.samples.rest.restbucks.tests.integration.crud;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import javax.ws.rs.core.Response;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.junit.Test;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 import osgi.jee.samples.rest.restbucks.model.CookieKind;
 import osgi.jee.samples.rest.restbucks.model.Location;
@@ -32,7 +31,7 @@ import osgi.jee.samples.rest.restbucks.model.Milk;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
-import osgi.jee.samples.rest.restbucks.services.OrderService;
+import osgi.jee.samples.rest.restbucks.services.OrderManager;
 import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
 
 /**
@@ -78,12 +77,12 @@ public class PostOrderServiceAsCRUDTest extends AbstractIntegrationTest {
 		Header locationHeader = headers[0];
 		String location = locationHeader.getValue();
 		String orderId = extractId(location);
-		OrderService service = getOrderService();
+		OrderManager service = getOrderManager();
 		if (service != null) {
 			Order storedOrder = service.getOrder(orderId);
 			assertEquals("Order badly stored.", order, storedOrder);
 		} else {
-			fail("Unable to retrieve OrderService");
+			fail("Unable to retrieve OrderManager");
 		}
 		
 	}

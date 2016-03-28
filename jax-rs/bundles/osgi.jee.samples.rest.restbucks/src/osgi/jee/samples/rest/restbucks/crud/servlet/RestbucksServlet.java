@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.restbucks.crud;
+package osgi.jee.samples.rest.restbucks.crud.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,26 +32,31 @@ import org.osgi.service.component.ComponentContext;
  *
  */
 @SuppressWarnings("serial")
-public abstract class RestbuckServlet extends HttpServlet {
+public abstract class RestbucksServlet extends HttpServlet {
 	
 	private String path;
 	
+	/**
+	 * Service activation method. Extracts the servlet path from the component context (i.e. the properties
+	 * of the service).
+	 * @param context {@link ComponentContext} of this service.
+	 */
 	public final void activate(ComponentContext context) {
 		path = (String) context.getProperties().get("servlet.path");
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see osgi.jee.samples.rest.restbucks.crud.RestbuckServlet#getPath()
+	 * @return the path of the current Servlet.
 	 */
 	public final String getPath() {
 		return path;
 	}
 
 	/**
-	 * @param req
-	 * @return
-	 * @throws IOException
+	 * Extracts the content of an HTTP request into a String.
+	 * @param req the {@link HttpServletRequest} to process.
+	 * @return a String containing the contents of the input request.
+	 * @throws IOException an error occurred during contents analysis.
 	 */
 	protected final String getContentsAsString(HttpServletRequest req) throws IOException {
 		BufferedReader reader = req.getReader();

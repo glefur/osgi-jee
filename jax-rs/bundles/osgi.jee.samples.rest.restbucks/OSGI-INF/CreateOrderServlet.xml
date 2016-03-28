@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.rest.restbucks.crud.CreateOrderServlet">
-   <implementation class="osgi.jee.samples.rest.restbucks.crud.CreateOrderServlet"/>
-   <reference bind="setOrderService" cardinality="1..1" interface="osgi.jee.samples.rest.restbucks.services.OrderService" name="OrderService" policy="static"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.rest.restbucks.crud.servlet.CreateOrderServlet">
+   <implementation class="osgi.jee.samples.rest.restbucks.internal.crud.servlet.CreateOrderServlet"/>
+   <reference bind="setOrderService" cardinality="1..1" interface="osgi.jee.samples.rest.restbucks.services.OrderManager" name="OrderService" policy="static"/>
    <service>
-      <provide interface="osgi.jee.samples.rest.restbucks.crud.RestbuckServlet"/>
+      <provide interface="osgi.jee.samples.rest.restbucks.crud.servlet.RestbucksServlet"/>
    </service>
    <property name="servlet.path" type="String" value="servlet/crud/order"/>
 </scr:component>

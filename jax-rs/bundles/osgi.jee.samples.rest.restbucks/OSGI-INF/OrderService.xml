@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.rest.restbucks.services.OrderService">
-   <implementation class="osgi.jee.samples.rest.restbucks.services.OrderService"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="osgi.jee.samples.rest.restbucks.services.OrderManager">
+   <implementation class="osgi.jee.samples.rest.restbucks.services.OrderManager"/>
    <service>
-      <provide interface="osgi.jee.samples.rest.restbucks.services.OrderService"/>
+      <provide interface="osgi.jee.samples.rest.restbucks.services.OrderManager"/>
    </service>
 </scr:component>

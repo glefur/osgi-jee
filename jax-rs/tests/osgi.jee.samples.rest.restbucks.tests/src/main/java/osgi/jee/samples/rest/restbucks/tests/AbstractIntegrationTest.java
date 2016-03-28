@@ -32,7 +32,7 @@ import org.osgi.framework.ServiceReference;
 
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
-import osgi.jee.samples.rest.restbucks.services.OrderService;
+import osgi.jee.samples.rest.restbucks.services.OrderManager;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
@@ -145,10 +145,10 @@ public abstract class AbstractIntegrationTest {
 		return split[split.length - 1];
 	}
 
-	protected OrderService getOrderService() {
+	protected OrderManager getOrderManager() {
 		BundleContext context = FrameworkUtil.getBundle(Order.class).getBundleContext();
-		ServiceReference<OrderService> ref = context.getServiceReference(OrderService.class);
-		OrderService service = context.getService(ref);
+		ServiceReference<OrderManager> ref = context.getServiceReference(OrderManager.class);
+		OrderManager service = context.getService(ref);
 		return service;
 	}
 

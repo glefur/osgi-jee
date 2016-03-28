@@ -13,14 +13,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.restbucks.internal.crud;
+package osgi.jee.samples.rest.restbucks.internal.crud.servlet;
 
 import javax.servlet.ServletException;
 
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 
-import osgi.jee.samples.rest.restbucks.crud.RestbuckServlet;
+import osgi.jee.samples.rest.restbucks.crud.servlet.RestbucksServlet;
 
 /**
  * Service automatically registering Restbucks servlet into the current servlet engine.
@@ -46,7 +46,7 @@ public class ServletRegister {
 	 * @throws ServletException an error occurred during registration.
 	 * @throws NamespaceException an error occurred during registration.
 	 */
-	public void addServlet(RestbuckServlet servlet) throws ServletException, NamespaceException {
+	public void addServlet(RestbucksServlet servlet) throws ServletException, NamespaceException {
 		httpService.registerServlet("/" + servlet.getPath(), servlet, null, null);
 	}
 	

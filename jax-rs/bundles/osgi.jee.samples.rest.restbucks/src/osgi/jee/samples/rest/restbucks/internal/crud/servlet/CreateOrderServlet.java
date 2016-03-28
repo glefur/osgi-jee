@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package osgi.jee.samples.rest.restbucks.crud;
+package osgi.jee.samples.rest.restbucks.internal.crud.servlet;
 
 import java.io.IOException;
 
@@ -21,9 +21,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import osgi.jee.samples.rest.restbucks.crud.servlet.RestbucksServlet;
 import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.xml.XMLUtil;
-import osgi.jee.samples.rest.restbucks.services.OrderService;
+import osgi.jee.samples.rest.restbucks.services.OrderManager;
 
 /**
  * This servlet process order creation.
@@ -33,19 +34,19 @@ import osgi.jee.samples.rest.restbucks.services.OrderService;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class CreateOrderServlet extends RestbuckServlet {
+public class CreateOrderServlet extends RestbucksServlet {
 
 	/**
-	 * 
+	 * Serialization ID 
 	 */
 	private static final long serialVersionUID = 2515153789916645819L;
 	
-	private OrderService service;
+	private OrderManager service;
 
 	/**
 	 * @param service the service to set
 	 */
-	public void setOrderService(OrderService service) {
+	public void setOrderService(OrderManager service) {
 		this.service = service;
 	}
 

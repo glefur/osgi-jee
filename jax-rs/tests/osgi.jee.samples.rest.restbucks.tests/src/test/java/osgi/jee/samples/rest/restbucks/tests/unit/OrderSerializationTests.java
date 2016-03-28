@@ -80,17 +80,6 @@ public class OrderSerializationTests {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T extends Product> List<T> getProducts(Order input, Class<? extends Product> type) {
-		List<T> result = Lists.newArrayList();
-		for (Product prod : input.getProducts()) {
-			if (type.isInstance(prod)) {
-				result.add((T) prod);
-			}
-		}
-		return result;
-	}
-	
-	@SuppressWarnings("unchecked")
 	private <T extends Product> List<T> getProducts(Order input, Class<? extends Product> type, String name) {
 		List<T> result = Lists.newArrayList();
 		for (Product prod : input.getProducts()) {
