@@ -32,13 +32,13 @@ import osgi.jee.samples.rest.restbucks.model.Order;
 import osgi.jee.samples.rest.restbucks.model.Shots;
 import osgi.jee.samples.rest.restbucks.model.Size;
 import osgi.jee.samples.rest.restbucks.services.OrderManager;
-import osgi.jee.samples.rest.restbucks.tests.AbstractIntegrationTest;
+import osgi.jee.samples.rest.restbucks.tests.AbstractServletTest;
 
 /**
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-public class PostOrderServiceAsCRUDTest extends AbstractIntegrationTest {
+public class PostOrderServiceAsCRUDTest extends AbstractServletTest {
 
 	/**
 	 * Here we test the order creation via a post method. We send a request and check that we have a Created return code,

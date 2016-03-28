@@ -19,12 +19,6 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.BeforeClass;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -38,14 +32,12 @@ import osgi.jee.samples.rest.restbucks.services.OrderManager;
  * @author <a href="mailto:goulwen.lefur@gmail.com">Goulwen Le Fur</a>.
  *
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractIntegrationTest {
 
 	public static String BASE_URL = "http://localhost:" + (System.getProperty("org.osgi.service.http.port")!=null?System.getProperty("org.osgi.service.http.port"):"9092");
 	
 	private static final long PORT_SLEEP_MILLIS = 100;
 
-	private HttpClient client;
 
 	private static XMLUtil xmlUtil;
 
@@ -57,42 +49,23 @@ public abstract class AbstractIntegrationTest {
 	    Thread.sleep(500);
 	}
 
-	/**
-	 * @return
-	 */
-	protected HttpClient getClient() {
-		if (client == null) {
-			client = HttpClientBuilder.create().build();
+	protected static XMLUtil getXMLUtil() {
+		if (xmlUtil == null) {
+			xmlUtil = new XMLUtil();
 		}
-		return client;
+		return xmlUtil;
 	}
 	
-	/**
-	 * Send an object in a XML format via a post method.
-	 * @param path the destination path
-	 * @param contents the object to pass to the server.
-	 * @return the response of this operation.
-	 * @throws Exception an error occurred.
-	 */
-	protected HttpResponse postPOX(String path, Object contents) throws Exception {
-		HttpPost post = new HttpPost(BASE_URL + path);
-		post.setEntity(new StringEntity(getXMLUtil().toXML(contents)));
-		return getClient().execute(post);
+	protected OrderManager getOrderManager() {
+		BundleContext context = FrameworkUtil.getBundle(Order.class).getBundleContext();
+		ServiceReference<OrderManager> ref = context.getServiceReference(OrderManager.class);
+		OrderManager service = context.getService(ref);
+		return service;
 	}
 
-	/**
-	 * Send an object in a XML format via a put method.
-	 * @param path the destination path
-	 * @param contents the object to pass to the server.
-	 * @return the response of this operation.
-	 * @throws Exception an error occurred.
-	 */
-	protected HttpResponse putPOX(String path, Object contents) throws Exception {
-		HttpPut put = new HttpPut(BASE_URL + path);
-		StringEntity entity = new StringEntity(getXMLUtil().toXML(contents));
-		entity.setContentType("application/xml");
-		put.setEntity(entity);
-		return getClient().execute(put);
+	protected String extractId(String location) {
+		String[] split = location.split("/");
+		return split[split.length - 1];
 	}
 
 	private static void waitForPort(int port) {
@@ -131,25 +104,6 @@ public abstract class AbstractIntegrationTest {
 	        }
 	    }
 	    return false;
-	}
-
-	protected static XMLUtil getXMLUtil() {
-		if (xmlUtil == null) {
-			xmlUtil = new XMLUtil();
-		}
-		return xmlUtil;
-	}
-	
-	protected String extractId(String location) {
-		String[] split = location.split("/");
-		return split[split.length - 1];
-	}
-
-	protected OrderManager getOrderManager() {
-		BundleContext context = FrameworkUtil.getBundle(Order.class).getBundleContext();
-		ServiceReference<OrderManager> ref = context.getServiceReference(OrderManager.class);
-		OrderManager service = context.getService(ref);
-		return service;
 	}
 
 }
