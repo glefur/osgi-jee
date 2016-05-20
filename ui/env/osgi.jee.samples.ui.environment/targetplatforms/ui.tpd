@@ -1,0 +1,27 @@
+target "Target Platform for OSGi/JEE/UI sample"
+
+with requirements, source
+
+location eclipse "http://download.eclipse.org/eclipse/updates/4.3" {
+	org.apache.felix.gogo.shell
+	org.apache.felix.gogo.command
+	org.eclipse.equinox.console
+	org.eclipse.equinox.http.jetty
+	org.eclipse.equinox.ds
+	org.eclipse.pde.junit.runtime
+	org.junit
+}
+
+location orbit "http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/" {
+	com.google.guava
+	osgi.enterprise
+}
+
+location "http://hstaudacher.github.io/osgi-jax-rs-connector" {
+	com.eclipsesource.jaxrs.jersey-min
+	com.eclipsesource.jaxrs.publisher
+}
+
+location restfuse "http://download.eclipsesource.com/technology/restfuse/p2/" {
+	com.eclipsesource.restfuse
+}

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Main bundle for OSGI JEE UI
+Bundle-SymbolicName: osgi.jee.samples.ui
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: glefur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.osgi.framework;version="1.7.0",
+ org.osgi.service.http;version="1.2.1",
+ org.osgi.util.tracker;version="1.5.1",
+ osgi.jee.samples.ui.fwks
+Bundle-Activator: osgi.jee.samples.ui.UISampleActivator
