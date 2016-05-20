@@ -104,7 +104,7 @@ public class OrderManager {
 	 * @param orderId ID of the order to archive.
 	 */
 	public void archive(String orderId) {
-		orders.remove(orderId);
+		orders.remove(Integer.valueOf(orderId));
 	}
 
 	/**
