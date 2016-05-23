@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bootstrap testing</title>
+
+		<!-- Bootstrap -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+ 
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+		<style>
+		body {
+			min-height: 2000px;
+			padding-top: 50px;
+		}
+		</style>
+		<script>
+		$('.carousel').carousel({
+			interval: 2000,
+			pause: 'none'
+		}) 
+		</script>
+	</head>
+	<body>
+		
+	    <!-- Fixed navbar -->
+	    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">OSGi/JEE/UI</a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="index.html">Home</a></li>
+	            <li><a href="#about">About</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+	              <ul class="dropdown-menu">
+	                <li><a href="#">Pagination</a></li>
+	                <li><a href="#">Jumbotron</a></li>
+	                <li><a href="#">Something else here</a></li>
+	                <li class="divider"></li>
+	                <li class="dropdown-header">Nav header</li>
+	                <li><a href="#">Separated link</a></li>
+	                <li><a href="#">One more separated link</a></li>
+	              </ul>
+	            </li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+	    
+		<div class="container">
+			<ol class="breadcrumb">
+			  <li><a href="#">OSGi/JEE</a></li>
+			  <li><a href="#">UI</a></li>
+			  <li><a href="index.html">Bootstrap</a></li>
+			  <li class="active">Jumbotron</li>
+			</ol>
+			<div class="jumbotron">
+				<h1>Here is a Jumbotron</h1>
+				<p>This is a good header for this sample!</p>
+			</div>
+			
+			<br/>
+    		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        		<!-- Indicators -->
+		        <ol class="carousel-indicators">
+		            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+		            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+		            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+		            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+		        </ol>
+		
+		        <!-- Wrapper for slides -->
+		        <div class="carousel-inner">
+		            <div class="item active">
+		                <img src="/images/katahdin_06.jpg" alt="...">
+		                <div class="carousel-caption">
+		                    <h3>On the Beach</h3>
+		                    <p>Yep, we're close to the ocean.</p>
+		                </div>
+		            </div>
+		            <div class="item">
+		                <img src="/images/katahdin_07.jpg" alt="...">
+		
+		                <div class="carousel-caption">
+		                    <h3>Great Location</h3>
+		                    <p>The Katahdin Inn is located at the far end of the boardwalk.</p>
+		                </div>
+		            </div>
+		            <div class="item">
+		                <img src="/images/katahdin_08.jpg" alt="...">
+		                <div class="carousel-caption">
+		                    <h3>Short Sands Beach</h3>
+		                    <p>Short Sands beach is small and kid friendly.</p>
+		                </div>
+		            </div>
+		
+		            <div class="item">
+		                <div align="center">
+		                <h1>Joy of Bootstrap</h1>
+		                <p>Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
+		                    <br/>
+		                <p><a href="http://www.getbootstrap.com" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+		                </div>
+		            </div>
+		        </div>
+
+		        <!-- Controls -->
+		        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+		            <span class="glyphicon glyphicon-chevron-left"></span>
+		        </a>
+		        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+		            <span class="glyphicon glyphicon-chevron-right"></span>
+		        </a>
+		    </div>
+		</div>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="/bootstrap/js/bootstrap.min.js"></script>
+	</body>
+</html>
