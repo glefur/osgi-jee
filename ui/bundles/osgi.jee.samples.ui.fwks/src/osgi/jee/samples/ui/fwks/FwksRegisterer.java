@@ -25,6 +25,18 @@ import org.osgi.service.http.NamespaceException;
 public class FwksRegisterer {
 
 	public static final ResourceDescriptor BOOTSTRAP = new ResourceDescriptor("fwks/bootstrap-3.3.6-dist", "/bootstrap");
+	public static final ResourceDescriptor ANGULAR = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular", "/angular");
+	public static final ResourceDescriptor ANGULAR_ANIMATE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-animate", "/angular/animate");
+	public static final ResourceDescriptor ANGULAR_ARIA = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-aria", "/angular/aria");
+	public static final ResourceDescriptor ANGULAR_COOKIES = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-cookies", "/angular/cookies");
+	public static final ResourceDescriptor ANGULAR_LOADER = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-loader", "/angular/loader");
+	public static final ResourceDescriptor ANGULAR_MESSAGES = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-messages", "/angular/messages");
+	public static final ResourceDescriptor ANGULAR_MESSAGE_FORMAT = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-message-format", "/angular/message-format");
+	public static final ResourceDescriptor ANGULAR_PARSE_EXT = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-parse-ext", "/angular/parse-ext");
+	public static final ResourceDescriptor ANGULAR_RESOURCE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-resource", "/angular/resource");
+	public static final ResourceDescriptor ANGULAR_ROUTE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-route", "/angular/route");
+	public static final ResourceDescriptor ANGULAR_SANITIZE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-sanitize", "/angular/sanitize");
+	public static final ResourceDescriptor ANGULAR_TOUCH = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-touch", "/angular/touch");
 
 	private HttpService httpService;
 	

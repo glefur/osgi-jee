@@ -47,6 +47,8 @@ public class UISampleActivator implements BundleActivator {
 				FwksRegisterer service = super.addingService(reference);
 				try {
 					service.registerFramework(FwksRegisterer.BOOTSTRAP);
+					service.registerFramework(FwksRegisterer.ANGULAR);
+					service.registerFramework(FwksRegisterer.ANGULAR_ROUTE);
 				} catch (NamespaceException e) {
 					e.printStackTrace();
 				}
