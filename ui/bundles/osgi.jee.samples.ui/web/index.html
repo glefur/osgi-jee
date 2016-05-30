@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="osgi.jee.samples.ui">
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Bootstrap testing</title>
@@ -33,18 +33,17 @@
 	        </div>
 	        <div class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="#">Home</a></li>
-	            <li><a href="#about">About</a></li>
+	            <li ng-attr-class="{{ pageName == 'Main' && 'active'}}"><a href="#">Home</a></li>
 	            <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+	              <a class="dropdown-toggle" data-toggle="dropdown">Bootstrap <b class="caret"></b></a>
 	              <ul class="dropdown-menu">
-	                <li><a href="#">Pagination</a></li>
-	                <li><a href="jumbotron.html">Jumbotron</a></li>
-	                <li><a href="#">Something else here</a></li>
+	                <li><a href="#/styling">Styling</a></li>
+	                <li><a href="#/tables">Tables</a></li>
+	                <li><a href="#/buttons">Buttons</a></li>
+	                <li><a href="#/forms">Forms</a></li>
 	                <li class="divider"></li>
-	                <li class="dropdown-header">Nav header</li>
-	                <li><a href="#">Separated link</a></li>
-	                <li><a href="#">One more separated link</a></li>
+	                <li class="dropdown-header">Advanced concepts</li>
+	                <li><a href="#">Pagination</a></li>
 	              </ul>
 	            </li>
 	          </ul>
@@ -58,117 +57,24 @@
 			  <li><a href="#">UI</a></li>
 			  <li class="active">Bootstrap</li>
 			</ol>
-			<h1>Welcome!</h1>
-			<p class="lead">This page use most of the Bootstrap concepts for testing purpose.</p>
-			<blockquote>Have fun!<small>The author, <cite title="Source Title">Host</cite></small></blockquote>
-			
-			<h2>Tested concepts</h2>
-			
-			<div class="table-responsive">
-				<table class="table table-striped table-hover">
-					<tr><td><span class="glyphicon glyphicon-th-list"></span></td><td>Tables</td></tr>
-					<tr><td><span class="glyphicon glyphicon-tint"></span></td><td>Text and paragraph styling</td></tr>
-					<tr><td><span class="glyphicon glyphicon-tasks"></span></td><td>Nav bar</td></tr>
-					<tr><td><span class="glyphicon glyphicon-record"></span></td><td>Buttons</td></tr>
-					<tr><td><span class="glyphicon glyphicon-pencil"></span></td><td>Inputs</td></tr>
-					<tr><td><span class="glyphicon glyphicon-list"></span></td><td>Pagination</td></tr>
-				</table>
+			<div class="jumbotron">
+				<h1>{{pageName}}</h1>
+				<p>{{pageDesc}}</p>
 			</div>
-			
-			<h2>Text and paragraph styling</h2>
-			
-			<p class="text-muted">This text is muted.</p>
-			<p class="text-primary">This text is important.</p>
-			<p class="text-success">This text indicates success.</p>
-			<p class="text-info">This text is used to convey information.</p>
-			<p class="text-warning">This text is used to convey a warning.</p>
-			<p class="text-danger">This text is used to convey danger.</p>
-			
-			<p class="bg-primary">This is <strong>primary</strong> background.</p>
-			<p class="bg-success">This is <strong>success</strong> background.</p>
-			<p class="bg-info">This is <strong>info</strong> background.</p>
-			<p class="bg-warning">This is <strong>warning</strong> background.</p>
-			<p class="bg-danger">This is <strong>danger</strong> background.</p>
-			
-			<h2>Buttons</h2>
-			<h3>Styles</h3>
-		 	<div>
-		 		<form method="post">
-        			<button type="button" class="btn btn-default" id="default">Default</button>
-        			<button type="button" class="btn btn-primary" id="primary">Primary</button>
-        			<button type="button" class="btn btn-success" id="success">Success</button>
-        			<button type="button" class="btn btn-info" id="info">Info</button>
-        			<button type="button" class="btn btn-warning" id="warning">Warning</button>
-        			<button type="button" class="btn btn-danger" id="danger">Danger</button>
-        			<button type="button" class="btn btn-link" id="link">Link</button>
-        		</form>
-		 	</div>
-			<h3>Sizes</h3>
-		 	<div> 	
-		 		<form method="post">
-        			<button type="button" class="btn btn-lg" id="long">Long</button>
-        			<button type="button" class="btn btn-sm" id="small">Small</button>
-        			<button type="button" class="btn btn-xs" id="xsmal">Xtra-Small</button><br/>
-        			<button type="button" class="btn btn-block" id="block">Block</button>
-        		</form>
-		 	</div>		 	
-			<h3>Groups</h3>
-		 	<div class="btn-toolbar" role="toolbar">
-		 		<div class="btn-group">
-        			<button type="button" class="btn btn-default" id="left">Left</button>
-        			<button type="button" class="btn btn-default" id="middle">Middle</button>
-        			<button type="button" class="btn btn-default" id="right">Right</button>
-		 		</div>
-		 		<div class="btn-group">
-        			<button type="button" class="btn btn-default" id="left2">Left2</button>
-        			<button type="button" class="btn btn-default" id="middle2">Middle2</button>
-			 		<div class="btn-group">
-	        			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdown">Dropdown<span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><a href="#">Submenu 1</a></li>
-							<li><a href="#">Submenu 2</a></li>
-						</ul>
-			 		</div>
-		 		</div>
-		 	</div>
-		 	<h2>Inputs & Pagination</h2>
-		 	<div class="input-group">
-				<div class="input-group-btn search-panel">
-		            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		            	<span id="language">Language</span> <span class="caret"></span>
-		            </button>
-		            <ul class="dropdown-menu" role="menu">
-		              <li><a href="#">Javascript</a></li>
-		              <li><a href="#">Java</a></li>
-		              <li class="divider"></li>
-		              <li><a href="#">Other</a></li>
-		            </ul>
-	            </div>
-  		 		<input type="text" class="form-control" placeholder="search...">
-  		 		<span class="input-group-btn">
-                	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-            	</span>
-		 	</div>
-		 	<h3>Results<span class="badge">23</span></h3>
-			<div class="table-responsive">
-				<table class="table table-striped table-hover">
-					<tr><td>1</td><td>Result 1</td></tr>
-					<tr><td>2</td><td>Result 2</td></tr>
-					<tr><td>3</td><td>Result 3</td></tr>
-					<tr><td>4</td><td>Result 4</td></tr>
-					<tr><td>5</td><td>Result 5</td></tr>
-				</table>
-		 	</div>
-			<ul class="pagination">
-			  <li class="active"><a href="#">1</a></li>
-			  <li><a href="#">2</a></li>
-			  <li><a href="#">3</a></li>
-			</ul>
+			<div ng-view></div>
 		</div>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/angular/angular.js"></script>
+		<script src="/angular/route/angular-route.js"></script>
+		<script src="/views/main/main.js"></script>
+		<script src="/views/styling/styling.js"></script>
+		<script src="/views/tables/tables.js"></script>
+		<script src="/views/buttons/buttons.js"></script>
+		<script src="/views/forms/forms.js"></script>
+	    <script src="/views/app.js"></script>
 	</body>
 </html>
