@@ -9,7 +9,8 @@ angular.module('osgi.jee.samples.ui', [
   'osgi.jee.samples.ui.views.tables',
   'osgi.jee.samples.ui.views.buttons',
   'osgi.jee.samples.ui.views.forms',
-  'osgi.jee.samples.ui.views.pics'
+  'osgi.jee.samples.ui.views.pics',
+  'osgi.jee.samples.ui.views.progress'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/main'});
