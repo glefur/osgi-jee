@@ -25,6 +25,7 @@ import org.osgi.service.http.NamespaceException;
 public class FwksRegisterer {
 
 	public static final ResourceDescriptor BOOTSTRAP = new ResourceDescriptor("fwks/bootstrap-3.3.6-dist", "/bootstrap");
+	
 	public static final ResourceDescriptor ANGULAR = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular", "/angular");
 	public static final ResourceDescriptor ANGULAR_ANIMATE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-animate", "/angular/animate");
 	public static final ResourceDescriptor ANGULAR_ARIA = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-aria", "/angular/aria");
@@ -37,6 +38,8 @@ public class FwksRegisterer {
 	public static final ResourceDescriptor ANGULAR_ROUTE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-route", "/angular/route");
 	public static final ResourceDescriptor ANGULAR_SANITIZE = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-sanitize", "/angular/sanitize");
 	public static final ResourceDescriptor ANGULAR_TOUCH = new ResourceDescriptor("fwks/angular-1.5.6-dist/angular-touch", "/angular/touch");
+
+	public static final ResourceDescriptor ANGULARUI = new ResourceDescriptor("fwks/angularui-1.3.3-dist", "/angularui");
 
 	private HttpService httpService;
 	
