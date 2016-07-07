@@ -1,10 +1,10 @@
 'use strict';
 
-var project = angular.module('osgi.jee.samples.ui.angularui.views.modal', ['ngRoute', 'ui.bootstrap']);
+var project = angular.module('osgi.jee.samples.ui.views.modal', ['ngRoute', 'ui.bootstrap']);
 
 project.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/modal', {
-    templateUrl: 'angular-ui/views/modal/modal.html',
+    templateUrl: 'views/modal/modal.html',
     controller: 'ModalCtrl'
   });
 }]);

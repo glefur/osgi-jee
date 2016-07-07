@@ -10,6 +10,7 @@ angular.module('osgi.jee.samples.ui', [
   'osgi.jee.samples.ui.views.buttons',
   'osgi.jee.samples.ui.views.forms',
   'osgi.jee.samples.ui.views.pics',
+  'osgi.jee.samples.ui.views.modal',
   'osgi.jee.samples.ui.views.progress',
   'osgi.jee.samples.ui.views.listgroup',
   'osgi.jee.samples.ui.views.panels'

@@ -19,48 +19,48 @@
 	</head>
 	<body>
 		
-	    <!-- Fixed navbar -->
-	    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-	      <div class="container">
-	        <div class="navbar-header">
-	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	            <span class="sr-only">Toggle navigation</span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-	          <a class="navbar-brand" href="#">OSGi/JEE/UI</a>
-	        </div>
-	        <div class="navbar-collapse collapse">
-	          <ul class="nav navbar-nav">
-	            <li class="dropdown">
-	              <a class="dropdown-toggle" data-toggle="dropdown">Bootstrap <b class="caret"></b></a>
-	              <ul class="dropdown-menu">
-	                <li><a href="#/styling">Styling</a></li>
-	                <li><a href="#/pics">Pics</a></li>
-	                <li><a href="#/tables">Tables</a></li>
-	                <li><a href="#/buttons">Buttons</a></li>
-	                <li><a href="#/forms">Forms</a></li>
-	                <li><a href="#/progress">Progress bars</a></li>
-	                <li><a href="#/listgroup">List Groups</a></li>
-	                <li><a href="#/panels">Panels</a></li>
-	                <li class="divider"></li>
-	                <li class="dropdown-header">Advanced concepts</li>
-	                <li><a href="#/grid">Grid system</a></li>
-	              </ul>
-	            </li>
-	            <li class="dropdown">
-	              <a class="dropdown-toggle" data-toggle="dropdown">AngularUI <b class="caret"></b></a>
-	              <ul class="dropdown-menu">
-	                <li><a href="index-angularui.html">Main</a></li>
-	                <li><a href="index-angularui.html#modal">Modals</a></li>
-	              </ul>
-	            </li>
-	          </ul>
-	        </div><!--/.nav-collapse -->
+	    <header class="navbar navbar-default navbar-fixed-top">
+	      <div class="navbar-inner">
+		      <div class="container">
+		        <div class="navbar-header">
+		          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		            <span class="sr-only">Toggle navigation</span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		          </button>
+		          <a class="navbar-brand visible-xs" href="#">OSGi/JEE/UI</a>
+		        </div>
+		        <nav class="hidden-xs">
+					<ul class="nav navbar-nav">
+		            	<a href="#" role="button" class="navbar-brand">OSGi/JEE/UI</a>
+              			<li class="dropdown" uib-dropdown>
+			                <a href="#" role="button" class="dropdown-toggle" uib-dropdown-toggle>Bootstrap <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#/styling">Styling</a></li>
+								<li><a href="#/pics">Pics</a></li>
+								<li><a href="#/tables">Tables</a></li>
+								<li><a href="#/buttons">Buttons</a></li>
+								<li><a href="#/forms">Forms</a></li>
+								<li><a href="#/progress">Progress bars</a></li>
+	                			<li><a href="#/listgroup">List Groups</a></li>
+				                <li><a href="#/panels">Panels</a></li>
+								<li class="divider"></li>
+								<li class="dropdown-header">Advanced concepts</li>
+								<li><a href="#/grid">Grid system</a></li>
+							</ul>
+						</li>
+              			<li class="dropdown" uib-dropdown>
+			                <a href="#" role="button" class="dropdown-toggle" uib-dropdown-toggle>Angular UI <b class="caret"></b></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#modal">Modals</a></li>
+							</ul>
+						</li>
+					</ul>
+		        </nav> 
+		      </div>
 	      </div>
-	    </div>
-	    
+	    </header>	    
 		<div class="container">
 			<ol class="breadcrumb">
 			  <li><a href="#">OSGi/JEE</a></li>
@@ -73,13 +73,9 @@
 			</div>
 			<div ng-view></div>
 		</div>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="/bootstrap/js/bootstrap.min.js"></script>
 		<script src="/angular/angular.js"></script>
 		<script src="/angular/route/angular-route.js"></script>
+		<script src="/angularui/ui-bootstrap-tpls.min.js"></script>
 		<script src="/views/main/main.js"></script>
 		<script src="/views/grid/grid.js"></script>
 		<script src="/views/styling/styling.js"></script>
@@ -87,6 +83,7 @@
 		<script src="/views/buttons/buttons.js"></script>
 		<script src="/views/forms/forms.js"></script>
 		<script src="/views/pics/pics.js"></script>
+		<script src="/views/modal/modal.js"></script>
 		<script src="/views/progress/progress.js"></script>
 		<script src="/views/listgroup/listgroup.js"></script>
 		<script src="/views/panels/panels.js"></script>
